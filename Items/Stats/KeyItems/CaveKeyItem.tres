@@ -1,0 +1,13 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Items/ItemStats.cs" type="Script" id=1]
+[ext_resource path="res://Items/Sprites/CaveKey.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+KeyItem = true
+Name = "Cave Key"
+Texture = ExtResource( 2 )
+Description = "The key to enter the cave."
+Stackable = false
+UseJustInBattle = false

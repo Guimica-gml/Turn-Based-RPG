@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://Battles/Actions/Action.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+Name = "Punch"
+AnimScenePath = "res://Battles/Actions/ActionAnims/PunchAnim/PunchAnim.tscn"
+Heal = false
+Value = 30

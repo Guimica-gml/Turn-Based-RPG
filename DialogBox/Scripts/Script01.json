@@ -1,0 +1,29 @@
+{
+	"default": [
+		{
+			"talker": "PlayerTalker",
+			"text": "Hello Jessica. What are you up to today?"
+		},
+		{
+			"talker": "JessicaTalker",
+			"text": "Hello Player, just thinking about going to the cave today."
+		},
+		{
+			"talker": "PlayerTalker",
+			"text": "Wait, there's a caver here?"
+		},
+		{
+			"talker": "JessicaTalker",
+			"text": "Yeah, you'll find it if you go to the left... of to the right. Anyway, take the key.",
+			"executeScripts": [ { "script": "AddItem", "args": ["res://Inventory/PlayerInventory.tres", "res://Items/Stats/KeyItems/CaveKeyItem.tres"] } ]
+		},
+		{
+			"talker": "PlayerTalker",
+			"text": "Oh, thanks, I'm going now. Bye."
+		},
+		{
+			"talker": "JessicaTalker",
+			"text": "Bye."
+		}
+	]
+}

@@ -1,0 +1,100 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Inventory/InventoryDisplayer/InventoryNameFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Stats/StatsDisplayer/PlayerStatsDisplay.png" type="Texture" id=2]
+[ext_resource path="res://Stats/StatKeyValue/StatKeyValue.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Stats/StatsDisplayer/StatsDisplayer.cs" type="Script" id=4]
+
+[sub_resource type="StyleBoxTexture" id=1]
+content_margin_top = 3.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 25, 13 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 6.0
+margin_bottom = 3.0
+
+[node name="StatsDisplayer" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 317.0
+margin_bottom = 177.0
+custom_constants/margin_right = 3
+custom_constants/margin_top = 3
+custom_constants/margin_left = 3
+custom_constants/margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 311.0
+margin_bottom = 171.0
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+margin_right = 308.0
+margin_bottom = 7.0
+custom_fonts/font = ExtResource( 1 )
+text = "STATS"
+align = 1
+valign = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+margin_top = 11.0
+margin_right = 308.0
+margin_bottom = 62.0
+
+[node name="HpStat" parent="MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 308.0
+margin_bottom = 7.0
+KeyName = "HP"
+_value = "1/1"
+
+[node name="AttackStat" parent="MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 11.0
+margin_right = 308.0
+margin_bottom = 18.0
+KeyName = "ATTACK"
+_value = "0"
+
+[node name="DefenseStat" parent="MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 22.0
+margin_right = 308.0
+margin_bottom = 29.0
+KeyName = "DEFENSE"
+_value = "0"
+
+[node name="LevelStat" parent="MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 33.0
+margin_right = 308.0
+margin_bottom = 40.0
+KeyName = "LEVEL"
+_value = "1"
+
+[node name="XpStat" parent="MarginContainer/VBoxContainer/VBoxContainer" instance=ExtResource( 3 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 44.0
+margin_right = 308.0
+margin_bottom = 51.0
+KeyName = "XP"
+_value = "0"

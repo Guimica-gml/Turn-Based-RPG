@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://Managers/Manager.cs" type="Script" id=1]
+
+[node name="Manager" type="CanvasLayer"]
+pause_mode = 2
+layer = 2
+script = ExtResource( 1 )
+_playerGridInitialPosition = Vector2( 9, 5 )

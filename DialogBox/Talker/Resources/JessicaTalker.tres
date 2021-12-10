@@ -1,0 +1,10 @@
+[gd_resource type="Resource" load_steps=2 format=2]
+
+[ext_resource path="res://DialogBox/Talker/Talker.cs" type="Script" id=1]
+
+[resource]
+script = ExtResource( 1 )
+Name = "Jessica"
+NameColor = Color( 1, 0.415686, 0.854902, 1 )
+Portraits = {
+}

@@ -1,0 +1,14 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Items/Stats/HealItems/HealItemStats.cs" type="Script" id=1]
+[ext_resource path="res://Items/Sprites/Bandage.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+KeyItem = false
+Name = "Bandage"
+Texture = ExtResource( 2 )
+Description = "This item heals 20 hp points :)"
+Stackable = true
+UseJustInBattle = false
+HealAmount = 20

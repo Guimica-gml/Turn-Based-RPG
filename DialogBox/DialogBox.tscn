@@ -1,0 +1,260 @@
+[gd_scene load_steps=13 format=2]
+
+[ext_resource path="res://DialogBox/DialogBox.cs" type="Script" id=1]
+[ext_resource path="res://DialogBox/Resources/TextBoxFrame.png" type="Texture" id=2]
+[ext_resource path="res://DialogBox/Resources/TextBoxFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://DialogBox/Resources/NameFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://DialogBox/Resources/TextboxBack.png" type="Texture" id=5]
+[ext_resource path="res://DialogBox/Resources/TextboxBackMask.png" type="Texture" id=6]
+[ext_resource path="res://DialogBox/Resources/TextBoxNameBox.png" type="Texture" id=7]
+[ext_resource path="res://DialogBox/Resources/NextArrow.png" type="Texture" id=8]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+
+uniform float speed;
+uniform vec2 direction;
+uniform sampler2D sprite;
+
+void fragment()
+{
+	float alpha = texture(TEXTURE, UV).a;
+	vec2 uv = UV;
+	uv += TIME * (direction * speed);
+	
+	COLOR = texture(sprite, uv);
+	COLOR.a = alpha;
+}
+"
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = SubResource( 1 )
+shader_param/speed = 0.04
+shader_param/direction = Vector2( -1, -1.4 )
+shader_param/sprite = ExtResource( 5 )
+
+[sub_resource type="Animation" id=3]
+resource_name = "Default"
+length = 2.0
+loop = true
+tracks/0/type = "bezier"
+tracks/0/path = NodePath("TextureRect/NameRect:rect_position:y")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"points": PoolRealArray( -25, -0.25, 0, 0.25, 0, -24, -0.25, 0, 0.25, 0, -26, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1.5 )
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("TextureRect/NextArrowRect:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 274, -0.25, 0, 0.25, 0, 275, -0.25, 0, 0.25, 0, 273, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0, 0.5, 1.5 )
+}
+
+[sub_resource type="Animation" id=4]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect/NameRect:rect_position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 16, -29 ) ]
+}
+tracks/1/type = "bezier"
+tracks/1/path = NodePath("TextureRect/NameRect:rect_position:x")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"points": PoolRealArray( 16, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/2/type = "bezier"
+tracks/2/path = NodePath("TextureRect/NameRect:rect_position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"points": PoolRealArray( -29, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/3/type = "bezier"
+tracks/3/path = NodePath("TextureRect/NextArrowRect:rect_position:x")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"points": PoolRealArray( 274, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/4/type = "bezier"
+tracks/4/path = NodePath("TextureRect/NextArrowRect:rect_position:y")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"points": PoolRealArray( 65, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/5/type = "bezier"
+tracks/5/path = NodePath("TextureRect/MarginContainer:rect_position:x")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+tracks/6/type = "bezier"
+tracks/6/path = NodePath("TextureRect/MarginContainer:rect_position:y")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"points": PoolRealArray( 0, -0.25, 0, 0.25, 0 ),
+"times": PoolRealArray( 0 )
+}
+
+[node name="DialogBox" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="."]
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+margin_left = -151.0
+margin_top = -88.0
+margin_right = 151.0
+margin_bottom = -6.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundRect" type="TextureRect" parent="TextureRect"]
+show_behind_parent = true
+material = SubResource( 2 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = ExtResource( 6 )
+stretch_mode = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 30
+custom_constants/margin_top = 15
+custom_constants/margin_left = 30
+custom_constants/margin_bottom = 10
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextLabel" type="RichTextLabel" parent="TextureRect/MarginContainer"]
+margin_left = 30.0
+margin_top = 15.0
+margin_right = 272.0
+margin_bottom = 72.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/mono_font = ExtResource( 3 )
+custom_fonts/bold_italics_font = ExtResource( 3 )
+custom_fonts/italics_font = ExtResource( 3 )
+custom_fonts/bold_font = ExtResource( 3 )
+custom_fonts/normal_font = ExtResource( 3 )
+bbcode_enabled = true
+meta_underlined = false
+text = "Nine patch rects are so op.... why this is looking so fucking bad? Oh... Ok, it just looks better now.... Oh, wait, I'm not using nine patch rects anymore, it's just a simple texture rect."
+scroll_active = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ResponsesContainer" type="VBoxContainer" parent="TextureRect"]
+anchor_left = 1.0
+anchor_right = 1.0
+margin_left = -62.0
+margin_top = -10.0
+margin_right = -43.0
+margin_bottom = -2.0
+grow_horizontal = 0
+grow_vertical = 0
+custom_constants/separation = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameRect" type="TextureRect" parent="TextureRect"]
+margin_left = 16.0
+margin_top = -29.0
+margin_right = 116.0
+margin_bottom = 11.0
+texture = ExtResource( 7 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_use_anchors_": false
+}
+
+[node name="NameLabel" type="Label" parent="TextureRect/NameRect"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_fonts/font = ExtResource( 4 )
+text = "Name here"
+align = 1
+valign = 1
+autowrap = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NextArrowRect" type="TextureRect" parent="TextureRect"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -28.0
+margin_top = -17.0
+margin_right = -12.0
+margin_bottom = -1.0
+texture = ExtResource( 8 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "Default"
+anims/Default = SubResource( 3 )
+anims/RESET = SubResource( 4 )
+
+[connection signal="tree_exiting" from="." to="." method="OnDialogBoxTreeExiting"]
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

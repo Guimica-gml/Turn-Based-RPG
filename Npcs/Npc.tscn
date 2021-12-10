@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Entity/Entity.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Npcs/Npc.cs" type="Script" id=2]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
+
+[node name="Npc" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="AnimationTree" parent="." index="4"]
+parameters/playback = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="." index="5"]
+
+[node name="IdleTimer" type="Timer" parent="." index="6"]
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
+[connection signal="timeout" from="IdleTimer" to="." method="OnIdleTimerTimeout"]

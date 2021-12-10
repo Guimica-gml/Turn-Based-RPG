@@ -1,0 +1,8 @@
+{
+	"default": [
+		{
+			"talker": "PlayerTalker",
+			"text": "I need the '%s' to open this door."
+		}
+	]
+}

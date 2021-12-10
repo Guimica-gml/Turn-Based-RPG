@@ -1,0 +1,26 @@
+{
+	"default": [
+		{
+			"talker": "BobTalker",
+			"text": "Did you talk to Jessica?",
+			"responses": [
+				{ "text": "Yes", "part": "talked-to-jessica" },
+				{ "text": "No", "part": "didn't-talk-to-jessica" }
+			]
+		}
+	],
+	
+	"talked-to-jessica": [
+		{
+			"talker": "BobTalker",
+			"text": "Great."
+		}
+	],
+	
+	"didn't-talk-to-jessica": [
+		{
+			"talker": "BobTalker",
+			"text": "You probably should."
+		}
+	]
+}

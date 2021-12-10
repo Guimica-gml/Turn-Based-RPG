@@ -1,0 +1,113 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Popups/Popup.cs" type="Script" id=1]
+[ext_resource path="res://Battles/BattleStatsDisplayer/BattleStatsDislay.png" type="Texture" id=2]
+[ext_resource path="res://Items/Sprites/Potion.png" type="Texture" id=3]
+[ext_resource path="res://Popups/PopupFont.tres" type="DynamicFont" id=4]
+
+[sub_resource type="StyleBoxTexture" id=1]
+content_margin_top = 2.0
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 14, 14 )
+margin_left = 2.0
+margin_right = 2.0
+margin_top = 5.0
+margin_bottom = 2.0
+
+[sub_resource type="Animation" id=2]
+resource_name = "FadeIn"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "FadeOut"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.2 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "queue_free"
+} ]
+}
+
+[node name="Popup" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 0
+rect_min_size = Vector2( 60, 0 )
+mouse_filter = 2
+size_flags_horizontal = 8
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 318.0
+margin_bottom = 178.0
+mouse_filter = 2
+custom_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer"]
+margin_right = 16.0
+margin_bottom = 176.0
+rect_min_size = Vector2( 16, 16 )
+mouse_filter = 2
+texture = ExtResource( 3 )
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="HBoxContainer"]
+margin_left = 16.0
+margin_right = 316.0
+margin_bottom = 176.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 4 )
+text = "Item name "
+valign = 1
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "FadeIn"
+anims/FadeIn = SubResource( 2 )
+anims/FadeOut = SubResource( 3 )
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 0
+wait_time = 2.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

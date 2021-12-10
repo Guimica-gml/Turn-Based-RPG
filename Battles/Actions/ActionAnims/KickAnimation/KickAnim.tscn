@@ -1,0 +1,154 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Battles/Actions/ActionAnims/ActionAnim.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Battles/Actions/ActionAnims/KickAnimation/Kick.png" type="Texture" id=2]
+[ext_resource path="res://Battles/Actions/ActionAnims/PunchAnim/Effect.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Default"
+length = 1.2
+step = 0.05
+tracks/0/type = "method"
+tracks/0/path = NodePath(".")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0.8 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "ApplyAction" ],
+"method": "emit_signal"
+} ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("KickPivot:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.3, 0.6, 0.8 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 43.8, 4.7, 43.8, -19.7 ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("KickPivot/Kick:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.05, 1, 1.05 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Effect:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.8, 0.85, 0.95, 1.05 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Effect2:modulate")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.8, 0.85, 0.95, 1.05 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Effect3:modulate")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.8, 0.85, 0.95, 1.05 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Effect:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.85, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -3, -10 ), Vector2( -3, -10 ), Vector2( -0.999999, -16 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Effect2:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.85, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -9, 7 ), Vector2( -9, 7 ), Vector2( -10, 14 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Effect3:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.85, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 2, 2 ), Vector2( 2, 2 ), Vector2( 10, 6 ) ]
+}
+
+[node name="KickAnim" instance=ExtResource( 1 )]
+scale = Vector2( -1, 1 )
+
+[node name="KickPivot" type="Node2D" parent="." index="0"]
+position = Vector2( -26, -26 )
+rotation = -0.34383
+
+[node name="Kick" type="Sprite" parent="KickPivot" index="0"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 0, 25 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 2 )
+
+[node name="Effect" type="Sprite" parent="." index="1"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -0.999999, -16 )
+rotation = -1.2706
+texture = ExtResource( 3 )
+
+[node name="Effect2" type="Sprite" parent="." index="2"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -10, 14 )
+rotation = 1.89892
+texture = ExtResource( 3 )
+
+[node name="Effect3" type="Sprite" parent="." index="3"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 10, 6 )
+rotation = 0.432842
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" parent="." index="4"]
+anims/Default = SubResource( 1 )

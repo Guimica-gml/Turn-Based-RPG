@@ -1,0 +1,35 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Battles/Resources/BattleFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Battles/ActionButton/ActionButtonNormal.tres" type="StyleBox" id=2]
+[ext_resource path="res://Battles/ActionButton/ActionButtonHover.tres" type="StyleBox" id=3]
+[ext_resource path="res://Battles/ActionButton/ActionButton.cs" type="Script" id=4]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="ActionButton" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 1
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 133.0
+margin_top = 80.0
+margin_right = 186.0
+margin_bottom = 99.0
+rect_min_size = Vector2( 53, 19 )
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = SubResource( 1 )
+custom_styles/disabled = ExtResource( 2 )
+custom_styles/normal = ExtResource( 2 )
+text = "Name here"
+
+[connection signal="pressed" from="Button" to="." method="OnButtonPressed"]

@@ -1,0 +1,143 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Battles/Actions/ActionAnims/ActionAnim.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Battles/Actions/ActionAnims/SlapAnimation/Slap.png" type="Texture" id=2]
+[ext_resource path="res://Battles/Actions/ActionAnims/PunchAnim/Effect.png" type="Texture" id=3]
+
+[sub_resource type="Animation" id=1]
+resource_name = "Default"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath("Slap:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, 109.1 ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0.3 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "ApplyAction" ],
+"method": "emit_signal"
+} ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Slap:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.15, 0.6, 0.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Effect2:modulate")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.3, 0.35, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Effect2:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -21, -3 ), Vector2( -21, -3 ), Vector2( -31, -3 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Effect2:scale")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.5, 0.55 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -1, 1 ), Vector2( -1, 1 ), Vector2( -1, 1e-05 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Effect:modulate")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.3, 0.35, 0.5, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Effect:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.3, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -4, -3 ), Vector2( -4, -3 ), Vector2( 5, -3 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Effect:scale")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.5, 0.55 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1e-05 ) ]
+}
+
+[node name="SlapAnim" instance=ExtResource( 1 )]
+scale = Vector2( -1, 1 )
+
+[node name="Slap" type="Sprite" parent="." index="0"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -18, -13 )
+scale = Vector2( 1.5, 1.5 )
+texture = ExtResource( 2 )
+
+[node name="Effect" type="Sprite" parent="." index="1"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -4, -3 )
+texture = ExtResource( 3 )
+
+[node name="Effect2" type="Sprite" parent="." index="2"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( -21, -3 )
+scale = Vector2( -1, 1 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" parent="." index="3"]
+anims/Default = SubResource( 1 )

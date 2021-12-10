@@ -1,0 +1,97 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://MainMenu/TtileFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://MainMenu/ButtonFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://MainMenu/Buttons/MenuButton.tres" type="StyleBox" id=3]
+[ext_resource path="res://MainMenu/Buttons/MenuButtonHover.tres" type="StyleBox" id=4]
+[ext_resource path="res://MainMenu/MainMenu.cs" type="Script" id=5]
+[ext_resource path="res://Interactions/Resources/Interaction_Menu.tres" type="Resource" id=6]
+
+[sub_resource type="StyleBoxEmpty" id=1]
+
+[node name="MainMenu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+interaction = ExtResource( 6 )
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+margin_left = 46.0
+margin_top = 13.0
+margin_right = 274.0
+margin_bottom = 167.0
+custom_constants/margin_bottom = 40
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer"]
+margin_right = 228.0
+margin_bottom = 114.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="CenterContainer/MarginContainer/VBoxContainer"]
+margin_right = 228.0
+margin_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 0, 60 )
+custom_fonts/font = ExtResource( 1 )
+text = "Turn-Based RPG"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="StartButton" type="Button" parent="CenterContainer/MarginContainer/VBoxContainer"]
+margin_left = 74.0
+margin_top = 64.0
+margin_right = 154.0
+margin_bottom = 87.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/focus = SubResource( 1 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "Start"
+
+[node name="ExitButton" type="Button" parent="CenterContainer/MarginContainer/VBoxContainer"]
+margin_left = 74.0
+margin_top = 91.0
+margin_right = 154.0
+margin_bottom = 114.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/focus = SubResource( 1 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "Exit"
+
+[connection signal="pressed" from="CenterContainer/MarginContainer/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="CenterContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="OnExitButtonPressed"]

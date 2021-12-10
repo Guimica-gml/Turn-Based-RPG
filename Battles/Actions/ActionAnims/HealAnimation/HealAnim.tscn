@@ -1,0 +1,94 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Battles/Actions/ActionAnims/ActionAnim.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Battles/Actions/ActionAnims/HealAnimation/Heal.png" type="Texture" id=2]
+[ext_resource path="res://Battles/Actions/ActionAnims/HealAnimation/HealParticle.png" type="Texture" id=3]
+
+[sub_resource type="Curve" id=2]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0.668319 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=3]
+curve = SubResource( 2 )
+
+[sub_resource type="ParticlesMaterial" id=4]
+flag_disable_z = true
+direction = Vector3( 0, 1, 0 )
+spread = 122.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 6.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 3 )
+
+[sub_resource type="Animation" id=1]
+resource_name = "Default"
+length = 1.8
+tracks/0/type = "value"
+tracks/0/path = NodePath("Heal:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 1.6, 1.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Heal:rotation_degrees")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.2, 0.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, 0.0, -139.4 ]
+}
+tracks/2/type = "method"
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0.6 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [ "ApplyAction" ],
+"method": "emit_signal"
+} ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Particles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 0.7, 1.6 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ false, true, false ]
+}
+
+[node name="HealAnim" instance=ExtResource( 1 )]
+
+[node name="Heal" type="Sprite" parent="." index="0"]
+modulate = Color( 1, 1, 1, 0 )
+position = Vector2( 18, -19 )
+scale = Vector2( 1.2, 1.2 )
+texture = ExtResource( 2 )
+
+[node name="Particles2D" type="Particles2D" parent="." index="1"]
+position = Vector2( 13, -13 )
+emitting = false
+amount = 4
+lifetime = 0.5
+process_material = SubResource( 4 )
+texture = ExtResource( 3 )
+
+[node name="AnimationPlayer" parent="." index="2"]
+anims/Default = SubResource( 1 )
