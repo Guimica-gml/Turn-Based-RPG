@@ -1,19 +1,17 @@
 using Godot;
-using Godot.Collections;
 
-public class InventoryDisplayer : PanelContainer
+public class InventoryDisplayer : TabContainer
 {
 	[Export] public Inventory Inventory;
+	[Export] private NodePath _itemInfoDisplayerPath = "";
 	
-	private GridContainer _itemsGrid;
-	private Label _nameLabel;
-	private PackedScene _itemSlotPacked;
+	private ItemsTab _itemsTab;
+	private ItemsTab _keyItemsTab;
 	
 	public override void _Ready()
 	{
-		_nameLabel = GetNode<Label>("MarginContainer/VBoxContainer/NameLabel");
-		_itemsGrid = GetNode<GridContainer>("MarginContainer/VBoxContainer/ItemsGrid");
-		_itemSlotPacked = GD.Load<PackedScene>("res://Inventory/ItemSlot/ItemSlot.tscn");
+		_itemsTab = GetNode<ItemsTab>("Items");
+		_keyItemsTab = GetNode<ItemsTab>("KeyItems");
 		
 		if (Inventory == null)
 		{
@@ -21,28 +19,10 @@ public class InventoryDisplayer : PanelContainer
 			return;
 		}
 		
-		Inventory.Connect("ItemsChanged", this, nameof(UpdateSlots));
-		_nameLabel.Text = Inventory.Name;
-		CreateSlots();
-	}
-	
-	private void CreateSlots()
-	{
-		foreach (var item in Inventory.Items)
-		{
-			var itemSlot = _itemSlotPacked.Instance<ItemSlot>();
-			itemSlot.SetDeferred("ItemStats", item);
-			itemSlot.Inventory = Inventory;
-			_itemsGrid.AddChild(itemSlot);
-		}
-	}
-	
-	private void UpdateSlots(Array<ItemStats> items)
-	{
-		for (var i = 0; i < _itemsGrid.GetChildCount(); ++i)
-		{
-			var itemSlot = _itemsGrid.GetChild<ItemSlot>(i);
-			itemSlot.ItemStats = items[i];
-		}
+		_itemsTab.ItemInfoDisplayer = GetNode<ItemInfoDisplayer>(_itemInfoDisplayerPath);
+		_itemsTab.Inventory = Inventory;
+		
+		_keyItemsTab.ItemInfoDisplayer = GetNode<ItemInfoDisplayer>(_itemInfoDisplayerPath);
+		_keyItemsTab.Inventory = Inventory;
 	}
 }

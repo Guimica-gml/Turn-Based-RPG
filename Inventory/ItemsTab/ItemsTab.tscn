@@ -1,0 +1,124 @@
+[gd_scene load_steps=14 format=2]
+
+[ext_resource path="res://Inventory/ItemsTab/ItemsTab.cs" type="Script" id=1]
+[ext_resource path="res://Inventory/ItemsTab/TabSelected.png" type="Texture" id=2]
+[ext_resource path="res://Inventory/ItemsTab/Tab.png" type="Texture" id=3]
+[ext_resource path="res://Inventory/ItemsTab/ScrollGrabber.png" type="Texture" id=4]
+[ext_resource path="res://Inventory/ItemsTab/Scroll.png" type="Texture" id=5]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 2 )
+region_rect = Rect2( 0, 0, 11, 8 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 11, 8 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+
+[sub_resource type="ImageTexture" id=3]
+
+[sub_resource type="StyleBoxTexture" id=6]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 8, 9 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=9]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 8, 9 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=12]
+content_margin_left = 2.0
+content_margin_right = 2.0
+content_margin_top = 2.0
+content_margin_bottom = 2.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 8, 9 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=16]
+content_margin_left = 0.0
+content_margin_right = 0.0
+content_margin_top = 0.0
+content_margin_bottom = 0.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 8, 15 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 6.0
+margin_bottom = 6.0
+
+[sub_resource type="Theme" id=17]
+VScrollBar/icons/decrement = SubResource( 3 )
+VScrollBar/icons/decrement_highlight = SubResource( 3 )
+VScrollBar/icons/decrement_pressed = SubResource( 3 )
+VScrollBar/icons/increment = SubResource( 3 )
+VScrollBar/icons/increment_highlight = SubResource( 3 )
+VScrollBar/icons/increment_pressed = SubResource( 3 )
+VScrollBar/styles/grabber = SubResource( 6 )
+VScrollBar/styles/grabber_highlight = SubResource( 9 )
+VScrollBar/styles/grabber_pressed = SubResource( 12 )
+VScrollBar/styles/scroll = SubResource( 16 )
+VScrollBar/styles/scroll_focus = SubResource( 16 )
+
+[node name="ItemsTab" type="Tabs"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_bg = Color( 1, 1, 1, 1 )
+custom_colors/font_color_fg = Color( 1, 1, 1, 1 )
+custom_styles/tab_fg = SubResource( 1 )
+custom_styles/tab_bg = SubResource( 2 )
+scrolling_enabled = false
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/margin_right = 3
+custom_constants/margin_top = 3
+custom_constants/margin_left = 3
+custom_constants/margin_bottom = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ScrollContainer" type="ScrollContainer" parent="MarginContainer"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 317.0
+margin_bottom = 177.0
+theme = SubResource( 17 )
+scroll_horizontal_enabled = false
+
+[node name="ItemsGrid" type="GridContainer" parent="MarginContainer/ScrollContainer"]
+margin_right = 314.0
+margin_bottom = 174.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+columns = 4

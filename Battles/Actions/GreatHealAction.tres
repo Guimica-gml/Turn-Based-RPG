@@ -4,7 +4,7 @@
 
 [resource]
 script = ExtResource( 1 )
-Name = "Heal"
+Name = "Great Heal"
 AnimScenePath = "res://Battles/Actions/ActionAnims/HealAnimation/HealAnim.tscn"
 Heal = true
-Value = 20
+Value = 40

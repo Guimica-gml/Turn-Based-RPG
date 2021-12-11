@@ -5,7 +5,7 @@
 [ext_resource path="res://Inventory/PlayerInventory.tres" type="Resource" id=3]
 [ext_resource path="res://Stats/StatsDisplayer/StatsDisplayer.tscn" type="PackedScene" id=4]
 [ext_resource path="res://Stats/PlayerStats.tres" type="Resource" id=5]
-[ext_resource path="res://Inventory/KeyItemsDisplayer/KeyItemsDisplayer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Inventory/ItemInfoDisplayer/ItemInfoDisplayer.tscn" type="PackedScene" id=6]
 
 [sub_resource type="Animation" id=1]
 resource_name = "Default"
@@ -71,20 +71,20 @@ margin_top = 6.0
 margin_right = -8.0
 margin_bottom = 174.0
 Inventory = ExtResource( 3 )
+_itemInfoDisplayerPath = NodePath("../ItemInfoDisplayer")
 
 [node name="StatsDisplayer" parent="Displayers" instance=ExtResource( 4 )]
 margin_left = 8.0
 margin_top = 6.0
 margin_right = -203.0
-margin_bottom = -88.0
+margin_bottom = -81.0
 Stats = ExtResource( 5 )
 
-[node name="KeyItemsDisplayer" parent="Displayers" instance=ExtResource( 6 )]
+[node name="ItemInfoDisplayer" parent="Displayers" instance=ExtResource( 6 )]
 margin_left = 8.0
-margin_top = 96.0
+margin_top = 103.0
 margin_right = -203.0
-margin_bottom = -7.0
-_inventory = ExtResource( 3 )
+margin_bottom = -6.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "Default"

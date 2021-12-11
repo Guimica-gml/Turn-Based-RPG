@@ -2,7 +2,7 @@
 
 [ext_resource path="res://Stats/Stats.cs" type="Script" id=1]
 [ext_resource path="res://Battles/Actions/KickAction.tres" type="Resource" id=2]
-[ext_resource path="res://Battles/Actions/HealAction.tres" type="Resource" id=3]
+[ext_resource path="res://Battles/Actions/GreatHealAction.tres" type="Resource" id=3]
 [ext_resource path="res://Battles/Actions/SlapAction.tres" type="Resource" id=4]
 [ext_resource path="res://Battles/Actions/PunchAction.tres" type="Resource" id=5]
 [ext_resource path="res://Player/Player.png" type="Texture" id=6]
@@ -11,7 +11,7 @@
 script = ExtResource( 1 )
 Name = "Player"
 SpriteSheet = ExtResource( 6 )
-_baseLevel = 1
+_baseLevel = 100
 _baseHp = 100
 _baseMaxHp = 100
 _baseAttack = 100

@@ -2,7 +2,6 @@ using Godot;
 
 public class ItemSlot : CenterContainer
 {
-	[Export] private ItemStats _itemStats;
 	public ItemStats ItemStats
 	{
 		get => _itemStats;
@@ -12,8 +11,12 @@ public class ItemSlot : CenterContainer
 			UpdateSlot();
 		}
 	}
+	[Export] private ItemStats _itemStats;
+	
+	[Export] private NodePath _itemInfoDisplayerPath = "";
 	
 	public Inventory Inventory;
+	public ItemInfoDisplayer ItemInfoDisplayer;
 	
 	private TextureRect _textureRect;
 	private Label _nameLabel;
@@ -26,6 +29,7 @@ public class ItemSlot : CenterContainer
 		_textureRect = GetNode<TextureRect>("Button/TextureRect");
 		_nameLabel = GetNode<Label>("Button/NameLabel");
 		_amountLabel = GetNode<Label>("Button/AmountLabel");
+		if (_itemInfoDisplayerPath != "") ItemInfoDisplayer = GetNode<ItemInfoDisplayer>(_itemInfoDisplayerPath);
 		
 		_button.FocusMode = FocusModeEnum.None;
 		UpdateSlot();
@@ -37,9 +41,18 @@ public class ItemSlot : CenterContainer
 		{
 			_textureRect.Texture = ItemStats.Texture;
 			_nameLabel.Text = ItemStats.Name;
-			_amountLabel.Text = ItemStats.Amount.ToString();
 			
-			_button.Modulate = (_itemStats.UseJustInBattle && !Global.BattleManager.InBattle) ? new Color(1f, 1f, 1f, 0.5f) : new Color(1f, 1f, 1f, 1f);
+			if (!ItemStats.KeyItem)
+			{
+				_amountLabel.Text = ItemStats.Amount.ToString();
+				_button.Modulate = (_itemStats.UseJustInBattle && !Global.BattleManager.InBattle) ? new Color(1f, 1f, 1f, 0.5f) : new Color(1f, 1f, 1f, 1f);
+			}
+			else
+			{
+				_amountLabel.Text = "";
+				_button.SelfModulate = new Color(1f, 1f, 1f, 0.5f);
+				_button.Modulate = new Color(1f, 1f, 1f, 1f);
+			}
 		}
 		else
 		{
@@ -52,10 +65,25 @@ public class ItemSlot : CenterContainer
 	
 	private void OnButtonPressed()
 	{
-		if (ItemStats == null) return;
-		if (_itemStats.UseJustInBattle && !Global.BattleManager.InBattle) return;
+		if (ItemStats == null || ItemStats.KeyItem) return;
+		if (ItemStats.UseJustInBattle && !Global.BattleManager.InBattle) return;
 		
 		ItemStats.Use();
 		Inventory.RemoveItem(GetIndex(), 1);
+		
+		if (ItemInfoDisplayer == null || ItemStats != null) return;
+		ItemInfoDisplayer.ItemStats = null;
+	}
+	
+	private void OnButtonMouseEntered()
+	{
+		if (ItemInfoDisplayer == null || ItemStats == null) return;
+		ItemInfoDisplayer.ItemStats = ItemStats;
+	}
+	
+	private void OnButtonMouseExited()
+	{
+		if (ItemInfoDisplayer == null || ItemStats == null) return;
+		ItemInfoDisplayer.ItemStats = null;
 	}
 }
