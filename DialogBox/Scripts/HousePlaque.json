@@ -1,0 +1,8 @@
+{
+	"default": [
+		{
+			"talker": "PlayerTalker",
+			"text": "It's written: \"%s's House\"."
+		}
+	]
+}
