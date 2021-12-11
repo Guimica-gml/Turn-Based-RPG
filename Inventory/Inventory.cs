@@ -8,8 +8,6 @@ public class Inventory : Resource
 	[Signal] private delegate void ItemRemoved(string itemName);
 	[Signal] private delegate void ItemAdded(ItemStats item);
 	
-	[Export] public string Name = "Inventory";
-	
 	[Export] public int Size
 	{
 		get => _size;
@@ -212,6 +210,20 @@ public class Inventory : Resource
 			if (item == null || !item.Stackable) continue;
 			GroupItem(item.Name);
 		}
+	}
+	
+	public bool HasItem(string itemName)
+	{
+		var hasItem = false;
+		
+		foreach (var item in Items)
+		{
+			if (item == null || item.Name != itemName) continue;
+			hasItem = true;
+			break;
+		}
+		
+		return hasItem;
 	}
 	
 	public bool HasKeyItem(string itemName)

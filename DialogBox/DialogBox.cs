@@ -117,20 +117,27 @@ public class DialogBox : Control
 		}
 		
 		var info = _dialog[_part][_page] as Dictionary;
-		var talker = LoadTalker(info["talker"] as string);
+		
+		// Checking if it's a condition
+		if (info.Contains("conditions"))
+		{
+			var conditions = new Array<Dictionary>(info["conditions"] as Godot.Collections.Array);
+			var conditionsAreTrue = CheckConditions(conditions);
+			
+			ChangePart((conditionsAreTrue) ? info["partIfTrue"] as string : info["partIfFalse"] as string);
+			return;
+		}
 		
 		// Checking if we need to execute a script
 		if (info.Contains("executeScripts"))
 		{
 			var scriptsInfo = new Array<Dictionary>(info["executeScripts"] as Godot.Collections.Array);
 			
-			foreach (Dictionary scriptInfo in scriptsInfo)
-			{
-				var scriptName = scriptInfo["script"] as string;
-				var scriptArgs = new Array<string>(scriptInfo["args"] as Godot.Collections.Array);
-				Global.DialogManager.CallDialogFunction(scriptName, scriptArgs);
-			}
+			foreach (var scriptInfo in scriptsInfo)
+				ExecuteDialogFunction(scriptInfo);
 		}
+		
+		var talker = LoadTalker(info["talker"] as string);
 		
 		// Setting dialog information
 		_nameLabel.Text = talker.Name;
@@ -141,6 +148,30 @@ public class DialogBox : Control
 		_textLabel.VisibleCharacters = 0;
 		_nextArrowRect.Visible = false;
 		_timer.Start(_textSpeed);
+	}
+	
+	private bool CheckConditions(Array<Dictionary> conditions)
+	{
+		var conditionsAreTrue = true;
+		
+		foreach (var condition in conditions)
+		{
+			if (ExecuteDialogFunction(condition) is bool value)
+			{
+				if (value) continue;
+				conditionsAreTrue = false;
+				break;
+			}
+		}
+		
+		return conditionsAreTrue;
+	}
+	
+	private object ExecuteDialogFunction(Dictionary funcInfo)
+	{
+		var scriptName = funcInfo["script"] as string;
+		var scriptArgs = new Array<string>(funcInfo["args"] as Godot.Collections.Array);
+		return Global.DialogManager.CallDialogFunction(scriptName, scriptArgs);
 	}
 	
 	private Talker LoadTalker(string talkerFilename)
@@ -208,20 +239,22 @@ public class DialogBox : Control
 	private void OnResponseButtonPressed(int index)
 	{
 		var dict = new Array<Dictionary>(_dialog[_part][_page]["responses"] as Godot.Collections.Array);
+		var partName = dict[index]["part"] as string;
 		
+		DeleteResponses();
+		_selectingResponseState = false;
+		ChangePart(partName);
+	}
+	
+	private void ChangePart(string partName)
+	{
 		// Checking if it's the end of the dialog
-		if (!dict[index].Contains("part"))
+		if (partName == "")
 		{
 			QueueFree();
 			return;
 		}
 		
-		var partName = dict[index]["part"] as string;
-		
-		DeleteResponses();
-		_selectingResponseState = false;
-		
-		// Going to the first page of the selected response
 		_selectedResponseIndex = 0;
 		_part = partName;
 		_page = 0;

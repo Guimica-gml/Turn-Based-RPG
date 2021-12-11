@@ -39,21 +39,47 @@ public class DialogManager : CanvasLayer
 	
 	/// --- DIALOG DEFINITIONS
 	
-	public void CallDialogFunction(string funcName, Array<string> args)
+	private Dictionary<string, string> _variableDefinitions = new Dictionary<string, string>();
+	
+	public object CallDialogFunction(string funcName, Array<string> args)
 	{
 		if (!HasMethod(funcName))
 		{
 			GD.PrintErr($"The Dialog function `{funcName}` doesn't exists");
-			return;
+			return null;
 		}
 		
-		Call(funcName, args);
+		return Call(funcName, args);
 	}
 	
-	private void AddItem(Array<string> args)
+	private object AddItem(Array<string> args)
 	{
 		var inventory = GD.Load<Inventory>(args[0]);
 		var item = GD.Load<ItemStats>(args[1]);
 		inventory.AddItem(item);
+		
+		return null;
+	}
+	
+	private object HasItem(Array<string> args)
+	{
+		var inventory = GD.Load<Inventory>(args[0]);
+		var item = GD.Load<ItemStats>(args[1]);
+		
+		return (inventory.HasKeyItem(item.Name) || inventory.HasItem(item.Name));
+	}
+	
+	private object SetVariableDefinition(Array<string> args)
+	{
+		var variableKey = args[0];
+		var variableValue = args[1];
+		_variableDefinitions[variableKey] = variableValue;
+		
+		return null;
+	}
+	
+	private object CheckVariableDefinition(Array<string> args)
+	{
+		return (_variableDefinitions.ContainsKey(args[0]) &&  _variableDefinitions[args[0]] == args[1]);
 	}
 }

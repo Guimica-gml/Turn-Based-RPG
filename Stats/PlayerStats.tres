@@ -11,7 +11,7 @@
 script = ExtResource( 1 )
 Name = "Player"
 SpriteSheet = ExtResource( 6 )
-_baseLevel = 100
+_baseLevel = 1
 _baseHp = 100
 _baseMaxHp = 100
 _baseAttack = 100
