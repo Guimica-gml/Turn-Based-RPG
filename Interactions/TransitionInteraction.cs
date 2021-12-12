@@ -10,7 +10,7 @@ public class TransitionInteraction : Interaction
 	
 	private Inventory _playerInventory;
 	
-	public override void OnInteractionTrigger()
+	public override void OnTrigger()
 	{
 		_playerInventory = GD.Load<Inventory>("res://Inventory/PlayerInventory.tres");
 		
@@ -31,7 +31,7 @@ public class TransitionInteraction : Interaction
 		return true;
 	}
 	
-	public override void OnInteractionEnd()
+	public override void OnEnd()
 	{
 		return;
 	}

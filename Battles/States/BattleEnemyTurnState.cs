@@ -5,7 +5,7 @@ using Godot.Collections;
 public class BattleEnemyTurnState : State
 {
 	[Export] private NodePath _battleScenarioPath = "";
-	private BattleScenario _battleScenario;
+	private BattlePauseDisplayer _battleScenario;
 	
 	private bool _performedAction = false;
 	private bool _performingAction = false;
@@ -15,9 +15,9 @@ public class BattleEnemyTurnState : State
 	{
 		GD.Randomize();
 		
-		_battleScenario = GetNode<BattleScenario>(_battleScenarioPath);
+		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
 		
-		_battleScenario.CurrentTurn = BattleScenario.Turns.Enemy;
+		_battleScenario.CurrentTurn = BattlePauseDisplayer.Turns.Enemy;
 		_battleScenario.SetNextMessageArrowVisibility(true);
 		_battleScenario.SetBattleText($"{_battleScenario.EnemyDisplayer.Stats.Name}'s turn");
 	}

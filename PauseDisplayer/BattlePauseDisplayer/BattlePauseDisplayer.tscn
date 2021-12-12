@@ -1,0 +1,281 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://PauseDisplayer/PauseDisplayer.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Battles/Resources/BattleFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Battles/ActionButton/ActionButtonHover.tres" type="StyleBox" id=3]
+[ext_resource path="res://Battles/ActionButton/ActionButtonNormal.tres" type="StyleBox" id=4]
+[ext_resource path="res://StateMachine/State/State.tscn" type="PackedScene" id=5]
+[ext_resource path="res://StateMachine/StateMachine.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Battles/BattleStatsDisplayer/BattleStatsDisplayer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Battles/BattleCharacterDisplayer/BattleCharacterDisplayer.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Battles/Resources/NextBattleMessage.png" type="Texture" id=9]
+[ext_resource path="res://SceneTransition/Masks/Default.png" type="Texture" id=10]
+[ext_resource path="res://Battles/Resources/BattleOptionsDisplay.png" type="Texture" id=11]
+[ext_resource path="res://Battles/Resources/BattleBackground.png" type="Texture" id=12]
+[ext_resource path="res://Battles/States/BattleStartState.cs" type="Script" id=13]
+[ext_resource path="res://StateMachine/State/BattlePlayerWinState.cs" type="Script" id=14]
+[ext_resource path="res://Battles/States/BattlePlayerTurnState.cs" type="Script" id=15]
+[ext_resource path="res://Battles/States/BattleEnemyTurnState.cs" type="Script" id=16]
+[ext_resource path="res://StateMachine/State/BattlePlayerLostState.cs" type="Script" id=17]
+[ext_resource path="res://Battles/States/BattleCheckForWinnerState.cs" type="Script" id=18]
+[ext_resource path="res://PauseDisplayer/BattlePauseDisplayer/BattlePauseDisplayer.cs" type="Script" id=19]
+[ext_resource path="res://PauseDisplayer/InventoryPauseDisplayer/InventoryPauseDisplayer.tscn" type="PackedScene" id=20]
+
+[sub_resource type="StyleBoxTexture" id=1]
+content_margin_top = 3.0
+texture = ExtResource( 11 )
+region_rect = Rect2( 0, 0, 25, 13 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 6.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="Animation" id=3]
+resource_name = "FadeIn"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.7, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("VBoxContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("TextureRect:visible")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "FadeOut"
+length = 1.2
+tracks/0/type = "value"
+tracks/0/path = NodePath("TextureRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 0.7, 1.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("VBoxContainer:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+
+[node name="BattlePauseDisplayer" instance=ExtResource( 1 )]
+script = ExtResource( 19 )
+
+[node name="StateMachine" parent="." index="0" instance=ExtResource( 6 )]
+_firstState = "Start"
+
+[node name="Start" parent="StateMachine" index="0" instance=ExtResource( 5 )]
+script = ExtResource( 13 )
+_battleScenarioPath = NodePath("../..")
+
+[node name="PlayerTurn" parent="StateMachine" index="1" instance=ExtResource( 5 )]
+script = ExtResource( 15 )
+_battleScenarioPath = NodePath("../..")
+_actionsContainerPath = NodePath("../../VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer/ActionsContainer")
+_itemsButtonPath = NodePath("../../VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer/ItemsButton")
+_inventoryPath = NodePath("../../InventoryPauseDisplayer")
+
+[node name="EnemyTurn" parent="StateMachine" index="2" instance=ExtResource( 5 )]
+script = ExtResource( 16 )
+_battleScenarioPath = NodePath("../..")
+
+[node name="CheckForWinner" parent="StateMachine" index="3" instance=ExtResource( 5 )]
+script = ExtResource( 18 )
+_battleScenarioPath = NodePath("../..")
+
+[node name="PlayerWin" parent="StateMachine" index="4" instance=ExtResource( 5 )]
+script = ExtResource( 14 )
+_battleScenarioPath = NodePath("../..")
+
+[node name="PlayerLost" parent="StateMachine" index="5" instance=ExtResource( 5 )]
+script = ExtResource( 17 )
+_battleScenarioPath = NodePath("../..")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." index="1"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer" index="0"]
+margin_right = 320.0
+margin_bottom = 130.0
+mouse_filter = 2
+texture = ExtResource( 12 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerDisplayer" parent="VBoxContainer/TextureRect" index="0" instance=ExtResource( 8 )]
+position = Vector2( 86, 112 )
+
+[node name="EnemyDisplayer" parent="VBoxContainer/TextureRect" index="1" instance=ExtResource( 8 )]
+position = Vector2( 248, 64 )
+_flip = true
+
+[node name="PlayerStatsDisplayer" parent="VBoxContainer/TextureRect" index="2" instance=ExtResource( 7 )]
+anchor_top = 1.0
+anchor_right = 0.0
+margin_left = 2.0
+margin_top = -24.0
+margin_right = 62.0
+margin_bottom = -2.0
+
+[node name="EnemyStatsDisplayer" parent="VBoxContainer/TextureRect" index="3" instance=ExtResource( 7 )]
+anchor_left = 1.0
+anchor_bottom = 0.0
+margin_left = -62.0
+margin_top = 2.0
+margin_right = -2.0
+margin_bottom = 24.0
+_showXp = false
+
+[node name="OptionsPanel" type="PanelContainer" parent="VBoxContainer" index="1"]
+margin_top = 130.0
+margin_right = 320.0
+margin_bottom = 180.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/OptionsPanel" index="0"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 317.0
+margin_bottom = 47.0
+mouse_filter = 2
+custom_constants/margin_right = 1
+custom_constants/margin_top = 1
+custom_constants/margin_left = 1
+custom_constants/margin_bottom = 1
+
+[node name="HboxContainer" type="HBoxContainer" parent="VBoxContainer/OptionsPanel/MarginContainer" index="0"]
+margin_left = 1.0
+margin_top = 1.0
+margin_right = 313.0
+margin_bottom = 43.0
+mouse_filter = 2
+custom_constants/separation = 0
+
+[node name="TextLabel" type="RichTextLabel" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer" index="0"]
+margin_right = 282.0
+margin_bottom = 42.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/mono_font = ExtResource( 2 )
+custom_fonts/bold_italics_font = ExtResource( 2 )
+custom_fonts/italics_font = ExtResource( 2 )
+custom_fonts/bold_font = ExtResource( 2 )
+custom_fonts/normal_font = ExtResource( 2 )
+text = "Here's where the text is going to appear lol"
+scroll_active = false
+
+[node name="NextMessageRect" type="TextureRect" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel" index="1"]
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -24.0
+margin_top = -15.0
+texture = ExtResource( 9 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionsContainer" type="HBoxContainer" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer" index="1"]
+margin_left = 282.0
+margin_right = 312.0
+margin_bottom = 42.0
+size_flags_horizontal = 5
+size_flags_vertical = 3
+alignment = 2
+
+[node name="ActionsContainer" type="GridContainer" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer" index="0"]
+margin_bottom = 42.0
+size_flags_horizontal = 5
+size_flags_vertical = 3
+columns = 2
+
+[node name="ItemsButton" type="Button" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer" index="1"]
+margin_left = 4.0
+margin_right = 30.0
+margin_bottom = 42.0
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 3 )
+custom_styles/pressed = ExtResource( 3 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/disabled = ExtResource( 4 )
+custom_styles/normal = ExtResource( 4 )
+text = "Items"
+
+[node name="InventoryPauseDisplayer" parent="." index="2" instance=ExtResource( 20 )]
+visible = false
+
+[node name="TextureRect" type="TextureRect" parent="." index="3"]
+modulate = Color( 0, 0, 0, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+texture = ExtResource( 10 )
+expand = true
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
+autoplay = "FadeIn"
+anims/FadeIn = SubResource( 3 )
+anims/FadeOut = SubResource( 4 )
+
+[connection signal="mouse_entered" from="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel" to="." method="OnTextLabelMouseEntered"]
+[connection signal="mouse_exited" from="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel" to="." method="OnTextLabelMouseExited"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationPlayerAnimationFinished"]

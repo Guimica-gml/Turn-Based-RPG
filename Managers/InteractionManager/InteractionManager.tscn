@@ -3,4 +3,5 @@
 [ext_resource path="res://Managers/InteractionManager/InteractionManager.cs" type="Script" id=1]
 
 [node name="InteractionManager" type="Node"]
+pause_mode = 2
 script = ExtResource( 1 )

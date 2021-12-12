@@ -9,11 +9,7 @@ public class InteractionManager : Node
 	
 	public void StartInteraction(Interaction interaction)
 	{
-		if (Interaction != null)
-		{
-			GD.PrintErr("Trying to start an interaction while another interaction is already happening");
-			return;
-		}
+		if (Interaction != null) return;
 		
 		if (interaction == null)
 		{
@@ -24,13 +20,13 @@ public class InteractionManager : Node
 		Interaction = interaction;
 		Interaction.Connect("Ended", this, nameof(EndInteraction));
 		
-		Interaction.OnInteractionTrigger();
+		Interaction.OnTrigger();
 		EmitSignal(nameof(InteractionTriggered), Interaction);
 	}
 	
 	private void EndInteraction()
 	{
-		Interaction.OnInteractionEnd();
+		Interaction.OnEnd();
 		Interaction.Disconnect("Ended", this, nameof(EndInteraction));
 		EmitSignal(nameof(InteractionEnded), Interaction);
 		Interaction = null;

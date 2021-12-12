@@ -1,11 +1,9 @@
 using Godot;
 
-public class BattleScenario : Control
+public class BattlePauseDisplayer : PauseDisplayer
 {
 	public enum Turns { None, Player, Enemy }
 	public Turns CurrentTurn = Turns.None;
-	
-	[Signal] private delegate void Ended();
 	
 	public bool MouseHoverTextBox { get; private set; }
 	public Stats EnemyStats;
@@ -49,6 +47,11 @@ public class BattleScenario : Control
 		CreatePlayerActionButtons();
 	}
 	
+	public override void _Input(InputEvent @event)
+	{
+		return; // This must be empty, do not dare removing this function
+	}
+	
 	public void EndBattle()
 	{
 		_animationPlayer.Play("FadeOut");
@@ -71,7 +74,7 @@ public class BattleScenario : Control
 	
 	public void Destroy()
 	{
-		EmitSignal(nameof(Ended));
+		EmitSignal(nameof(Close));
 		QueueFree();
 	}
 	

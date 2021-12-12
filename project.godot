@@ -22,6 +22,7 @@ InteractionManager="*res://Managers/InteractionManager/InteractionManager.tscn"
 TransitionManager="*res://Managers/TransitionManager/TransitionManager.tscn"
 PopupManager="*res://Managers/PopupManager/PopupManager.tscn"
 BattleManager="*res://Managers/BattleManager/BattleManager.tscn"
+ShopManager="*res://Managers/ShopManager/ShopManager.tscn"
 Global="*res://Global.cs"
 
 [display]

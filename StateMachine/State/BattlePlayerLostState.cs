@@ -3,11 +3,11 @@ using Godot;
 public class BattlePlayerLostState : State
 {
 	[Export] private NodePath _battleScenarioPath = "";
-	private BattleScenario _battleScenario;
+	private BattlePauseDisplayer _battleScenario;
 	
 	public override void StateReady()
 	{
-		_battleScenario = GetNode<BattleScenario>(_battleScenarioPath);
+		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
 		_battleScenario.SetBattleText("You lost.");
 		_battleScenario.SetNextMessageArrowVisibility(true);
 	}

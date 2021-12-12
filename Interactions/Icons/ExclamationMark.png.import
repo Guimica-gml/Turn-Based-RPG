@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/PauseBack.png-2aae1fa85fd6a4a365f32dbb5fa58b5c.stex"
+path="res://.import/ExclamationMark.png-c8614ad9bf17c8cf2b008ee8a2d007dd.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://PauseDisplayer/PauseBack.png"
-dest_files=[ "res://.import/PauseBack.png-2aae1fa85fd6a4a365f32dbb5fa58b5c.stex" ]
+source_file="res://Interactions/Icons/ExclamationMark.png"
+dest_files=[ "res://.import/ExclamationMark.png-c8614ad9bf17c8cf2b008ee8a2d007dd.stex" ]
 
 [params]
 

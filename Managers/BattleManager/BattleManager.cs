@@ -1,6 +1,6 @@
 using Godot;
 
-public class BattleManager : CanvasLayer
+public class BattleManager : Node
 {
 	[Signal] private delegate void BattleStarted();
 	[Signal] private delegate void BattleEnded();
@@ -9,25 +9,18 @@ public class BattleManager : CanvasLayer
 	
 	private Enemy _currentEnemy = null;
 	
-	private BattleScenario _battleScenario = null;
-	private PackedScene _battleScenarioPacked = GD.Load<PackedScene>("res://Battles/BattleScenario.tscn");
+	private BattlePauseDisplayer _battleScenario = null;
+	private PackedScene _battleScenarioPacked = GD.Load<PackedScene>("res://PauseDisplayer/BattlePauseDisplayer/BattlePauseDisplayer.tscn");
 	
 	public void StartBattle(Enemy enemy)
 	{
-		if (enemy.Stats == null)
-		{
-			GD.PrintErr("Trying to start a battle without an enemy");
-			return;
-		}
-		
-		if (InBattle || Global.InteractionManager.Interaction != null) return;
-		GetTree().Paused = true;
 		InBattle = true;
 		
-		_battleScenario = _battleScenarioPacked.Instance<BattleScenario>();
+		_battleScenario = _battleScenarioPacked.Instance<BattlePauseDisplayer>();
 		_battleScenario.EnemyStats = enemy.Stats;
-		_battleScenario.Connect("Ended", this, nameof(OnBattleEnded));
-		AddChild(_battleScenario);
+		_battleScenario.Connect("Close", this, nameof(OnBattleEnded));
+		
+		Global.Manager.PauseGame(_battleScenario);
 		
 		_currentEnemy = enemy;
 		EmitSignal(nameof(BattleStarted));
@@ -42,8 +35,6 @@ public class BattleManager : CanvasLayer
 		}
 		
 		InBattle = false;
-		_battleScenario = null;
-		GetTree().Paused = false;
 		EmitSignal(nameof(BattleEnded));
 	}
 }

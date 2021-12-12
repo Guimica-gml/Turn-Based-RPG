@@ -3,11 +3,11 @@ using Godot;
 public class BattleCheckForWinnerState : State
 {
 	[Export] private NodePath _battleScenarioPath = "";
-	private BattleScenario _battleScenario;
+	private BattlePauseDisplayer _battleScenario;
 	
 	public override void StateReady()
 	{
-		_battleScenario = GetNode<BattleScenario>(_battleScenarioPath);
+		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
 		
 		if (_battleScenario.PlayerDisplayer.Stats.Hp <= 0)
 		{
@@ -19,7 +19,7 @@ public class BattleCheckForWinnerState : State
 		}
 		else
 		{
-			var nextState = (_battleScenario.CurrentTurn == BattleScenario.Turns.Player) ? "EnemyTurn" : "PlayerTurn";
+			var nextState = (_battleScenario.CurrentTurn == BattlePauseDisplayer.Turns.Player) ? "EnemyTurn" : "PlayerTurn";
 			EmitSignal(nameof(RequestState), nextState);
 		}
 	}

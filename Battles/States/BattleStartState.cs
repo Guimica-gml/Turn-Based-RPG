@@ -3,11 +3,11 @@ using Godot;
 public class BattleStartState : State
 {
 	[Export] private NodePath _battleScenarioPath = "";
-	private BattleScenario _battleScenario;
+	private BattlePauseDisplayer _battleScenario;
 	
 	public override void StateReady()
 	{
-		_battleScenario = GetNode<BattleScenario>(_battleScenarioPath);
+		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
 		
 		_battleScenario.SetActionButtonsVisibility(false);
 		_battleScenario.SetNextMessageArrowVisibility(true);

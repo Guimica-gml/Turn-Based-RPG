@@ -1,91 +1,13 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=2 format=2]
 
-[ext_resource path="res://PauseDisplayer/PauseBack.png" type="Texture" id=1]
-[ext_resource path="res://Inventory/InventoryDisplayer/InventoryDisplayer.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Inventory/PlayerInventory.tres" type="Resource" id=3]
-[ext_resource path="res://Stats/StatsDisplayer/StatsDisplayer.tscn" type="PackedScene" id=4]
-[ext_resource path="res://Stats/PlayerStats.tres" type="Resource" id=5]
-[ext_resource path="res://Inventory/ItemInfoDisplayer/ItemInfoDisplayer.tscn" type="PackedScene" id=6]
-
-[sub_resource type="Animation" id=1]
-resource_name = "Default"
-length = 0.15
-step = 0.05
-tracks/0/type = "value"
-tracks/0/path = NodePath("Displayers:rect_position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.15 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 5 ), Vector2( 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Displayers:modulate")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.15 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Color( 1, 1, 1, 0.588235 ), Color( 1, 1, 1, 1 ) ]
-}
+[ext_resource path="res://PauseDisplayer/PauseDisplayer.cs" type="Script" id=1]
 
 [node name="PauseDisplayer" type="Control"]
 pause_mode = 2
 anchor_right = 1.0
 anchor_bottom = 1.0
+mouse_filter = 2
+script = ExtResource( 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Background" type="NinePatchRect" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-texture = ExtResource( 1 )
-patch_margin_left = 3
-patch_margin_top = 19
-patch_margin_right = 3
-patch_margin_bottom = 8
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="Displayers" type="Control" parent="."]
-anchor_right = 1.0
-anchor_bottom = 1.0
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="InventoryDisplayer" parent="Displayers" instance=ExtResource( 2 )]
-anchor_left = 1.0
-anchor_bottom = 0.0
-margin_left = -160.0
-margin_top = 6.0
-margin_right = -8.0
-margin_bottom = 174.0
-Inventory = ExtResource( 3 )
-_itemInfoDisplayerPath = NodePath("../ItemInfoDisplayer")
-
-[node name="StatsDisplayer" parent="Displayers" instance=ExtResource( 4 )]
-margin_left = 8.0
-margin_top = 6.0
-margin_right = -203.0
-margin_bottom = -81.0
-Stats = ExtResource( 5 )
-
-[node name="ItemInfoDisplayer" parent="Displayers" instance=ExtResource( 6 )]
-margin_left = 8.0
-margin_top = 103.0
-margin_right = -203.0
-margin_bottom = -6.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "Default"
-anims/Default = SubResource( 1 )

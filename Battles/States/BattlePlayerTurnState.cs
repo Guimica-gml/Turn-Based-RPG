@@ -4,7 +4,7 @@ using Godot.Collections;
 public class BattlePlayerTurnState : State
 {
 	[Export] private NodePath _battleScenarioPath = "";
-	private BattleScenario _battleScenario;
+	private BattlePauseDisplayer _battleScenario;
 	
 	[Export] private NodePath _actionsContainerPath = "";
 	private GridContainer _actionsContainer;
@@ -24,12 +24,12 @@ public class BattlePlayerTurnState : State
 	{
 		_playerInventory = GD.Load<Inventory>("res://Inventory/PlayerInventory.tres");
 		
-		_battleScenario = GetNode<BattleScenario>(_battleScenarioPath);
+		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
 		_actionsContainer = GetNode<GridContainer>(_actionsContainerPath);
 		_itemsButton = GetNode<Button>(_itemsButtonPath);
 		_inventory = GetNode<Control>(_inventoryPath);
 		
-		_battleScenario.CurrentTurn = BattleScenario.Turns.Player;
+		_battleScenario.CurrentTurn = BattlePauseDisplayer.Turns.Player;
 		_battleScenario.SetActionButtonsVisibility(true);
 		_battleScenario.SetNextMessageArrowVisibility(false);
 		_battleScenario.SetBattleText("Select an action.");

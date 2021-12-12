@@ -3,14 +3,14 @@ using Godot;
 public class BattlePlayerWinState : State
 {
 	[Export] private NodePath _battleScenarioPath = "";
-	private BattleScenario _battleScenario;
+	private BattlePauseDisplayer _battleScenario;
 	
 	private bool _leveledUp = false;
 	private string _levelingUpMessage = "";
 	
 	public override void StateReady()
 	{
-		_battleScenario = GetNode<BattleScenario>(_battleScenarioPath);
+		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
 		_battleScenario.SetNextMessageArrowVisibility(true);
 		_battleScenario.SetBattleText($"You defeated {_battleScenario.EnemyDisplayer.Stats.Name}. \nYou gained {_battleScenario.EnemyDisplayer.Stats.XpWhenDefeated} xp.");
 		

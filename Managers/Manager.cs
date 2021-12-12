@@ -2,45 +2,47 @@ using Godot;
 
 public class Manager : CanvasLayer
 {
+	[Signal] private delegate void GamePaused();
+	[Signal] private delegate void GameUnpaused();
+	
 	[Export] public int GridSize = 16;
 	[Export] public Vector2 _playerGridInitialPosition = Vector2.Zero;
 	
 	public bool InMenu = false;
 	
-	private Control _pauseDisplayer;
+	private PauseDisplayer _pauseDisplayer;
 	
 	private PackedScene _playerPreload = GD.Load<PackedScene>("res://Player/Player.tscn");
-	private PackedScene _pauseDisplayerPreload = GD.Load<PackedScene>("res://PauseDisplayer/PauseDisplayer.tscn");
+	private PackedScene _pauseDisplayerPreload = GD.Load<PackedScene>("res://PauseDisplayer/InventoryPauseDisplayer/InventoryPauseDisplayer.tscn");
 	
 	public override void _Input(InputEvent @event)
 	{
-		if (Global.BattleManager.InBattle || InMenu) return;
-		if (Global.InteractionManager.Interaction != null || !@event.IsActionPressed("ui_pause")) return;
+		if (InMenu || Global.InteractionManager.Interaction != null || !@event.IsActionPressed("ui_pause")) return;
 		
-		if (GetTree().Paused)
+		if (!GetTree().Paused)
 		{
-			UnpauseGame();
-		}
-		else
-		{
-			PauseGame();
+			var pauseInteraction = _pauseDisplayerPreload.Instance<PauseDisplayer>();
+			PauseGame(pauseInteraction);
 		}
 	}
 	
-	public void PauseGame()
+	public void PauseGame(PauseDisplayer pauseDisplayer)
 	{
-		_pauseDisplayer = _pauseDisplayerPreload.Instance<Control>();
+		_pauseDisplayer = pauseDisplayer;
+		_pauseDisplayer.Connect("Close", this, "UnpauseGame");
 		AddChild(_pauseDisplayer);
 		
 		GetTree().Paused = true;
+		EmitSignal(nameof(GamePaused));
 	}
 	
-	public void UnpauseGame()
+	private void UnpauseGame()
 	{
 		_pauseDisplayer.QueueFree();
 		_pauseDisplayer = null;
 		
-		GetTree().Paused = false;
+		GetTree().SetDeferred("paused", false);
+		EmitSignal(nameof(GameUnpaused));
 	}
 	
 	public MainCamera GetMainCamera()

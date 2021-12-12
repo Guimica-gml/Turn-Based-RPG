@@ -6,7 +6,7 @@ public class DialogInteraction : Interaction
 	[Export(PropertyHint.File, "*.json")] public string DialogPath;
 	[Export] public Array<string> Replaces = new Array<string>();
 	
-	public override void OnInteractionTrigger()
+	public override void OnTrigger()
 	{
 		Global.DialogManager.Connect("DialogEnded", this, nameof(OnDialogEnded));
 		Global.DialogManager.StartDialog(DialogPath, Replaces);
@@ -17,7 +17,7 @@ public class DialogInteraction : Interaction
 		return true;
 	}
 	
-	public override void OnInteractionEnd()
+	public override void OnEnd()
 	{
 		Global.DialogManager.Disconnect("DialogEnded", this, nameof(OnDialogEnded));
 	}
