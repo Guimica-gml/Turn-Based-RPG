@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/ScrollGrabber.png-5b830a415c7a57b2eb90be0e243694fd.stex"
+path="res://.import/Scroll.png-f6b22ae93b8a0d9426e06d0f23d49581.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Inventory/ItemsTab/ScrollGrabber.png"
-dest_files=[ "res://.import/ScrollGrabber.png-5b830a415c7a57b2eb90be0e243694fd.stex" ]
+source_file="res://Themes/Scroll.png"
+dest_files=[ "res://.import/Scroll.png-f6b22ae93b8a0d9426e06d0f23d49581.stex" ]
 
 [params]
 

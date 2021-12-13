@@ -9,6 +9,7 @@ public class StatsDisplayer : PanelContainer
 	private StatKeyValue _defenseKeyValue;
 	private StatKeyValue _levelKeyValue;
 	private StatKeyValue _xpKeyValue;
+	private StatKeyValue _moneyKeyValue;
 	
 	public override void _Ready()
 	{
@@ -17,6 +18,7 @@ public class StatsDisplayer : PanelContainer
 		_defenseKeyValue = GetNode<StatKeyValue>("MarginContainer/VBoxContainer/VBoxContainer/DefenseStat");
 		_levelKeyValue = GetNode<StatKeyValue>("MarginContainer/VBoxContainer/VBoxContainer/LevelStat");
 		_xpKeyValue = GetNode<StatKeyValue>("MarginContainer/VBoxContainer/VBoxContainer/XpStat");
+		_moneyKeyValue = GetNode<StatKeyValue>("MarginContainer/VBoxContainer/VBoxContainer/MoneyStat");
 		
 		if (Stats == null)
 		{
@@ -29,12 +31,14 @@ public class StatsDisplayer : PanelContainer
 		Stats.Connect("DefenseChanged", this, nameof(UpdateDefense));
 		Stats.Connect("LevelChanged", this, nameof(UpdateLevel));
 		Stats.Connect("XpChanged", this, nameof(UpdateXp));
+		Stats.Connect("MoneyChanged", this, nameof(UpdateMoney));
 		
 		UpdateHp(Stats.Hp);
 		UpdateAttack(Stats.Attack);
 		UpdateDefense(Stats.Defense);
 		UpdateLevel(Stats.Level);
 		UpdateXp(Stats.Xp);
+		UpdateMoney(Stats.Money);
 	}
 	
 	private void UpdateHp(int hp)
@@ -60,5 +64,10 @@ public class StatsDisplayer : PanelContainer
 	private void UpdateXp(int xp)
 	{
 		_xpKeyValue.Value = xp.ToString() + "/" + Stats.XpToNextLevel().ToString();
+	}
+	
+	private void UpdateMoney(int money)
+	{
+		_moneyKeyValue.Value = money.ToString();
 	}
 }

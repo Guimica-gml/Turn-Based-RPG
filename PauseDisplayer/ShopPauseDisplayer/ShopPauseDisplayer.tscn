@@ -1,9 +1,21 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://PauseDisplayer/PauseDisplayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PauseDisplayer/ShopPauseDisplayer/ShopPauseDisplayer.cs" type="Script" id=2]
 [ext_resource path="res://PauseDisplayer/InventoryPauseDisplayer/PauseBack.png" type="Texture" id=3]
-[ext_resource path="res://Stats/StatKeyValue/StatKeyValueFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://PauseDisplayer/ShopPauseDisplayer/NameFont.tres" type="DynamicFont" id=4]
+[ext_resource path="res://Inventory/InventoryDisplayer/InventoryDisplay.png" type="Texture" id=5]
+[ext_resource path="res://Shops/ShopItemDisplayer/ShopItemDisplayer.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Shops/ShopInfoDisplayer/ShopInfoDisplayer.tscn" type="PackedScene" id=7]
+
+[sub_resource type="StyleBoxTexture" id=1]
+content_margin_top = 3.0
+texture = ExtResource( 5 )
+region_rect = Rect2( 0, 0, 25, 13 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 6.0
+margin_bottom = 3.0
 
 [node name="ShopPauseDisplayer" instance=ExtResource( 1 )]
 script = ExtResource( 2 )
@@ -20,22 +32,244 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterContainer" type="CenterContainer" parent="." index="1"]
+[node name="MarginContainer" type="MarginContainer" parent="." index="1"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+custom_constants/margin_right = 3
+custom_constants/margin_top = 3
+custom_constants/margin_left = 3
+custom_constants/margin_bottom = 3
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="CenterContainer" index="0"]
-margin_left = 121.0
-margin_top = 81.0
-margin_right = 198.0
-margin_bottom = 98.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer" index="0"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 317.0
+margin_bottom = 178.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer" index="0"]
+margin_right = 314.0
+margin_bottom = 17.0
 custom_fonts/font = ExtResource( 4 )
-text = "Not implemented yet
-(press 'esc' to close)"
+text = "SHOP"
 align = 1
 valign = 1
+
+[node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" index="1"]
+margin_top = 17.0
+margin_right = 314.0
+margin_bottom = 175.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/PanelContainer" index="0"]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 311.0
+margin_bottom = 155.0
+
+[node name="ShopInfoDisplayer" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer" index="0" instance=ExtResource( 7 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 92.0
+margin_bottom = 152.0
+size_flags_horizontal = 3
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer" index="1"]
+margin_left = 96.0
+margin_right = 308.0
+margin_bottom = 152.0
+rect_min_size = Vector2( 204, 152 )
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/vseparation = 0
+columns = 6
+
+[node name="ShopItemDisplayer" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="0" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_right = 32.0
+margin_bottom = 38.0
+
+[node name="ShopItemDisplayer2" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="1" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 36.0
+margin_right = 68.0
+margin_bottom = 38.0
+
+[node name="ShopItemDisplayer3" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="2" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 72.0
+margin_right = 104.0
+margin_bottom = 38.0
+
+[node name="ShopItemDisplayer4" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="3" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 108.0
+margin_right = 140.0
+margin_bottom = 38.0
+
+[node name="ShopItemDisplayer5" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="4" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 144.0
+margin_right = 176.0
+margin_bottom = 38.0
+
+[node name="ShopItemDisplayer6" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="5" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 180.0
+margin_right = 212.0
+margin_bottom = 38.0
+
+[node name="ShopItemDisplayer7" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="6" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 38.0
+margin_right = 32.0
+margin_bottom = 76.0
+
+[node name="ShopItemDisplayer8" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="7" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 36.0
+margin_top = 38.0
+margin_right = 68.0
+margin_bottom = 76.0
+
+[node name="ShopItemDisplayer9" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="8" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 72.0
+margin_top = 38.0
+margin_right = 104.0
+margin_bottom = 76.0
+
+[node name="ShopItemDisplayer10" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="9" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 108.0
+margin_top = 38.0
+margin_right = 140.0
+margin_bottom = 76.0
+
+[node name="ShopItemDisplayer11" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="10" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 144.0
+margin_top = 38.0
+margin_right = 176.0
+margin_bottom = 76.0
+
+[node name="ShopItemDisplayer12" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="11" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 180.0
+margin_top = 38.0
+margin_right = 212.0
+margin_bottom = 76.0
+
+[node name="ShopItemDisplayer13" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="12" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 76.0
+margin_right = 32.0
+margin_bottom = 114.0
+
+[node name="ShopItemDisplayer14" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="13" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 36.0
+margin_top = 76.0
+margin_right = 68.0
+margin_bottom = 114.0
+
+[node name="ShopItemDisplayer15" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="14" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 72.0
+margin_top = 76.0
+margin_right = 104.0
+margin_bottom = 114.0
+
+[node name="ShopItemDisplayer16" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="15" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 108.0
+margin_top = 76.0
+margin_right = 140.0
+margin_bottom = 114.0
+
+[node name="ShopItemDisplayer17" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="16" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 144.0
+margin_top = 76.0
+margin_right = 176.0
+margin_bottom = 114.0
+
+[node name="ShopItemDisplayer18" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="17" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 180.0
+margin_top = 76.0
+margin_right = 212.0
+margin_bottom = 114.0
+
+[node name="ShopItemDisplayer19" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="18" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_top = 114.0
+margin_right = 32.0
+margin_bottom = 152.0
+
+[node name="ShopItemDisplayer20" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="19" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 36.0
+margin_top = 114.0
+margin_right = 68.0
+margin_bottom = 152.0
+
+[node name="ShopItemDisplayer21" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="20" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 72.0
+margin_top = 114.0
+margin_right = 104.0
+margin_bottom = 152.0
+
+[node name="ShopItemDisplayer22" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="21" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 108.0
+margin_top = 114.0
+margin_right = 140.0
+margin_bottom = 152.0
+
+[node name="ShopItemDisplayer23" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="22" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 144.0
+margin_top = 114.0
+margin_right = 176.0
+margin_bottom = 152.0
+
+[node name="ShopItemDisplayer24" parent="MarginContainer/VBoxContainer/PanelContainer/HBoxContainer/GridContainer" index="23" instance=ExtResource( 6 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
+margin_left = 180.0
+margin_top = 114.0
+margin_right = 212.0
+margin_bottom = 152.0

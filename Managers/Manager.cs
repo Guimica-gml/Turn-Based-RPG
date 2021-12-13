@@ -6,7 +6,6 @@ public class Manager : CanvasLayer
 	[Signal] private delegate void GameUnpaused();
 	
 	[Export] public int GridSize = 16;
-	[Export] public Vector2 _playerGridInitialPosition = Vector2.Zero;
 	
 	public bool InMenu = false;
 	

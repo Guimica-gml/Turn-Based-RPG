@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=22 format=2]
 
 [ext_resource path="res://TileMaps/GroundTileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://Npcs/Jessica/Jessica.tscn" type="PackedScene" id=2]
@@ -21,7 +21,6 @@
 [ext_resource path="res://Environment/House/House.tscn" type="PackedScene" id=19]
 [ext_resource path="res://Interactions/Resources/Interaction_Plaque_Scenraio1.tres" type="Resource" id=20]
 [ext_resource path="res://Environment/Shop/Shop.tscn" type="PackedScene" id=21]
-[ext_resource path="res://Interactions/Resources/Iteraction_Shop_Scenario1.tres" type="Resource" id=22]
 
 [node name="Sceneario1" type="Node2D"]
 
@@ -96,6 +95,7 @@ position = Vector2( 304, 48 )
 
 [node name="Shop" parent="YSort" instance=ExtResource( 21 )]
 position = Vector2( 224, 48 )
+_items = [ ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ) ]
 
 [node name="Jessica" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 160, 32 )
@@ -124,10 +124,6 @@ Interaction = ExtResource( 7 )
 [node name="InteractableArea3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 288, 48 )
 Interaction = ExtResource( 20 )
-
-[node name="InteractableArea4" parent="." instance=ExtResource( 4 )]
-position = Vector2( 208, 32 )
-Interaction = ExtResource( 22 )
 
 [node name="SceneEntry" parent="." instance=ExtResource( 8 )]
 position = Vector2( 16, 80 )

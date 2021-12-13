@@ -11,3 +11,4 @@ Texture = ExtResource( 2 )
 Description = "The key to enter the cave."
 Stackable = false
 UseJustInBattle = false
+Price = 1

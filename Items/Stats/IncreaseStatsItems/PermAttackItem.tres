@@ -11,5 +11,6 @@ Texture = ExtResource( 1 )
 Description = "This item increases your attack by 10 points permanently"
 Stackable = true
 UseJustInBattle = false
+Price = 100
 Stat = "Attack"
 IncreaseAmount = 10

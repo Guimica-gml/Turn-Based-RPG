@@ -3,4 +3,5 @@
 [ext_resource path="res://Managers/PopupManager/PopupManager.cs" type="Script" id=1]
 
 [node name="PopupManager" type="CanvasLayer"]
+layer = 2
 script = ExtResource( 1 )

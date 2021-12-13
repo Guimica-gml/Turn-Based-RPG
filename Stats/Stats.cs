@@ -7,6 +7,7 @@ public class Stats : Resource
 	[Signal] private delegate void XpChanged(int xp);
 	[Signal] private delegate void AttackChanged(int attack);
 	[Signal] private delegate void DefenseChanged(int defense);
+	[Signal] private delegate void MoneyChanged(int money);
 	[Signal] private delegate void LevelChanged(int level, string message);
 	[Signal] private delegate void ZeroHp();
 	
@@ -21,9 +22,20 @@ public class Stats : Resource
 	[Export] private int _baseAttack = 1;
 	[Export] private int _baseDefense = 1;
 	[Export] private int _baseXpWhenDefeated = 0;
+	[Export] private int _baseMoney = 0;
 	[Export] public Array<Action> Actions = new Array<Action>();
 	
 	private int _baseXp = 0;
+	
+	public int Money
+	{
+		get => _baseMoney;
+		set
+		{
+			_baseMoney = value;
+			EmitSignal(nameof(MoneyChanged), Money);
+		}
+	}
 	
 	public int Hp
 	{

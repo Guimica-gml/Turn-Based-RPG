@@ -8,6 +8,7 @@ public abstract class ItemStats : Resource
 	[Export(PropertyHint.MultilineText)] public string Description;
 	[Export] public bool Stackable = true;
 	[Export] public bool UseJustInBattle = false;
+	[Export] public int Price = 1;
 	public int Amount = 1;
 	
 	protected Stats playerStats = null;

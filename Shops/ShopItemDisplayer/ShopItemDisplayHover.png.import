@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/Scroll.png-65e990204b39e2e9859ebf54ada086db.stex"
+path="res://.import/ShopItemDisplayHover.png-5528f3332ebe7bcd39b1398246387e28.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Inventory/ItemsTab/Scroll.png"
-dest_files=[ "res://.import/Scroll.png-65e990204b39e2e9859ebf54ada086db.stex" ]
+source_file="res://Shops/ShopItemDisplayer/ShopItemDisplayHover.png"
+dest_files=[ "res://.import/ShopItemDisplayHover.png-5528f3332ebe7bcd39b1398246387e28.stex" ]
 
 [params]
 

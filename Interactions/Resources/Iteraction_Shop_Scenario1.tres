@@ -1,7 +1,11 @@
-[gd_resource type="Resource" load_steps=2 format=2]
+[gd_resource type="Resource" load_steps=6 format=2]
 
 [ext_resource path="res://Interactions/ShopInteraction.cs" type="Script" id=1]
+[ext_resource path="res://Items/Stats/IncreaseStatsItems/BattleDefenseItem.tres" type="Resource" id=2]
+[ext_resource path="res://Items/Stats/HealItems/BandageItem.tres" type="Resource" id=3]
+[ext_resource path="res://Items/Stats/IncreaseStatsItems/BattleAttackItem.tres" type="Resource" id=4]
+[ext_resource path="res://Items/Stats/HealItems/PotionItem.tres" type="Resource" id=5]
 
 [resource]
 script = ExtResource( 1 )
-Items = [  ]
+Items = [ ExtResource( 5 ), ExtResource( 3 ), ExtResource( 4 ), ExtResource( 2 ) ]

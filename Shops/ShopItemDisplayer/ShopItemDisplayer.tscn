@@ -1,0 +1,70 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Shops/ShopItemDisplayer/ShopItemDisplayHover.png" type="Texture" id=1]
+[ext_resource path="res://Shops/ShopItemDisplayer/ShopItemDisplayer.cs" type="Script" id=2]
+[ext_resource path="res://Shops/ShopItemDisplayer/ShopItemDisplay.png" type="Texture" id=3]
+[ext_resource path="res://Items/Sprites/Potion.png" type="Texture" id=4]
+
+[sub_resource type="StyleBoxTexture" id=3]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 8, 8 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 1 )
+region_rect = Rect2( 0, 0, 8, 8 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 3.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[sub_resource type="ShortCut" id=4]
+
+[node name="ShopItemDisplayer" type="CenterContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 144.0
+margin_top = 74.0
+margin_right = 176.0
+margin_bottom = 106.0
+rect_min_size = Vector2( 32, 32 )
+custom_styles/hover = SubResource( 3 )
+custom_styles/pressed = SubResource( 1 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/disabled = SubResource( 3 )
+custom_styles/normal = SubResource( 3 )
+toggle_mode = true
+action_mode = 0
+shortcut = SubResource( 4 )
+
+[node name="TextureRect" type="TextureRect" parent="Button"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -13.0
+margin_top = -13.0
+margin_right = 13.0
+margin_bottom = 13.0
+rect_min_size = Vector2( 24, 24 )
+mouse_filter = 2
+texture = ExtResource( 4 )
+stretch_mode = 6
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="toggled" from="Button" to="." method="OnButtonToggled"]

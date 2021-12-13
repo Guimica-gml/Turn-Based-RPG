@@ -17,10 +17,10 @@ config/icon="res://Icon.png"
 [autoload]
 
 Manager="*res://Managers/Manager.tscn"
+PopupManager="*res://Managers/PopupManager/PopupManager.tscn"
 DialogManager="*res://Managers/DialogManager/DialogManager.tscn"
 InteractionManager="*res://Managers/InteractionManager/InteractionManager.tscn"
 TransitionManager="*res://Managers/TransitionManager/TransitionManager.tscn"
-PopupManager="*res://Managers/PopupManager/PopupManager.tscn"
 BattleManager="*res://Managers/BattleManager/BattleManager.tscn"
 ShopManager="*res://Managers/ShopManager/ShopManager.tscn"
 Global="*res://Global.cs"

@@ -6,4 +6,3 @@
 pause_mode = 2
 layer = 2
 script = ExtResource( 1 )
-_playerGridInitialPosition = Vector2( 9, 5 )
