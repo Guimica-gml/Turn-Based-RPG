@@ -3,7 +3,6 @@ using Godot.Collections;
 
 public class ShopPauseDisplayer : PauseDisplayer
 {
-	[Export] public int ItemsPerPage = 9;
 	[Export] public Array<ItemStats> Items = new Array<ItemStats>();
 	
 	private GridContainer _gridContainer;

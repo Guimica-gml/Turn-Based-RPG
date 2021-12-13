@@ -3,7 +3,7 @@ using Godot;
 public class PopupScreen : Control
 {
 	private VBoxContainer _popupCountainer;
-	private PackedScene _popupPacked = GD.Load<PackedScene>("res://Popups/Popup.tscn");
+	private PackedScene _itemPopupPacked = GD.Load<PackedScene>("res://Popups/ItemPopup/ItemPopup.tscn");
 	
 	private Inventory _playerInventory = null;
 	
@@ -15,15 +15,15 @@ public class PopupScreen : Control
 		_playerInventory.Connect("ItemAdded", this, nameof(OnItemAdded));
 	}
 	
-	public void AddPopup(ItemStats item)
+	public void AddPopup(Popup popup)
 	{
-		var popup = _popupPacked.Instance<Popup>();
-		popup.ItemStats = item;
 		_popupCountainer.AddChild(popup);
 	}
 	
 	private void OnItemAdded(ItemStats item)
 	{
-		AddPopup(item);
+		var itemPopup = _itemPopupPacked.Instance<ItemPopup>();
+		itemPopup.ItemStats = item;
+		AddPopup(itemPopup);
 	}
 }

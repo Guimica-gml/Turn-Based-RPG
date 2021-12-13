@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Popups/Popup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Items/Sprites/Potion.png" type="Texture" id=2]
+[ext_resource path="res://Popups/PopupFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://Popups/ItemPopup/ItemPopup.cs" type="Script" id=4]
+
+[node name="ItemPopup" instance=ExtResource( 1 )]
+script = ExtResource( 4 )
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." index="0"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 318.0
+margin_bottom = 178.0
+mouse_filter = 2
+custom_constants/separation = 0
+
+[node name="TextureRect" type="TextureRect" parent="HBoxContainer" index="0"]
+margin_right = 16.0
+margin_bottom = 176.0
+rect_min_size = Vector2( 16, 16 )
+mouse_filter = 2
+texture = ExtResource( 2 )
+stretch_mode = 4
+
+[node name="Label" type="Label" parent="HBoxContainer" index="1"]
+margin_left = 16.0
+margin_right = 316.0
+margin_bottom = 176.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 3 )
+text = "Item name "
+valign = 1

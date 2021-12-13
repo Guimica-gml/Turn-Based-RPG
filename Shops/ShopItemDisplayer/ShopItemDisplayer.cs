@@ -28,14 +28,7 @@ public class ShopItemDisplayer : CenterContainer
 	
 	private void UpdateSlot()
 	{
-		if (ItemStats != null)
-		{
-			_textureRect.Texture = ItemStats.Texture;
-		}
-		else
-		{
-			_textureRect.Texture = null;
-		}
+		_textureRect.Texture = (ItemStats != null) ? ItemStats.Texture : null;
 	}
 	
 	public void SetButtonPressed(bool pressed)

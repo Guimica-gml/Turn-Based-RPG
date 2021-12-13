@@ -12,7 +12,7 @@ public class PopupManager : CanvasLayer
 		AddChild(PopupScreen);
 	}
 	
-	public void AddPopup(ItemStats item)
+	public void AddPopup(Popup popup)
 	{
 		if (PopupScreen == null)
 		{
@@ -20,6 +20,6 @@ public class PopupManager : CanvasLayer
 			return;
 		}
 		
-		PopupScreen.AddPopup(item);
+		PopupScreen.AddPopup(popup);
 	}
 }

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Popups/Popup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Popups/PopupFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Popups/TextPopup/TextPopup.cs" type="Script" id=3]
+
+[node name="TextPopup" instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="Label" type="Label" parent="." index="0"]
+margin_left = 2.0
+margin_top = 2.0
+margin_right = 318.0
+margin_bottom = 178.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/font = ExtResource( 2 )
+text = "Text"
+valign = 1

@@ -22,6 +22,8 @@ public class ShopInfoDisplayer : CenterContainer
 	private Inventory _playerInventory;
 	private Stats _playerStats;
 	
+	private PackedScene _textPopupPacked = GD.Load<PackedScene>("res://Popups/TextPopup/TextPopup.tscn");
+	
 	public override void _Ready()
 	{
 		_playerInventory = GD.Load<Inventory>("res://Inventory/PlayerInventory.tres");
@@ -52,12 +54,28 @@ public class ShopInfoDisplayer : CenterContainer
 		}
 	}
 	
+	private void CreateTextPopup(string text)
+	{
+		var textPopup = _textPopupPacked.Instance<TextPopup>();
+		textPopup.Text = text;
+		textPopup.Color = Colors.DarkRed;
+		Global.PopupManager.AddPopup(textPopup);
+	}
+	
 	private void OnBuyButtonPressed()
 	{
-		if (_playerStats.Money < ItemStats.Price) return;
+		if (_playerStats.Money < ItemStats.Price)
+		{
+			CreateTextPopup("Not enough money");
+			return;
+		}
 		
 		var addedItem = _playerInventory.AddItem(ItemStats.Duplicate() as ItemStats);
-		if (!addedItem) return;
+		if (!addedItem)
+		{
+			CreateTextPopup("Not enough space in inventory");
+			return;
+		}
 		
 		_playerStats.Money -= ItemStats.Price;
 	}
