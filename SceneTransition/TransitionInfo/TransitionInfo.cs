@@ -10,4 +10,9 @@ public class TransitionInfo : Resource
 		SmoothSize = smoothSize;
 		TexturePath = texturePath;
 	}
+	
+	public override string ToString()
+	{
+		return $"[SmoothSize: {SmoothSize}, TexturePath: {TexturePath}]";
+	}
 }

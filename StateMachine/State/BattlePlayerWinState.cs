@@ -5,6 +5,7 @@ public class BattlePlayerWinState : State
 	[Export] private NodePath _battleScenarioPath = "";
 	private BattlePauseDisplayer _battleScenario;
 	
+	private bool _done = false;
 	private bool _leveledUp = false;
 	private string _levelingUpMessage = "";
 	
@@ -27,7 +28,7 @@ public class BattlePlayerWinState : State
 	
 	public override void StateProcess(float delta)
 	{
-		if (_battleScenario.MouseHoverTextBox && Input.IsActionJustPressed("left_click"))
+		if (!_done && _battleScenario.MouseHoverTextBox && Input.IsActionJustPressed("left_click"))
 		{
 			if (_leveledUp)
 			{
@@ -36,7 +37,9 @@ public class BattlePlayerWinState : State
 				return;
 			}
 			
+			_battleScenario.SetNextMessageArrowVisibility(false);
 			_battleScenario.EndBattle();
+			_done = true;
 		}
 	}
 	

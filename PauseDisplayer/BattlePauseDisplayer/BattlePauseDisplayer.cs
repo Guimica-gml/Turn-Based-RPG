@@ -5,15 +5,17 @@ public class BattlePauseDisplayer : PauseDisplayer
 	public enum Turns { None, Player, Enemy }
 	public Turns CurrentTurn = Turns.None;
 	
+	private bool _destroyState = false;
+	
 	public bool MouseHoverTextBox { get; private set; }
 	public Stats EnemyStats;
 	
 	private Stats _playerStats;
-	private AnimationPlayer _animationPlayer;
 	private HBoxContainer _optionsContainer;
 	private GridContainer _actionsContainer;
 	private RichTextLabel _textLabel;
 	private TextureRect _nextMessageArrow;
+	private TransitionEffect _transitionEffect;
 	
 	private BattleStatsDisplayer _playerStatsDisplayer;
 	private BattleStatsDisplayer _enemyStatsDisplayer;
@@ -26,7 +28,7 @@ public class BattlePauseDisplayer : PauseDisplayer
 	public override void _Ready()
 	{
 		_playerStats = GD.Load<Stats>("res://Stats/PlayerStats.tres");
-		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		_transitionEffect = GetNode<TransitionEffect>("TransitionEffect");
 		_optionsContainer = GetNode<HBoxContainer>("VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer");
 		_actionsContainer = GetNode<GridContainer>("VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer/ActionsContainer");
 		_textLabel = GetNode<RichTextLabel>("VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel");
@@ -37,6 +39,17 @@ public class BattlePauseDisplayer : PauseDisplayer
 		
 		PlayerDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/TextureRect/PlayerDisplayer");
 		EnemyDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/TextureRect/EnemyDisplayer");
+		
+		// Setting up animtions for fade in and fade out
+		
+		Visible = false;
+		
+		_transitionEffect.Connect("EffectTransition", this, nameof(OnEffectTransition));
+		_transitionEffect.Connect("EffectEnded", this, nameof(OnEffectEnded));
+		
+		_transitionEffect.StartEffect(TransitionEffect.Types.FromCenter);
+		
+		// Setting information about the battle
 		
 		_playerStatsDisplayer.Stats = _playerStats;
 		_enemyStatsDisplayer.Stats = EnemyStats;
@@ -54,7 +67,8 @@ public class BattlePauseDisplayer : PauseDisplayer
 	
 	public void EndBattle()
 	{
-		_animationPlayer.Play("FadeOut");
+		_destroyState = true;
+		_transitionEffect.StartEffect(TransitionEffect.Types.FromCenter);
 	}
 	
 	public void SetBattleText(string text)
@@ -88,12 +102,6 @@ public class BattlePauseDisplayer : PauseDisplayer
 		}
 	}
 	
-	private void OnAnimationPlayerAnimationFinished(string animName)
-	{
-		if (animName != "FadeOut") return;
-		Destroy();
-	}
-	
 	private void OnTextLabelMouseEntered()
 	{
 		MouseHoverTextBox = true;
@@ -102,5 +110,16 @@ public class BattlePauseDisplayer : PauseDisplayer
 	private void OnTextLabelMouseExited()
 	{
 		MouseHoverTextBox = false;
+	}
+	
+	private void OnEffectTransition()
+	{
+		Visible = !_destroyState;
+	}
+	
+	private void OnEffectEnded()
+	{
+		if (!_destroyState) return;
+		Destroy();
 	}
 }

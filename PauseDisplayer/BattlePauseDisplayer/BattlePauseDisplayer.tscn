@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=23 format=2]
 
 [ext_resource path="res://PauseDisplayer/PauseDisplayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Battles/Resources/BattleFont.tres" type="DynamicFont" id=2]
@@ -9,7 +9,7 @@
 [ext_resource path="res://Battles/BattleStatsDisplayer/BattleStatsDisplayer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Battles/BattleCharacterDisplayer/BattleCharacterDisplayer.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Battles/Resources/NextBattleMessage.png" type="Texture" id=9]
-[ext_resource path="res://SceneTransition/Masks/Default.png" type="Texture" id=10]
+[ext_resource path="res://SceneTransition/TransitionEffect.tscn" type="PackedScene" id=10]
 [ext_resource path="res://Battles/Resources/BattleOptionsDisplay.png" type="Texture" id=11]
 [ext_resource path="res://Battles/Resources/BattleBackground.png" type="Texture" id=12]
 [ext_resource path="res://Battles/States/BattleStartState.cs" type="Script" id=13]
@@ -31,74 +31,6 @@ margin_top = 6.0
 margin_bottom = 3.0
 
 [sub_resource type="StyleBoxEmpty" id=2]
-
-[sub_resource type="Animation" id=3]
-resource_name = "FadeIn"
-length = 1.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("TextureRect:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 0.7, 1.2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("VBoxContainer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("TextureRect:visible")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0 ),
-"transitions": PoolRealArray( 1 ),
-"update": 1,
-"values": [ true ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "FadeOut"
-length = 1.2
-tracks/0/type = "value"
-tracks/0/path = NodePath("TextureRect:modulate")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 0.5, 0.7, 1.2 ),
-"transitions": PoolRealArray( 1, 1, 1, 1 ),
-"update": 0,
-"values": [ Color( 0, 0, 0, 0 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 1 ), Color( 0, 0, 0, 0 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("VBoxContainer:visible")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 0.6 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ true, false ]
-}
 
 [node name="BattlePauseDisplayer" instance=ExtResource( 1 )]
 script = ExtResource( 19 )
@@ -260,22 +192,7 @@ text = "Items"
 [node name="InventoryPauseDisplayer" parent="." index="2" instance=ExtResource( 20 )]
 visible = false
 
-[node name="TextureRect" type="TextureRect" parent="." index="3"]
-modulate = Color( 0, 0, 0, 0 )
-anchor_right = 1.0
-anchor_bottom = 1.0
-mouse_filter = 2
-texture = ExtResource( 10 )
-expand = true
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="." index="4"]
-autoplay = "FadeIn"
-anims/FadeIn = SubResource( 3 )
-anims/FadeOut = SubResource( 4 )
+[node name="TransitionEffect" parent="." index="3" instance=ExtResource( 10 )]
 
 [connection signal="mouse_entered" from="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel" to="." method="OnTextLabelMouseEntered"]
 [connection signal="mouse_exited" from="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel" to="." method="OnTextLabelMouseExited"]
-[connection signal="animation_finished" from="AnimationPlayer" to="." method="OnAnimationPlayerAnimationFinished"]

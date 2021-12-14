@@ -24,7 +24,7 @@ public class TransitionEffect : Control
 		_tween = GetNode<Tween>("Tween");
 	}
 	
-	public async void ChangeSceneTo(string scenePath, string sceneEntryIndetifier = "none", Types transitionType = Types.Default)
+	public async void StartEffect(Types transitionType = Types.Default)
 	{
 		if (Active)
 		{
@@ -39,14 +39,13 @@ public class TransitionEffect : Control
 		Material.Set("shader_param/mask", GD.Load<Texture>(info.TexturePath));
 		
 		// Transtion
-		
 		EmitSignal(nameof(EffectStarted));
 		StartTween(1f, 0f);
 		
 		await ToSignal(_tween, "tween_completed");
 		EmitSignal(nameof(EffectTransition));
 		
-		await ToSignal(GetTree().CreateTimer(0.25f), "timeout");
+		await ToSignal(GetTree().CreateTimer(0.3f), "timeout");
 		StartTween(0f, 1f);
 		
 		await ToSignal(_tween, "tween_completed");

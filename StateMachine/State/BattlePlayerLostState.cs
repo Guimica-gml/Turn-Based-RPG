@@ -16,8 +16,10 @@ public class BattlePlayerLostState : State
 	{
 		if (_battleScenario.MouseHoverTextBox && !Global.TransitionManager.InTransition && Input.IsActionJustPressed("left_click"))
 		{
+			_battleScenario.SetNextMessageArrowVisibility(false);
+			
 			Global.TransitionManager.Connect("SceneChanged", this, nameof(Destroy));
-			Global.TransitionManager.ChangeSceneTo("res://GameOver/GameOver.tscn");
+			Global.TransitionManager.ChangeSceneTo("res://GameOver/GameOver.tscn", "none", TransitionEffect.Types.FromCenter);
 		}
 	}
 	

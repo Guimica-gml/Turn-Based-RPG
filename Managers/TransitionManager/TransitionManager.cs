@@ -23,9 +23,9 @@ public class TransitionManager : Node
 		_transitionEffect = sceneTransitionPacked.Instance<TransitionEffect>();
 		AddChild(_transitionEffect);
 		
-		_transitionEffect.Connect("EffectTransition", this, nameof(OnSceneChanged));
-		_transitionEffect.Connect("EffectStarted", this, nameof(OnTransitionTriggered));
-		_transitionEffect.Connect("EffectEnded", this, nameof(OnTransitionEnded));
+		_transitionEffect.Connect("EffectTransition", this, nameof(OnEffectTransition));
+		_transitionEffect.Connect("EffectStarted", this, nameof(OnEffectStarted));
+		_transitionEffect.Connect("EffectEnded", this, nameof(OnEffectEnded));
 	}
 	
 	public void ChangeSceneTo(string scenePath, string sceneEntryIndetifier = "none", TransitionEffect.Types transitionType = TransitionEffect.Types.Default)
@@ -39,7 +39,7 @@ public class TransitionManager : Node
 		_scenePath = scenePath;
 		_sceneEntryIndetifier = sceneEntryIndetifier;
 		
-		_transitionEffect.ChangeSceneTo(scenePath, sceneEntryIndetifier, transitionType);
+		_transitionEffect.StartEffect(transitionType);
 	}
 	
 	private Player CreatePlayer(Vector2 position, PackedScene packedPlayer = null)
@@ -69,7 +69,7 @@ public class TransitionManager : Node
 		GD.PrintErr($"TransitionManager was not able to find a SceneEntry with the indentifier `{sceneEntryIndetifier}`");
 	}
 	
-	private void OnTransitionTriggered()
+	private void OnEffectStarted()
 	{
 		InTransition = true;
 		
@@ -85,7 +85,7 @@ public class TransitionManager : Node
 		EmitSignal(nameof(TransitionTriggered));
 	}
 	
-	private async void OnSceneChanged()
+	private async void OnEffectTransition()
 	{
 		GetTree().ChangeScene(_scenePath);
 		
@@ -97,7 +97,7 @@ public class TransitionManager : Node
 		EmitSignal(nameof(SceneChanged));
 	}
 	
-	private void OnTransitionEnded()
+	private void OnEffectEnded()
 	{
 		InTransition = false;
 		EmitSignal(nameof(TransitionEnded));
