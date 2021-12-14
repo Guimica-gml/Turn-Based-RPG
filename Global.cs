@@ -2,13 +2,13 @@ using Godot;
 
 public class Global : Node
 {
-	public static Manager Manager;
-	public static InteractionManager InteractionManager;
-	public static TransitionManager TransitionManager;
-	public static DialogManager DialogManager;
-	public static BattleManager BattleManager;
-	public static PopupManager PopupManager;
-	public static ShopManager ShopManager;
+	public static Manager Manager { get; private set; }
+	public static InteractionManager InteractionManager { get; private set; }
+	public static TransitionManager TransitionManager { get; private set; }
+	public static DialogManager DialogManager { get; private set; }
+	public static BattleManager BattleManager { get; private set; }
+	public static PopupManager PopupManager { get; private set; }
+	public static ShopManager ShopManager { get; private set; }
 	
 	public override void _Ready()
 	{
