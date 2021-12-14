@@ -34,6 +34,7 @@ margin_bottom = 3.0
 
 [node name="BattlePauseDisplayer" instance=ExtResource( 1 )]
 script = ExtResource( 19 )
+TransitionType = 2
 
 [node name="StateMachine" parent="." index="0" instance=ExtResource( 6 )]
 _firstState = "Start"

@@ -2,6 +2,8 @@ using Godot;
 
 public class BattlePauseDisplayer : PauseDisplayer
 {
+	[Export] public TransitionEffect.Types TransitionType = TransitionEffect.Types.Default;
+	
 	public enum Turns { None, Player, Enemy }
 	public Turns CurrentTurn = Turns.None;
 	
@@ -47,7 +49,7 @@ public class BattlePauseDisplayer : PauseDisplayer
 		_transitionEffect.Connect("EffectTransition", this, nameof(OnEffectTransition));
 		_transitionEffect.Connect("EffectEnded", this, nameof(OnEffectEnded));
 		
-		_transitionEffect.StartEffect(TransitionEffect.Types.FromCenter);
+		_transitionEffect.StartEffect(TransitionType);
 		
 		// Setting information about the battle
 		
@@ -68,7 +70,7 @@ public class BattlePauseDisplayer : PauseDisplayer
 	public void EndBattle()
 	{
 		_destroyState = true;
-		_transitionEffect.StartEffect(TransitionEffect.Types.FromCenter);
+		_transitionEffect.StartEffect(TransitionType);
 	}
 	
 	public void SetBattleText(string text)

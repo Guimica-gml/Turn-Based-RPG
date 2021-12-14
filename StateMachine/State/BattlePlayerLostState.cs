@@ -19,7 +19,7 @@ public class BattlePlayerLostState : State
 			_battleScenario.SetNextMessageArrowVisibility(false);
 			
 			Global.TransitionManager.Connect("SceneChanged", this, nameof(Destroy));
-			Global.TransitionManager.ChangeSceneTo("res://GameOver/GameOver.tscn", "none", TransitionEffect.Types.FromCenter);
+			Global.TransitionManager.ChangeSceneTo("res://GameOver/GameOver.tscn", "none", _battleScenario.TransitionType);
 		}
 	}
 	

@@ -124,8 +124,4 @@ Interaction = ExtResource( 6 )
 position = Vector2( 224, 256 )
 Indentifier = "Entry06"
 
-[node name="SceneEntry2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 128, 160 )
-Indentifier = "Default"
-
 [editable path="MainCamera"]
