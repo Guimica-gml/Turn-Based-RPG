@@ -6,8 +6,8 @@ public class DialogManager : CanvasLayer
 	[Signal] private delegate void DialogTriggered(string dialogPath);
 	[Signal] private delegate void DialogEnded(string dialogPath);
 	
-	public DialogBox DialogBox = null;
-	public string DialogPath = "";
+	public DialogBox DialogBox { get; private set; } = null;
+	public string DialogPath { get; private set; } = "";
 	
 	private PackedScene DialogBoxPreload = GD.Load<PackedScene>("res://DialogBox/DialogBox.tscn");
 	

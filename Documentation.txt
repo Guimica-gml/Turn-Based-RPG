@@ -1,0 +1,25 @@
+[Turn-Based RPG Documentation]
+
+- Interactions:
+	-> ;
+	-> ;
+
+- Dialogs:
+	-> ;
+	-> ;
+
+- Transitions:
+	-> ;
+	-> ;
+
+- Popups:
+	-> ;
+	-> ;
+
+- Battles:
+	-> ;
+	-> ;
+
+- Shops:
+	-> ;
+	-> ;

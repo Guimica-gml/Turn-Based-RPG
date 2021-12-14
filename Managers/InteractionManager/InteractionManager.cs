@@ -5,7 +5,7 @@ public class InteractionManager : Node
 	[Signal] private delegate void InteractionTriggered(Interaction interaction);
 	[Signal] private delegate void InteractionEnded(Interaction interaction);
 	
-	public Interaction Interaction = null;
+	public Interaction Interaction { get; private set; } = null;
 	
 	public void StartInteraction(Interaction interaction)
 	{

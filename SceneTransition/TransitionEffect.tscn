@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://SceneTransition/SceneTransition.cs" type="Script" id=1]
+[ext_resource path="res://SceneTransition/TransitionEffect.cs" type="Script" id=1]
 [ext_resource path="res://SceneTransition/Masks/Default.png" type="Texture" id=2]
 
 [sub_resource type="Shader" id=1]
@@ -25,7 +25,7 @@ shader_param/cutoff = 1.0
 shader_param/smoothsize = 1.0
 shader_param/mask = ExtResource( 2 )
 
-[node name="SceneTransition" type="Control"]
+[node name="TransitionEffect" type="Control"]
 material = SubResource( 2 )
 anchor_right = 1.0
 anchor_bottom = 1.0

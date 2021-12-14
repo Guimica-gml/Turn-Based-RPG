@@ -5,7 +5,7 @@ public class BattleManager : Node
 	[Signal] private delegate void BattleStarted();
 	[Signal] private delegate void BattleEnded();
 	
-	public bool InBattle = false;
+	public bool InBattle { get; private set; } = false;
 	
 	private Enemy _currentEnemy = null;
 	
