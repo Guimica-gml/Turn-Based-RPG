@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://PauseDisplayer/PauseDisplayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://PauseDisplayer/ShopPauseDisplayer/ShopPauseDisplayer.cs" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://Inventory/InventoryDisplayer/InventoryDisplay.png" type="Texture" id=5]
 [ext_resource path="res://Shops/ShopItemDisplayer/ShopItemDisplayer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Shops/ShopInfoDisplayer/ShopInfoDisplayer.tscn" type="PackedScene" id=7]
+[ext_resource path="res://PauseDisplayer/ShopPauseDisplayer/MoneyFont.tres" type="DynamicFont" id=8]
 
 [sub_resource type="StyleBoxTexture" id=1]
 content_margin_top = 3.0
@@ -56,10 +57,26 @@ __meta__ = {
 [node name="NameLabel" type="Label" parent="MarginContainer/VBoxContainer" index="0"]
 margin_right = 314.0
 margin_bottom = 17.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
 custom_fonts/font = ExtResource( 4 )
 text = "SHOP"
 align = 1
 valign = 1
+
+[node name="MoneyLabel" type="Label" parent="MarginContainer/VBoxContainer/NameLabel" index="0"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 2.0
+margin_right = -1.0
+size_flags_horizontal = 3
+size_flags_vertical = 1
+custom_fonts/font = ExtResource( 8 )
+text = "MONEY: ???"
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="PanelContainer" type="PanelContainer" parent="MarginContainer/VBoxContainer" index="1"]
 margin_top = 17.0

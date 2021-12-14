@@ -1,5 +1,6 @@
 using Godot;
 using Godot.Collections;
+using System;
 
 public class Stats : Resource
 {
@@ -23,6 +24,10 @@ public class Stats : Resource
 	[Export] private int _baseDefense = 1;
 	[Export] private int _baseXpWhenDefeated = 0;
 	[Export] private int _baseMoney = 0;
+	
+	[Export] private int _baseMinDropMoney = 1;
+	[Export] private int _baseMaxDropMoney = 1;
+	
 	[Export] public Array<Action> Actions = new Array<Action>();
 	
 	private int _baseXp = 0;
@@ -32,7 +37,7 @@ public class Stats : Resource
 		get => _baseMoney;
 		set
 		{
-			_baseMoney = value;
+			_baseMoney = Mathf.Max(value, _baseMoney);
 			EmitSignal(nameof(MoneyChanged), Money);
 		}
 	}
@@ -118,8 +123,26 @@ public class Stats : Resource
 	
 	public int XpWhenDefeated
 	{
-		get => (int) _baseXpWhenDefeated + (Level / 2);
+		get => (int) _baseXpWhenDefeated + (Level * 20);
 		set => _baseXpWhenDefeated = value;
+	}
+	
+	public int MinDropMoney
+	{
+		get => (int) _baseMinDropMoney + (Level * 20);
+		set => _baseMinDropMoney = value;
+	}
+	
+	public int MaxDropMoney
+	{
+		get => (int) _baseMaxDropMoney + (Level * 20);
+		set => _baseMaxDropMoney = value;
+	}
+	
+	public int GetDropMoney()
+	{
+		var random = new Random();
+		return random.Next(MinDropMoney, MaxDropMoney);
 	}
 	
 	public int XpToNextLevel()

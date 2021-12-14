@@ -10,12 +10,19 @@ public class BattlePlayerWinState : State
 	
 	public override void StateReady()
 	{
+		GD.Randomize();
+		
 		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
+		
+		var enemyStats = _battleScenario.EnemyDisplayer.Stats;
+		var dropMoney = enemyStats.GetDropMoney();
+		
 		_battleScenario.SetNextMessageArrowVisibility(true);
-		_battleScenario.SetBattleText($"You defeated {_battleScenario.EnemyDisplayer.Stats.Name}. \nYou gained {_battleScenario.EnemyDisplayer.Stats.XpWhenDefeated} xp.");
+		_battleScenario.SetBattleText($"You defeated {enemyStats.Name}. \nYou gained {enemyStats.XpWhenDefeated} xp and ${dropMoney} rupies.");
 		
 		_battleScenario.PlayerDisplayer.Stats.Connect("LevelChanged", this, nameof(OnPlayerLevelChanged));
-		_battleScenario.PlayerDisplayer.Stats.Xp += _battleScenario.EnemyDisplayer.Stats.XpWhenDefeated;
+		_battleScenario.PlayerDisplayer.Stats.Xp += enemyStats.XpWhenDefeated;
+		_battleScenario.PlayerDisplayer.Stats.Money += dropMoney;
 	}
 	
 	public override void StateProcess(float delta)

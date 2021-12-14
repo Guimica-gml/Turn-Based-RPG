@@ -18,4 +18,6 @@ _baseAttack = 100
 _baseDefense = 100
 _baseXpWhenDefeated = 0
 _baseMoney = 1000
+_baseMinDropMoney = 1
+_baseMaxDropMoney = 1
 Actions = [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]
