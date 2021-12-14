@@ -37,7 +37,7 @@ public class Stats : Resource
 		get => _baseMoney;
 		set
 		{
-			_baseMoney = Mathf.Max(value, _baseMoney);
+			_baseMoney = Mathf.Max(0, value);
 			EmitSignal(nameof(MoneyChanged), Money);
 		}
 	}

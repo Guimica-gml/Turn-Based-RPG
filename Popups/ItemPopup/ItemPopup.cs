@@ -1,6 +1,6 @@
 using Godot;
 
-public class ItemPopup : Popup
+public class ItemPopup : GenericPopup
 {
 	[Export] public ItemStats ItemStats = null;
 	

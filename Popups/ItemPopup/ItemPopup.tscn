@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=2]
 
-[ext_resource path="res://Popups/Popup.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Popups/GenericPopup.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Items/Sprites/Potion.png" type="Texture" id=2]
 [ext_resource path="res://Popups/PopupFont.tres" type="DynamicFont" id=3]
 [ext_resource path="res://Popups/ItemPopup/ItemPopup.cs" type="Script" id=4]

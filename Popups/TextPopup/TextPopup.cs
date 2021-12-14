@@ -1,6 +1,6 @@
 using Godot;
 
-public class TextPopup : Popup
+public class TextPopup : GenericPopup
 {
 	[Export] public string Text = null;
 	[Export] public Color Color = Colors.White;

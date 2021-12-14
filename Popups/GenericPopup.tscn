@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=2]
 
-[ext_resource path="res://Popups/Popup.cs" type="Script" id=1]
+[ext_resource path="res://Popups/GenericPopup.cs" type="Script" id=1]
 [ext_resource path="res://Battles/BattleStatsDisplayer/BattleStatsDislay.png" type="Texture" id=2]
 
 [sub_resource type="StyleBoxTexture" id=1]
@@ -58,11 +58,10 @@ tracks/1/keys = {
 } ]
 }
 
-[node name="Popup" type="PanelContainer"]
+[node name="GenericPopup" type="PanelContainer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 0
-rect_min_size = Vector2( 60, 0 )
 mouse_filter = 2
 size_flags_horizontal = 8
 custom_styles/panel = SubResource( 1 )

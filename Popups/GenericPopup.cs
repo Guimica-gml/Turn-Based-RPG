@@ -1,6 +1,6 @@
 using Godot;
 
-public class Popup : PanelContainer
+public class GenericPopup : PanelContainer
 {
 	private AnimationPlayer _animationPlayer;
 	

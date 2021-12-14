@@ -12,7 +12,7 @@ public class PopupManager : CanvasLayer
 		AddChild(PopupScreen);
 	}
 	
-	public void AddPopup(Popup popup)
+	public void AddPopup(GenericPopup popup)
 	{
 		if (PopupScreen == null)
 		{

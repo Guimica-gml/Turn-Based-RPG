@@ -15,7 +15,7 @@ public class PopupScreen : Control
 		_playerInventory.Connect("ItemAdded", this, nameof(OnItemAdded));
 	}
 	
-	public void AddPopup(Popup popup)
+	public void AddPopup(GenericPopup popup)
 	{
 		_popupCountainer.AddChild(popup);
 	}
