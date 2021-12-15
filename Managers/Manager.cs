@@ -7,8 +7,6 @@ public class Manager : CanvasLayer
 	
 	[Export] public int GridSize = 16;
 	
-	public bool InMenu = false;
-	
 	private PauseDisplayer _pauseDisplayer;
 	
 	private PackedScene _playerPreload = GD.Load<PackedScene>("res://Player/Player.tscn");
@@ -16,17 +14,16 @@ public class Manager : CanvasLayer
 	
 	public override void _Input(InputEvent @event)
 	{
-		if (InMenu || Global.InteractionManager.Interaction != null || !@event.IsActionPressed("ui_pause")) return;
+		if (Global.InteractionManager.Interaction != null || !@event.IsActionPressed("ui_pause")) return;
 		
-		if (!GetTree().Paused)
-		{
-			var pauseInteraction = _pauseDisplayerPreload.Instance<PauseDisplayer>();
-			PauseGame(pauseInteraction);
-		}
+		var pauseInteraction = _pauseDisplayerPreload.Instance<PauseDisplayer>();
+		PauseGame(pauseInteraction);
 	}
 	
 	public void PauseGame(PauseDisplayer pauseDisplayer)
 	{
+		if (GetTree().Paused || InMenu()) return;
+		
 		_pauseDisplayer = pauseDisplayer;
 		_pauseDisplayer.Connect("Close", this, "UnpauseGame");
 		AddChild(_pauseDisplayer);
@@ -42,6 +39,12 @@ public class Manager : CanvasLayer
 		
 		GetTree().SetDeferred("paused", false);
 		EmitSignal(nameof(GameUnpaused));
+	}
+	
+	public bool InMenu()
+	{
+		var menuNodes = GetTree().GetNodesInGroup("Menu");
+		return (menuNodes.Count > 0);
 	}
 	
 	public MainCamera GetMainCamera()

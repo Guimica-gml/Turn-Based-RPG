@@ -52,7 +52,7 @@ public class BattlePauseDisplayer : PauseDisplayer
 		_transitionEffect.StartEffect(TransitionType);
 		
 		// Setting information about the battle
-		
+
 		_playerStatsDisplayer.Stats = _playerStats;
 		_enemyStatsDisplayer.Stats = EnemyStats;
 		

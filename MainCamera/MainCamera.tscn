@@ -6,6 +6,7 @@
 position = Vector2( 152, 72 )
 offset = Vector2( 8, 8 )
 current = true
+process_mode = 0
 smoothing_enabled = true
 smoothing_speed = 10.0
 editor_draw_screen = false
