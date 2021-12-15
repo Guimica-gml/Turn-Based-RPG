@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ameid\\OneDrive\\Desktop\\Godot\\Projects (Godot)\\rpg\\just a rogue-like.csproj",
-      "projectName": "just a rogue-like",
-      "projectPath": "C:\\Users\\ameid\\OneDrive\\Desktop\\Godot\\Projects (Godot)\\rpg\\just a rogue-like.csproj",
+      "projectUniqueName": "C:\\Users\\ameid\\OneDrive\\Desktop\\Godot\\Projects (Godot)\\RPG\\Turn-Based RPG.csproj",
+      "projectName": "Turn-Based RPG",
+      "projectPath": "C:\\Users\\ameid\\OneDrive\\Desktop\\Godot\\Projects (Godot)\\RPG\\Turn-Based RPG.csproj",
       "packagesPath": "C:\\Users\\ameid\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ameid\\OneDrive\\Desktop\\Godot\\Projects (Godot)\\rpg\\.mono\\temp\\obj\\",
+      "outputPath": "C:\\Users\\ameid\\OneDrive\\Desktop\\Godot\\Projects (Godot)\\RPG\\.mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

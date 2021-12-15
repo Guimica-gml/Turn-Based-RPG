@@ -1,6 +1,6 @@
 ﻿Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "just a rogue-like", "just a rogue-like.csproj", "{442E5E8D-DF97-4203-9D9F-AC75CF6B3C97}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Turn-Based RPG", "Turn-Based RPG.csproj", "{442E5E8D-DF97-4203-9D9F-AC75CF6B3C97}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
