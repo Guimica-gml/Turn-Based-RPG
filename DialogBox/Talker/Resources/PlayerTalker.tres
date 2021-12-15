@@ -5,6 +5,6 @@
 [resource]
 script = ExtResource( 1 )
 Name = "Player"
-NameColor = Color( 1, 0.317647, 0.317647, 1 )
+NameColor = Color( 0.384314, 0.0313726, 0.0313726, 1 )
 Portraits = {
 }

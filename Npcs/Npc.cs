@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 using System;
 
 public class Npc : Entity
@@ -75,5 +76,26 @@ public class Npc : Entity
 	private void OnIdleTimerTimeout()
 	{
 		_targetPosition = GetRandomPosition();
+	}
+	
+	public Dictionary Save()
+	{
+		var saveDict = new Dictionary()
+		{
+			{ "DirX", _direction.x },
+			{ "DirY", _direction.y },
+			{ "Wander", _wander },
+			{ "WanderRadius", _wanderRadius },
+			{ "WanderTime", _wanderTime },
+		};
+		return saveDict;
+	}
+	
+	public void Load(Dictionary infoDict)
+	{
+		_direction = new Vector2((float) infoDict["DirX"], (float) infoDict["DirY"]);
+		_wander = (bool) infoDict["Wander"];
+		_wanderRadius = (int) infoDict["WanderRadius"];
+		_wanderTime = (float) infoDict["WanderTime"];
 	}
 }

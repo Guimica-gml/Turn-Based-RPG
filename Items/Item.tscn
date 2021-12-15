@@ -72,7 +72,7 @@ tracks/2/keys = {
 "values": [ Vector2( 1, 1 ) ]
 }
 
-[node name="Item" type="Node2D"]
+[node name="Item" type="Node2D" groups=["Save"]]
 script = ExtResource( 3 )
 
 [node name="Sprite" type="Sprite" parent="."]

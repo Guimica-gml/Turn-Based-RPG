@@ -28,7 +28,7 @@ public class TransitionEffect : Control
 	{
 		if (Active)
 		{
-			GD.Print("ERROR: SceneTransition.cs - Line: 29");
+			GD.Print("Trying to start an effect while TransitionEffect is already active");
 			return;
 		}
 		Active = true;

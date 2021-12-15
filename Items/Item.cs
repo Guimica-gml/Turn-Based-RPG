@@ -1,4 +1,5 @@
 using Godot;
+using Godot.Collections;
 
 public class Item : Node2D
 {
@@ -39,5 +40,19 @@ public class Item : Node2D
 		
 		_caught = true;
 		_animationPlayer.Play("PickUp");
+	}
+	
+	public Dictionary Save()
+	{
+		var saveDict = new Dictionary()
+		{
+			{ "ItemStats", ItemStats }
+		};
+		return saveDict;
+	}
+	
+	public void Load(Dictionary infoDict)
+	{
+		ItemStats = infoDict["ItemStats"] as ItemStats;
 	}
 }

@@ -11,12 +11,6 @@ public class InteractionManager : Node
 	{
 		if (Interaction != null) return;
 		
-		if (interaction == null)
-		{
-			GD.PrintErr("Trying to start a `null` interaction");
-			return;
-		}
-		
 		Interaction = interaction;
 		Interaction.Connect("Ended", this, nameof(EndInteraction));
 		

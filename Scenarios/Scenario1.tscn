@@ -96,9 +96,6 @@ _items = [ ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource(
 position = Vector2( 160, 32 )
 _direction = Vector2( 0, 1 )
 
-[node name="InteractableArea" parent="YSort/Jessica" instance=ExtResource( 4 )]
-Interaction = ExtResource( 6 )
-
 [node name="Tree" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 240, 144 )
 
@@ -119,6 +116,10 @@ Interaction = ExtResource( 7 )
 [node name="InteractableArea3" parent="." instance=ExtResource( 4 )]
 position = Vector2( 288, 48 )
 Interaction = ExtResource( 20 )
+
+[node name="InteractableArea4" parent="." instance=ExtResource( 4 )]
+position = Vector2( 160, 32 )
+Interaction = ExtResource( 6 )
 
 [node name="SceneEntry" parent="." instance=ExtResource( 8 )]
 position = Vector2( 16, 80 )

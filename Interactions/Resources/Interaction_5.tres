@@ -5,3 +5,4 @@
 [resource]
 script = ExtResource( 1 )
 DialogPath = "res://DialogBox/Scripts/Script02.json"
+Replaces = [  ]
