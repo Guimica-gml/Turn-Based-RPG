@@ -53,8 +53,6 @@ public class Manager : CanvasLayer
 		
 		GetTree().SetDeferred("paused", false);
 		EmitSignal(nameof(GameUnpaused));
-		
-		PrintStrayNodes();
 	}
 	
 	public bool InMenu()
