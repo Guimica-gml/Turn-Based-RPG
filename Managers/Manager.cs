@@ -32,7 +32,11 @@ public class Manager : CanvasLayer
 	
 	public void PauseGame(PauseDisplayer pauseDisplayer)
 	{
-		if (GetTree().Paused || InMenu()) return;
+		if (GetTree().Paused || InMenu())
+		{
+			pauseDisplayer.QueueFree();
+			return;
+		}
 		
 		_pauseDisplayer = pauseDisplayer;
 		_pauseDisplayer.Connect("Close", this, "UnpauseGame");
@@ -49,6 +53,8 @@ public class Manager : CanvasLayer
 		
 		GetTree().SetDeferred("paused", false);
 		EmitSignal(nameof(GameUnpaused));
+		
+		PrintStrayNodes();
 	}
 	
 	public bool InMenu()

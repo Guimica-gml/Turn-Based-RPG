@@ -10,7 +10,6 @@ public class ShopPauseDisplayer : PauseDisplayer
 	private ShopInfoDisplayer _shopInfoDisplayer;
 	
 	private Stats _playerStats = null;
-	private PackedScene _shopItemDisplayer = GD.Load<PackedScene>("res://Shops/ShopItemDisplayer/ShopItemDisplayer.tscn");
 	
 	public override void _Ready()
 	{
@@ -25,10 +24,10 @@ public class ShopPauseDisplayer : PauseDisplayer
 		var buttons = new Array<ShopItemDisplayer>(_gridContainer.GetChildren());
 		foreach (var button in buttons) button.Connect("ButtonToggled", this, nameof(OnButtonToggled));
 		
-		CreateShopItemDisplayers();
+		UpdateShopItemDisplayers();
 	}
 	
-	private void CreateShopItemDisplayers()
+	private void UpdateShopItemDisplayers()
 	{
 		for (var i = 0; i < Items.Count; ++i)
 		{
