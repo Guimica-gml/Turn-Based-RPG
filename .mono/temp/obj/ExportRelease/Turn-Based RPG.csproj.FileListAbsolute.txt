@@ -1,0 +1,8 @@
+C:\Users\ameid\OneDrive\Desktop\Godot\Projects (Godot)\RPG\.mono\temp\bin\ExportRelease\Turn-Based RPG.dll
+C:\Users\ameid\OneDrive\Desktop\Godot\Projects (Godot)\RPG\.mono\temp\bin\ExportRelease\Turn-Based RPG.pdb
+C:\Users\ameid\OneDrive\Desktop\Godot\Projects (Godot)\RPG\.mono\temp\obj\ExportRelease\Turn-Based RPG.csproj.AssemblyReference.cache
+C:\Users\ameid\OneDrive\Desktop\Godot\Projects (Godot)\RPG\.mono\temp\obj\ExportRelease\Turn-Based RPG.AssemblyInfoInputs.cache
+C:\Users\ameid\OneDrive\Desktop\Godot\Projects (Godot)\RPG\.mono\temp\obj\ExportRelease\Turn-Based RPG.AssemblyInfo.cs
+C:\Users\ameid\OneDrive\Desktop\Godot\Projects (Godot)\RPG\.mono\temp\obj\ExportRelease\Turn-Based RPG.csproj.CoreCompileInputs.cache
+C:\Users\ameid\OneDrive\Desktop\Godot\Projects (Godot)\RPG\.mono\temp\obj\ExportRelease\Turn-Based RPG.dll
+C:\Users\ameid\OneDrive\Desktop\Godot\Projects (Godot)\RPG\.mono\temp\obj\ExportRelease\Turn-Based RPG.pdb

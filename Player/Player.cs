@@ -1,5 +1,5 @@
 using Godot;
-using Godot.Collections;
+using System.Collections.Generic;
 
 public class Player : Entity
 {
@@ -47,16 +47,11 @@ public class Player : Entity
 	{
 		foreach (var item in _acceptedInputs)
 		{
-			if (!Input.IsActionPressed(item.Key)) continue;
-			return item.Value;
+			if (Input.IsActionPressed(item.Key))
+				return item.Value;
 		}
 		
 		return Vector2.Zero;
-	}
-	
-	protected override void OnCollisionAhead(Object collider)
-	{
-		return; // Nothing here
 	}
 	
 	public void SetCamera(MainCamera camera)

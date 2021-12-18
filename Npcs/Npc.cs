@@ -48,11 +48,6 @@ public class Npc : Entity
 		return Vector2.Zero;
 	}
 	
-	protected override void OnCollisionAhead(Godot.Object collider)
-	{
-		return;
-	}
-	
 	private Vector2 GetRandomPosition()
 	{
 		var gridSize = Global.Manager.GridSize;

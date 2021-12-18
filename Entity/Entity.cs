@@ -14,7 +14,6 @@ public abstract class Entity : KinematicBody2D
 	protected Sprite _sprite;
 	protected RayCast2D _rayCast;
 	
-	protected abstract void OnCollisionAhead(Object collider);
 	protected abstract Vector2 CheckForInput();
 	
 	public override void _Ready()
@@ -27,7 +26,7 @@ public abstract class Entity : KinematicBody2D
 	
 	public override void _PhysicsProcess(float delta)
 	{
-		if (!_moving && CanMove)_moveVector = CheckForInput();
+		if (!_moving && CanMove) _moveVector = CheckForInput();
 		
 		if (_moveVector != Vector2.Zero)
 		{
@@ -41,8 +40,6 @@ public abstract class Entity : KinematicBody2D
 		}
 		
 		_animationTreePlayback.Travel((_moveVector == Vector2.Zero) ? "Idle" : "Run");
-		
-		if (CheckCollision()) OnCollisionAhead(_rayCast.GetCollider());
 		
 		if (!_moving) return;
 		GlobalPosition += _moveVector * _speed;
