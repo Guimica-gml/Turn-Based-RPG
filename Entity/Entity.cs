@@ -27,7 +27,8 @@ public abstract class Entity : KinematicBody2D
 	
 	public override void _PhysicsProcess(float delta)
 	{
-		if (!_moving && CanMove) _moveVector = CheckForInput();
+		if (!_moving && CanMove)_moveVector = CheckForInput();
+		
 		if (_moveVector != Vector2.Zero)
 		{
 			UpdateDirection(_moveVector);

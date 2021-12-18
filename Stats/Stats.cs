@@ -177,4 +177,9 @@ public class Stats : Resource
 		AttackBoost = 0;
 		DefenseBoost = 0;
 	}
+	
+	~Stats()
+	{
+		Dispose();
+	}
 }

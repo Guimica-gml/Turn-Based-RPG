@@ -62,7 +62,7 @@ public class BattlePauseDisplayer : PauseDisplayer
 		CreatePlayerActionButtons();
 	}
 	
-	public override void _Input(InputEvent @event)
+	public override void _Process(float delta)
 	{
 		return; // This must be empty, do not dare removing this function
 	}

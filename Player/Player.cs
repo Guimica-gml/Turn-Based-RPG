@@ -18,6 +18,7 @@ public class Player : Entity
 	public override void _Ready()
 	{
 		base._Ready();
+		
 		_remoteTransform = GetNode<RemoteTransform2D>("CameraRemote");
 		_interactionRayCast = GetNode<RayCast2D>("InteractionRayCast2D");
 		_interactionSprite = GetNode<Sprite>("InteractionSprite");

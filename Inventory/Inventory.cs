@@ -239,4 +239,9 @@ public class Inventory : Resource
 		
 		return hasKeyItem;
 	}
+	
+	~Inventory()
+	{
+		Dispose();
+	}
 }

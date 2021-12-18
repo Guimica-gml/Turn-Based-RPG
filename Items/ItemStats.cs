@@ -19,4 +19,9 @@ public abstract class ItemStats : Resource
 	{
 		playerStats = GD.Load("res://Stats/PlayerStats.tres") as Stats;
 	}
+	
+	~ItemStats()
+	{
+		Dispose();
+	}
 }

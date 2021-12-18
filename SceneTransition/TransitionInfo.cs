@@ -15,4 +15,9 @@ public class TransitionInfo : Resource
 	{
 		return $"[SmoothSize: {SmoothSize}, TexturePath: {TexturePath}]";
 	}
+	
+	~TransitionInfo()
+	{
+		Dispose();
+	}
 }

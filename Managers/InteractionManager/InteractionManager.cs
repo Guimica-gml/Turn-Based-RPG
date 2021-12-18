@@ -5,24 +5,28 @@ public class InteractionManager : Node
 	[Signal] private delegate void InteractionTriggered(Interaction interaction);
 	[Signal] private delegate void InteractionEnded(Interaction interaction);
 	
-	public Interaction Interaction { get; private set; } = null;
+	public bool InInteraction { get; private set; } = false;
+	private Interaction _interaction = null;
 	
 	public void StartInteraction(Interaction interaction)
 	{
-		if (Interaction != null) return;
+		if (_interaction != null) return;
+		InInteraction = true;
 		
-		Interaction = interaction;
-		Interaction.Connect("Ended", this, nameof(EndInteraction));
+		_interaction = interaction;
+		_interaction.Connect("Ended", this, nameof(EndInteraction));
 		
-		Interaction.OnTrigger();
-		EmitSignal(nameof(InteractionTriggered), Interaction);
+		_interaction.OnTrigger();
+		EmitSignal(nameof(InteractionTriggered), _interaction);
 	}
 	
 	private void EndInteraction()
 	{
-		Interaction.OnEnd();
-		Interaction.Disconnect("Ended", this, nameof(EndInteraction));
-		EmitSignal(nameof(InteractionEnded), Interaction);
-		Interaction = null;
+		_interaction.OnEnd();
+		_interaction.Disconnect("Ended", this, nameof(EndInteraction));
+		EmitSignal(nameof(InteractionEnded), _interaction);
+		
+		_interaction = null;
+		InInteraction = false;
 	}
 }

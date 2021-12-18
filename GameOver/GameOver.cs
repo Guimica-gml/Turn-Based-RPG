@@ -2,9 +2,9 @@ using Godot;
 
 public class GameOver : Control
 {
-	public override void _Input(InputEvent @event)
+	public override void _Process(float delta)
 	{
-		if (@event.IsActionPressed("left_click") && !Global.TransitionManager.InTransition)
+		if (Input.IsActionJustPressed("left_click") && !Global.TransitionManager.InTransition)
 		{
 			GetTree().Quit();
 		}

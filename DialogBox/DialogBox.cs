@@ -10,6 +10,8 @@ public class DialogBox : Control
 	[Export] private float _textSpeed = 0.025f;
 	[Export] public Array<string> Replaces = new Array<string>();
 	
+	private Array<char> _slowerCharacters = new Array<char>() { ',', '.', '!', '?' };
+	
 	private bool _selectingResponseState = false;
 	private string _part = "default";
 	private int _page = 0;
@@ -36,36 +38,36 @@ public class DialogBox : Control
 		UpdateDialog();
 	}
 	
-	public override void _Input(InputEvent @event)
+	public override void _Process(float delta)
 	{
 		if (_selectingResponseState)
 		{
-			MultipleResponsesInteraction(@event);
+			MultipleResponsesInteraction();
 		}
 		else
 		{
-			NormalInteraction(@event);
+			NormalInteraction();
 		}
 	}
 	
-	private void MultipleResponsesInteraction(InputEvent @event)
+	private void MultipleResponsesInteraction()
 	{
 		// Changes the selected response depending on player input
-		_selectedResponseIndex += Convert.ToInt16(@event.IsActionPressed("ui_down")) - Convert.ToInt16(@event.IsActionPressed("ui_up"));
-		_selectedResponseIndex = Mathf.Clamp(_selectedResponseIndex, 0, _dialog[_part].Count);
+		_selectedResponseIndex += Convert.ToInt16(Input.IsActionJustPressed("ui_down")) - Convert.ToInt16(Input.IsActionJustPressed("ui_up"));
+		_selectedResponseIndex = Mathf.Clamp(_selectedResponseIndex, 0, (_dialog[_part][_page]["responses"] as Godot.Collections.Array).Count - 1);
 		
 		UpdateReponseButtons();
 		
 		// Select the response
-		if (@event.IsActionPressed("ui_interact"))
+		if (Input.IsActionJustPressed("ui_interact"))
 		{
 			OnResponseButtonPressed(_selectedResponseIndex);
 		}
 	}
 	
-	private void NormalInteraction(InputEvent @event)
+	private void NormalInteraction()
 	{
-		if (!@event.IsActionPressed("ui_interact")) return;
+		if (!Input.IsActionJustPressed("ui_interact")) return;
 		
 		// Checking if all character are being displayed
 		var charactersAmount = _textLabel.GetTotalCharacterCount();
@@ -268,9 +270,14 @@ public class DialogBox : Control
 	
 	private void OnTimerTimeout()
 	{
-		_textLabel.VisibleCharacters += 1;
+		if (_textLabel.VisibleCharacters < _textLabel.GetTotalCharacterCount())
+		{
+			_textLabel.VisibleCharacters += 1;
+			var lastChar = _textLabel.Text[_textLabel.VisibleCharacters - 1];
+			_timer.Start((_slowerCharacters.Contains(lastChar)) ? _textSpeed * 12f : _textSpeed);
+			return;
+		}
 		
-		if (_textLabel.VisibleCharacters < _textLabel.GetTotalCharacterCount()) return;
 		_nextArrowRect.Visible = true;
 		_timer.Stop();
 	}
