@@ -4,8 +4,9 @@ public class PauseDisplayer : Control
 {
 	[Signal] protected delegate void Close();
 	
-	public override void _Process(float delta)
+	public override void _Input(InputEvent @event)
 	{
-		if (Input.IsActionJustPressed("ui_pause")) EmitSignal(nameof(Close));
+		if (@event.IsActionPressed("ui_pause")) EmitSignal(nameof(Close));
+		@event.Dispose();
 	}
 }

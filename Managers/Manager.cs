@@ -22,12 +22,15 @@ public class Manager : CanvasLayer
 		Global.TransitionManager.Connect("SceneChanged", this, nameof(OnSceneChanged));
 	}
 	
-	public override void _Process(float delta)
+	public override void _Input(InputEvent @event)
 	{
-		if (Global.InteractionManager.InInteraction || !Input.IsActionJustPressed("ui_pause")) return;
+		if (!Global.InteractionManager.InInteraction && @event.IsActionPressed("ui_pause"))
+		{
+			var pauseDisplayer = _pauseDisplayerPreload.Instance<PauseDisplayer>();
+			PauseGame(pauseDisplayer);
+		}
 		
-		var pauseDisplayer = _pauseDisplayerPreload.Instance<PauseDisplayer>();
-		PauseGame(pauseDisplayer);
+		@event.Dispose();
 	}
 	
 	public void PauseGame(PauseDisplayer pauseDisplayer)

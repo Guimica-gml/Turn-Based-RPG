@@ -38,36 +38,38 @@ public class DialogBox : Control
 		UpdateDialog();
 	}
 	
-	public override void _Process(float delta)
+	public override void _Input(InputEvent @event)
 	{
 		if (_selectingResponseState)
 		{
-			MultipleResponsesInteraction();
+			MultipleResponsesInteraction(@event);
 		}
 		else
 		{
-			NormalInteraction();
+			NormalInteraction(@event);
 		}
+		
+		@event.Dispose();
 	}
 	
-	private void MultipleResponsesInteraction()
+	private void MultipleResponsesInteraction(InputEvent @event)
 	{
 		// Changes the selected response depending on player input
-		_selectedResponseIndex += Convert.ToInt16(Input.IsActionJustPressed("ui_down")) - Convert.ToInt16(Input.IsActionJustPressed("ui_up"));
+		_selectedResponseIndex += Convert.ToInt16(@event.IsActionPressed("ui_down")) - Convert.ToInt16(@event.IsActionPressed("ui_up"));
 		_selectedResponseIndex = Mathf.Clamp(_selectedResponseIndex, 0, (_dialog[_part][_page]["responses"] as Godot.Collections.Array).Count - 1);
 		
 		UpdateReponseButtons();
 		
 		// Select the response
-		if (Input.IsActionJustPressed("ui_interact"))
+		if (@event.IsActionPressed("ui_interact"))
 		{
 			OnResponseButtonPressed(_selectedResponseIndex);
 		}
 	}
 	
-	private void NormalInteraction()
+	private void NormalInteraction(InputEvent @event)
 	{
-		if (!Input.IsActionJustPressed("ui_interact")) return;
+		if (!@event.IsActionPressed("ui_interact")) return;
 		
 		// Checking if all character are being displayed
 		var charactersAmount = _textLabel.GetTotalCharacterCount();
