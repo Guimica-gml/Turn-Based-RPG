@@ -16,13 +16,15 @@ public class BattlePlayerWinState : State
 		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
 		
 		var enemyStats = _battleScenario.EnemyDisplayer.Stats;
+		
+		var xpDrop = enemyStats.GetXpDrop();
 		var dropMoney = enemyStats.GetDropMoney();
 		
 		_battleScenario.SetNextMessageArrowVisibility(true);
-		_battleScenario.SetBattleText($"You defeated {enemyStats.Name}. \nYou gained {enemyStats.XpWhenDefeated} xp and ${dropMoney} rupies.");
+		_battleScenario.SetBattleText($"You defeated {enemyStats.Name}. \nYou gained {xpDrop} xp and ${dropMoney} rupies.");
 		
 		_battleScenario.PlayerDisplayer.Stats.Connect("LevelChanged", this, nameof(OnPlayerLevelChanged));
-		_battleScenario.PlayerDisplayer.Stats.Xp += enemyStats.XpWhenDefeated;
+		_battleScenario.PlayerDisplayer.Stats.Xp += xpDrop;
 		_battleScenario.PlayerDisplayer.Stats.Money += dropMoney;
 	}
 	

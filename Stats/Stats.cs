@@ -17,13 +17,16 @@ public class Stats : Resource
 	
 	[Export] public string Name = "";
 	[Export] public Texture SpriteSheet = null;
+	
 	[Export(PropertyHint.Range, "1, 100")] private int _baseLevel = 1;
 	[Export] private int _baseHp = 1;
 	[Export] private int _baseMaxHp = 1;
 	[Export] private int _baseAttack = 1;
 	[Export] private int _baseDefense = 1;
-	[Export] private int _baseXpWhenDefeated = 0;
 	[Export] private int _baseMoney = 0;
+	
+	[Export] private int _baseMinXpDrop = 0;
+	[Export] private int _baseMaxXpDrop = 0;
 	
 	[Export] private int _baseMinDropMoney = 1;
 	[Export] private int _baseMaxDropMoney = 1;
@@ -121,10 +124,16 @@ public class Stats : Resource
 		}
 	}
 	
-	public int XpWhenDefeated
+	public int MinXpDrop
 	{
-		get => (int) _baseXpWhenDefeated + (Level * 20);
-		set => _baseXpWhenDefeated = value;
+		get => (int) _baseMinXpDrop + (Level * 20);
+		set => _baseMinXpDrop = value;
+	}
+	
+	public int MaxXpDrop
+	{
+		get => (int) _baseMaxXpDrop + (Level * 20);
+		set => _baseMaxXpDrop = value;
 	}
 	
 	public int MinDropMoney
@@ -137,6 +146,12 @@ public class Stats : Resource
 	{
 		get => (int) _baseMaxDropMoney + (Level * 20);
 		set => _baseMaxDropMoney = value;
+	}
+	
+	public int GetXpDrop()
+	{
+		var random = new Random();
+		return random.Next(MinXpDrop, MaxXpDrop);
 	}
 	
 	public int GetDropMoney()
