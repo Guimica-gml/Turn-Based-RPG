@@ -11,6 +11,6 @@ Texture = ExtResource( 1 )
 Description = "This item increases your defense by 10 points permanently"
 Stackable = true
 UseJustInBattle = false
-Price = 90
+Price = 40
 Stat = "Defense"
 IncreaseAmount = 10

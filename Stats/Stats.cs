@@ -11,9 +11,6 @@ public class Stats : Resource
 	[Signal] private delegate void LevelChanged(int level, string message);
 	[Signal] private delegate void ZeroHp();
 	
-	public int AttackBoost = 0;
-	public int DefenseBoost = 0;
-	
 	[Export] public string Name = "";
 	[Export] public Texture SpriteSheet = null;
 	
@@ -33,6 +30,28 @@ public class Stats : Resource
 	[Export] public Array<Action> Actions = new Array<Action>();
 	
 	private int _baseXp = 0;
+	
+	public int AttackBoost
+	{
+		get => _attackBoost;
+		set
+		{
+			_attackBoost = value;
+			EmitSignal(nameof(AttackChanged), Attack);
+		}
+	}
+	private int _attackBoost = 0;
+	
+	public int DefenseBoost 
+	{
+		get => _defenseBoost;
+		set
+		{
+			_defenseBoost = value;
+			EmitSignal(nameof(DefenseChanged), Defense);
+		}
+	}
+	private int _defenseBoost = 0;
 	
 	public int Money
 	{

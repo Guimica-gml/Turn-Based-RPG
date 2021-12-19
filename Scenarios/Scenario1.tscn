@@ -63,8 +63,16 @@ ItemStats = ExtResource( 12 )
 position = Vector2( 192, 144 )
 ItemStats = ExtResource( 17 )
 
+[node name="Item10" parent="Items" instance=ExtResource( 16 )]
+position = Vector2( 208, 144 )
+ItemStats = ExtResource( 17 )
+
 [node name="Item5" parent="Items" instance=ExtResource( 16 )]
 position = Vector2( 176, 144 )
+ItemStats = ExtResource( 15 )
+
+[node name="Item11" parent="Items" instance=ExtResource( 16 )]
+position = Vector2( 208, 160 )
 ItemStats = ExtResource( 15 )
 
 [node name="Item6" parent="Items" instance=ExtResource( 16 )]
@@ -90,7 +98,7 @@ position = Vector2( 304, 48 )
 
 [node name="Shop" parent="YSort" instance=ExtResource( 21 )]
 position = Vector2( 224, 48 )
-_items = [ ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ) ]
+_items = [ ExtResource( 11 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 17 ) ]
 
 [node name="Jessica" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 160, 32 )

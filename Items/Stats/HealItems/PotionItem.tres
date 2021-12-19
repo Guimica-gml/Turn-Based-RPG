@@ -11,5 +11,5 @@ Texture = ExtResource( 2 )
 Description = "This item heals 30 hp points :)"
 Stackable = true
 UseJustInBattle = false
-Price = 50
+Price = 30
 HealAmount = 30
