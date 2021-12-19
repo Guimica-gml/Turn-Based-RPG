@@ -5,9 +5,7 @@
 			"text": "Did you talk to Jessica?",
 			"responses": [
 				{ "text": "Yes", "part": "talked-to-jessica" },
-				{ "text": "No", "part": "didn't-talk-to-jessica" },
-				{ "text": "AAA", "part": "didn't-talk-to-jessica" },
-				{ "text": "BBB", "part": "didn't-talk-to-jessica" }
+				{ "text": "No", "part": "didn't-talk-to-jessica" }
 			]
 		}
 	],
