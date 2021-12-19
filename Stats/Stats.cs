@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public class Stats : Resource
 {
@@ -150,14 +149,12 @@ public class Stats : Resource
 	
 	public int GetXpDrop()
 	{
-		var random = new Random();
-		return random.Next(MinXpDrop, MaxXpDrop);
+		return (int) GD.RandRange(MinXpDrop, MaxXpDrop);
 	}
 	
 	public int GetDropMoney()
 	{
-		var random = new Random();
-		return random.Next(MinDropMoney, MaxDropMoney);
+		return (int) GD.RandRange(MinDropMoney, MaxDropMoney);
 	}
 	
 	public int XpToNextLevel()

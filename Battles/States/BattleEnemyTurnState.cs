@@ -1,5 +1,4 @@
 using Godot;
-using System;
 using Godot.Collections;
 
 public class BattleEnemyTurnState : State
@@ -61,7 +60,6 @@ public class BattleEnemyTurnState : State
 	
 	private Action GetAction()
 	{
-		var random = new Random();
 		var enemyStats = _battleScenario.EnemyDisplayer.Stats;
 		var healActions = new Array<Action>();
 		var attackActions = new Array<Action>();
@@ -80,12 +78,12 @@ public class BattleEnemyTurnState : State
 			}
 		}
 		
-		if (enemyStats.Hp < enemyStats.MaxHp && random.Next(0, 100) > 70)
+		if (enemyStats.Hp < enemyStats.MaxHp && GD.RandRange(0f, 100f) > 70f)
 		{
-			return healActions[random.Next(0, healActions.Count)];
+			return healActions[(int) GD.RandRange(0, healActions.Count)];
 		}
 		
-		return attackActions[random.Next(0, attackActions.Count)];
+		return attackActions[(int) GD.RandRange(0, attackActions.Count)];
 	}
 	
 	private void OnAnimEnded()

@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public class Npc : Entity
 {
@@ -11,7 +10,6 @@ public class Npc : Entity
 	
 	private Vector2 _initialPosition;
 	private Vector2 _targetPosition;
-	private Random _randomGenerator;
 	
 	private Timer _timer;
 	private Timer _idleTimer;
@@ -22,7 +20,6 @@ public class Npc : Entity
 		GD.Randomize();
 		
 		_initialPosition = GlobalPosition;
-		_randomGenerator = new Random();
 		
 		_timer = GetNode<Timer>("Timer");
 		_idleTimer = GetNode<Timer>("IdleTimer");
@@ -51,21 +48,15 @@ public class Npc : Entity
 	private Vector2 GetRandomPosition()
 	{
 		var gridSize = Global.Manager.GridSize;
-		var position = _initialPosition + new Vector2(_randomGenerator.Next(-_wanderRadius, _wanderRadius), _randomGenerator.Next(-_wanderRadius, _wanderRadius));
+		var position = _initialPosition + new Vector2((int) GD.RandRange(-_wanderRadius, _wanderRadius), (int) GD.RandRange(-_wanderRadius, _wanderRadius));
 		var inGridPosition = new Vector2(((int) position.x / gridSize) * gridSize, ((int) position.y / gridSize) * gridSize);
 		
 		return inGridPosition;
 	}
 	
-	static float NextFloat(Random random, float minValue, float maxValue)
-	{
-		var result = (random.NextDouble() * (maxValue - minValue)) + minValue;
-		return (float)result;
-	}
-	
 	private void OnTimerTimeout()
 	{
-		_idleTimer.Start(NextFloat(_randomGenerator, 0.5f, 1.2f));
+		_idleTimer.Start((float) GD.RandRange(0.5f, 1.2f));
 	}
 	
 	private void OnIdleTimerTimeout()

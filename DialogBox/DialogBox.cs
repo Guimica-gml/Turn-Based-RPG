@@ -1,6 +1,5 @@
 using Godot;
 using Godot.Collections;
-using System;
 
 public class DialogBox : Control
 {
@@ -55,16 +54,14 @@ public class DialogBox : Control
 	private void MultipleResponsesInteraction(InputEvent @event)
 	{
 		// Changes the selected response depending on player input
-		_selectedResponseIndex += Convert.ToInt16(@event.IsActionPressed("ui_down")) - Convert.ToInt16(@event.IsActionPressed("ui_up"));
-		_selectedResponseIndex = Mathf.Clamp(_selectedResponseIndex, 0, (_dialog[_part][_page]["responses"] as Godot.Collections.Array).Count - 1);
+		_selectedResponseIndex += System.Convert.ToInt16(@event.IsActionPressed("ui_down")) - System.Convert.ToInt16(@event.IsActionPressed("ui_up"));
+		_selectedResponseIndex = Mathf.Clamp(_selectedResponseIndex, 0, (_dialog[_part][_page]["responses"] as Array).Count - 1);
 		
 		UpdateReponseButtons();
 		
 		// Select the response
 		if (@event.IsActionPressed("ui_interact"))
-		{
 			OnResponseButtonPressed(_selectedResponseIndex);
-		}
 	}
 	
 	private void NormalInteraction(InputEvent @event)
@@ -83,7 +80,7 @@ public class DialogBox : Control
 		// Checking if the player can select multiple responses
 		if (_dialog[_part][_page].Contains("responses"))
 		{
-			CreateResponses(new Array<Dictionary>(_dialog[_part][_page]["responses"] as Godot.Collections.Array));
+			CreateResponses(new Array<Dictionary>(_dialog[_part][_page]["responses"] as Array));
 			_selectingResponseState = true;
 			return;
 		}
@@ -125,7 +122,7 @@ public class DialogBox : Control
 		// Checking if it's a condition
 		if (info.Contains("conditions"))
 		{
-			var conditions = new Array<Dictionary>(info["conditions"] as Godot.Collections.Array);
+			var conditions = new Array<Dictionary>(info["conditions"] as Array);
 			var conditionsAreTrue = CheckConditions(conditions);
 			
 			ChangePart((conditionsAreTrue) ? info["partIfTrue"] as string : info["partIfFalse"] as string);
@@ -135,7 +132,7 @@ public class DialogBox : Control
 		// Checking if we need to execute a script
 		if (info.Contains("executeScripts"))
 		{
-			var scriptsInfo = new Array<Dictionary>(info["executeScripts"] as Godot.Collections.Array);
+			var scriptsInfo = new Array<Dictionary>(info["executeScripts"] as Array);
 			
 			foreach (var scriptInfo in scriptsInfo)
 				ExecuteDialogFunction(scriptInfo);
@@ -174,7 +171,7 @@ public class DialogBox : Control
 	private object ExecuteDialogFunction(Dictionary funcInfo)
 	{
 		var scriptName = funcInfo["script"] as string;
-		var scriptArgs = new Array<string>(funcInfo["args"] as Godot.Collections.Array);
+		var scriptArgs = new Array<string>(funcInfo["args"] as Array);
 		return Global.DialogManager.CallDialogFunction(scriptName, scriptArgs);
 	}
 	
@@ -242,7 +239,7 @@ public class DialogBox : Control
 	
 	private void OnResponseButtonPressed(int index)
 	{
-		var dict = new Array<Dictionary>(_dialog[_part][_page]["responses"] as Godot.Collections.Array);
+		var dict = new Array<Dictionary>(_dialog[_part][_page]["responses"] as Array);
 		var partName = dict[index]["part"] as string;
 		
 		DeleteResponses();
@@ -276,7 +273,7 @@ public class DialogBox : Control
 		{
 			_textLabel.VisibleCharacters += 1;
 			var lastChar = _textLabel.Text[_textLabel.VisibleCharacters - 1];
-			_timer.Start((_slowerCharacters.Contains(lastChar)) ? _textSpeed * 12f : _textSpeed);
+			_timer.Start((_slowerCharacters.Contains(lastChar)) ? _textSpeed * 10f : _textSpeed);
 			return;
 		}
 		
