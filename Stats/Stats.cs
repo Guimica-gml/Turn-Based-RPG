@@ -53,6 +53,30 @@ public class Stats : Resource
 	}
 	private int _defenseBoost = 0;
 	
+	public int TempAttackBoost
+	{
+		get => _tempAttackBoost;
+		set
+		{
+			ConnectToBattleSystem();
+			_tempAttackBoost = value;
+			EmitSignal(nameof(AttackChanged), Attack);
+		}
+	}
+	private int _tempAttackBoost = 0;
+	
+	public int TempDefenseBoost 
+	{
+		get => _tempDefenseBoost;
+		set
+		{
+			ConnectToBattleSystem();
+			_tempDefenseBoost = value;
+			EmitSignal(nameof(DefenseChanged), Defense);
+		}
+	}
+	private int _tempDefenseBoost = 0;
+	
 	public int Money
 	{
 		get => _baseMoney;
@@ -76,7 +100,7 @@ public class Stats : Resource
 	
 	public int MaxHp
 	{
-		get => (int) _baseMaxHp + 8 * (Level / 2);
+		get => (int) _baseMaxHp + (8 * Level);
 		set => _baseMaxHp = value;
 	}
 	
@@ -116,11 +140,7 @@ public class Stats : Resource
 	
 	public int Attack
 	{
-		get
-		{
-			ConnectToBattleSystem();
-			return (int) _baseAttack + 10 * (Level / 2) + AttackBoost;
-		}
+		get => (int) (_baseAttack + 10 * Level) + AttackBoost;
 		set
 		{
 			_baseAttack = value;
@@ -130,11 +150,7 @@ public class Stats : Resource
 	
 	public int Defense
 	{
-		get
-		{
-			ConnectToBattleSystem();
-			return (int) _baseDefense + 5 * (Level / 2) + DefenseBoost;
-		}
+		get => (int) (_baseDefense + 5 * Level) + DefenseBoost;
 		set
 		{
 			_baseDefense = value;
@@ -166,6 +182,16 @@ public class Stats : Resource
 		set => _baseMaxDropMoney = value;
 	}
 	
+	public int GetAttackWithTempBoost()
+	{
+		return Attack + TempAttackBoost;
+	}
+	
+	public int GetDefenseWithTempBoost()
+	{
+		return Defense + TempDefenseBoost;
+	}
+	
 	public int GetXpDrop()
 	{
 		return (int) GD.RandRange(MinXpDrop, MaxXpDrop);
@@ -188,12 +214,12 @@ public class Stats : Resource
 	
 	public void AttackTarget(Stats target, Action action)
 	{
-		target.Hurt(action.Value + ((int) Attack / 15));
+		target.Hurt(action.Value + ((int) GetAttackWithTempBoost() / 15));
 	}
 	
 	public void Hurt(int damage)
 	{
-		var realDamage = Mathf.Max(1, (int) (damage - Defense / 15));
+		var realDamage = Mathf.Max(1, (int) (damage - GetDefenseWithTempBoost() / 15));
 		Hp = Mathf.Max(0, Hp - realDamage);
 	}
 	
@@ -205,8 +231,8 @@ public class Stats : Resource
 	
 	private void OnBattleEnded()
 	{
-		AttackBoost = 0;
-		DefenseBoost = 0;
+		TempAttackBoost = 0;
+		TempDefenseBoost = 0;
 	}
 	
 	~Stats()

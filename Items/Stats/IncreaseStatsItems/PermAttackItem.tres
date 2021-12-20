@@ -12,5 +12,5 @@ Description = "This item increases your attack by 10 points permanently"
 Stackable = true
 UseJustInBattle = false
 Price = 40
-Stat = "Attack"
+Stat = "AttackBoost"
 IncreaseAmount = 10
