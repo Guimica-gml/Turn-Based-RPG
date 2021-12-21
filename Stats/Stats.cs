@@ -100,7 +100,7 @@ public class Stats : Resource
 	
 	public int MaxHp
 	{
-		get => (int) _baseMaxHp + (8 * Level);
+		get => (int) _baseMaxHp + (8 * (Level - 1));
 		set => _baseMaxHp = value;
 	}
 	
@@ -140,7 +140,7 @@ public class Stats : Resource
 	
 	public int Attack
 	{
-		get => (int) (_baseAttack + 10 * Level) + AttackBoost;
+		get => (int) (_baseAttack + 10 * (Level - 1)) + AttackBoost;
 		set
 		{
 			_baseAttack = value;
@@ -150,7 +150,7 @@ public class Stats : Resource
 	
 	public int Defense
 	{
-		get => (int) (_baseDefense + 5 * Level) + DefenseBoost;
+		get => (int) (_baseDefense + 5 * (Level - 1)) + DefenseBoost;
 		set
 		{
 			_baseDefense = value;
@@ -160,25 +160,25 @@ public class Stats : Resource
 	
 	public int MinXpDrop
 	{
-		get => (int) _baseMinXpDrop + (Level * 20);
+		get => (int) _baseMinXpDrop + ((Level - 1) * 20);
 		set => _baseMinXpDrop = value;
 	}
 	
 	public int MaxXpDrop
 	{
-		get => (int) _baseMaxXpDrop + (Level * 20);
+		get => (int) _baseMaxXpDrop + ((Level - 1) * 20);
 		set => _baseMaxXpDrop = value;
 	}
 	
 	public int MinDropMoney
 	{
-		get => (int) _baseMinDropMoney + (Level * 20);
+		get => (int) _baseMinDropMoney + ((Level - 1) * 20);
 		set => _baseMinDropMoney = value;
 	}
 	
 	public int MaxDropMoney
 	{
-		get => (int) _baseMaxDropMoney + (Level * 20);
+		get => (int) _baseMaxDropMoney + ((Level - 1) * 20);
 		set => _baseMaxDropMoney = value;
 	}
 	
