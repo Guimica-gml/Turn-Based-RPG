@@ -2147,7 +2147,7 @@
         </member>
         <member name="M:Godot.Node.FindNode(System.String,System.Boolean,System.Boolean)">
             <summary>
-            <para>Finds a descendant of this node whose name matches <c>mask</c> as in <c>String.match</c> (i.e. case-sensitive, but <c>"*"</c> matches zero or more characters and <c>"?"</c> matches any single character except <c>"."</c>).</para>
+            <para>Finds a descendant of this node whose name matches <c>mask</c> as in <c>String.match</c> (i.e. case-sensitive, but <c>"*"</c> matches zero or more characters and <c>"?"</c> matches any single character except <c>"."</c>). Returns <c>null</c> if no matching <see cref="T:Godot.Node"/> is found.</para>
             <para>Note: It does not match against the full path, just against individual node names.</para>
             <para>If <c>owned</c> is <c>true</c>, this method only finds nodes whose owner is this node. This is especially important for scenes instantiated through a script, because those scenes don't have an owner.</para>
             <para>Note: As this method walks through all the descendants of the node, it is the slowest way to get a reference to another node. Whenever possible, consider using <see cref="M:Godot.Node.GetNode(Godot.NodePath)"/> instead. To avoid using <see cref="M:Godot.Node.FindNode(System.String,System.Boolean,System.Boolean)"/> too often, consider caching the node reference into a variable.</para>
@@ -2228,6 +2228,14 @@
             <summary>
             <para>Returns an array listing the groups that the node is a member of.</para>
             <para>Note: For performance reasons, the order of node groups is not guaranteed. The order of node groups should not be relied upon as it can vary across project runs.</para>
+            <para>Note: The engine uses some group names internally (all starting with an underscore). To avoid conflicts with internal groups, do not add custom groups whose name starts with an underscore. To exclude internal groups while looping over <see cref="M:Godot.Node.GetGroups"/>, use the following snippet:</para>
+            <para><code>
+            # Stores the node's non-internal groups only (as an array of Strings).
+            var non_internal_groups = []
+            for group in get_groups():
+                if not group.begins_with("_"):
+                    non_internal_groups.push_back(group)
+            </code></para>
             </summary>
         </member>
         <member name="M:Godot.Node.Raise">
@@ -2406,6 +2414,7 @@
         <member name="M:Godot.Node.ReplaceBy(Godot.Node,System.Boolean)">
             <summary>
             <para>Replaces a node in a scene by the given one. Subscriptions that pass through this node will be lost.</para>
+            <para>Note that the replaced node is not automatically freed, so you either need to keep it in a variable for later use or free it using <see cref="M:Godot.Object.Free"/>.</para>
             </summary>
         </member>
         <member name="M:Godot.Node.SetSceneInstanceLoadPlaceholder(System.Boolean)">
@@ -2706,6 +2715,7 @@
         <member name="M:Godot.Object.GetIndexed(Godot.NodePath)">
             <summary>
             <para>Gets the object's property indexed by the given <see cref="T:Godot.NodePath"/>. The node path should be relative to the current object and can use the colon character (<c>:</c>) to access nested properties. Examples: <c>"position:x"</c> or <c>"material:next_pass:blend_mode"</c>.</para>
+            <para>Note: Even though the method takes <see cref="T:Godot.NodePath"/> argument, it doesn't support actual paths to <see cref="T:Godot.Node"/>s in the scene tree, only colon-separated sub-property paths. For the purpose of nodes, use <see cref="M:Godot.Node.GetNodeAndResource(Godot.NodePath)"/> instead.</para>
             </summary>
         </member>
         <member name="M:Godot.Object.GetPropertyList">
@@ -14796,6 +14806,7 @@
         <member name="T:Godot.BakedLightmap">
             <summary>
             <para>Baked lightmaps are an alternative workflow for adding indirect (or baked) lighting to a scene. Unlike the <see cref="T:Godot.GIProbe"/> approach, baked lightmaps work fine on low-end PCs and mobile devices as they consume almost no resources in run-time.</para>
+            <para>Procedural generation: Lightmap baking functionality is only available in the editor. This means <see cref="T:Godot.BakedLightmap"/> is not suited to procedurally generated or user-built levels. For procedurally generated or user-built levels, use <see cref="T:Godot.GIProbe"/> instead.</para>
             <para>Note: Due to how lightmaps work, most properties only have a visible effect once lightmaps are baked again.</para>
             </summary>
         </member>
@@ -15372,6 +15383,7 @@
         <member name="P:Godot.Button.Icon">
             <summary>
             <para>Button's icon, if text is present the icon will be placed before the text.</para>
+            <para>To edit margin and spacing of the icon, use <c>hseparation</c> theme property of <see cref="T:Godot.Button"/> and <c>content_margin_*</c> properties of the used <see cref="T:Godot.StyleBox"/>es.</para>
             </summary>
         </member>
         <member name="P:Godot.Button.Flat">
@@ -15720,7 +15732,7 @@
         </member>
         <member name="P:Godot.CPUParticles.AngularVelocity">
             <summary>
-            <para>Initial angular velocity applied to each particle. Sets the speed of rotation of the particle.</para>
+            <para>Initial angular velocity applied to each particle in degrees per second. Sets the speed of rotation of the particle.</para>
             </summary>
         </member>
         <member name="P:Godot.CPUParticles.AngularVelocityRandom">
@@ -16215,7 +16227,7 @@
         </member>
         <member name="P:Godot.CPUParticles2D.AngularVelocity">
             <summary>
-            <para>Initial angular velocity applied to each particle. Sets the speed of rotation of the particle.</para>
+            <para>Initial angular velocity applied to each particle in degrees per second. Sets the speed of rotation of the particle.</para>
             </summary>
         </member>
         <member name="P:Godot.CPUParticles2D.AngularVelocityRandom">
@@ -19269,7 +19281,7 @@
         <member name="P:Godot.Control.RectScale">
             <summary>
             <para>The node's scale, relative to its <see cref="P:Godot.Control.RectSize"/>. Change this property to scale the node around its <see cref="P:Godot.Control.RectPivotOffset"/>. The Control's <see cref="P:Godot.Control.HintTooltip"/> will also scale according to this value.</para>
-            <para>Note: This property is mainly intended to be used for animation purposes. Text inside the Control will look pixelated or blurry when the Control is scaled. To support multiple resolutions in your project, use an appropriate viewport stretch mode as described in the <a href="https://docs.godotengine.org/en/3.4/tutorials/viewports/multiple_resolutions.html">documentation</a> instead of scaling Controls individually.</para>
+            <para>Note: This property is mainly intended to be used for animation purposes. Text inside the Control will look pixelated or blurry when the Control is scaled. To support multiple resolutions in your project, use an appropriate viewport stretch mode as described in the <a href="https://docs.godotengine.org/en/3.4/tutorials/rendering/multiple_resolutions.html">documentation</a> instead of scaling Controls individually.</para>
             <para>Note: If the Control node is a child of a <see cref="T:Godot.Container"/> node, the scale will be reset to <c>Vector2(1, 1)</c> when the scene is instanced. To set the Control's scale when it's instanced, wait for one frame using <c>yield(get_tree(), "idle_frame")</c> then set its <see cref="P:Godot.Control.RectScale"/> property.</para>
             </summary>
         </member>
@@ -21952,7 +21964,9 @@
             <summary>
             <para><see cref="T:Godot.GIProbe"/>s are used to provide high-quality real-time indirect light to scenes. They precompute the effect of objects that emit light and the effect of static geometry to simulate the behavior of complex light in real-time. <see cref="T:Godot.GIProbe"/>s need to be baked before using, however, once baked, dynamic objects will receive light from them. Further, lights can be fully dynamic or baked.</para>
             <para>Having <see cref="T:Godot.GIProbe"/>s in a scene can be expensive, the quality of the probe can be turned down in exchange for better performance in the <see cref="T:Godot.ProjectSettings"/> using .</para>
-            <para>Note: Meshes should have sufficiently thick walls to avoid light leaks (avoid one-sided walls). For interior levels, enclose your level geometry in a sufficiently large box and bridge the loops to close the mesh.</para>
+            <para>Procedural generation: <see cref="T:Godot.GIProbe"/> can be baked in an exported project, which makes it suitable for procedurally generated or user-built levels as long as all the geometry is generated in advance.</para>
+            <para>Performance: <see cref="T:Godot.GIProbe"/> is relatively demanding on the GPU and is not suited to low-end hardware such as integrated graphics (consider <see cref="T:Godot.BakedLightmap"/> instead). To provide a fallback for low-end hardware, consider adding an option to disable <see cref="T:Godot.GIProbe"/> in your project's options menus. A <see cref="T:Godot.GIProbe"/> node can be disabled by hiding it.</para>
+            <para>Note: Meshes should have sufficiently thick walls to avoid light leaks (avoid one-sided walls). For interior levels, enclose your level geometry in a sufficiently large box and bridge the loops to close the mesh. To further prevent light leaks, you can also strategically place temporary <see cref="T:Godot.MeshInstance"/> nodes with <see cref="P:Godot.GeometryInstance.UseInBakedLight"/> enabled. These temporary nodes can then be hidden after baking the <see cref="T:Godot.GIProbe"/> node.</para>
             <para>Note: Due to a renderer limitation, emissive <see cref="T:Godot.ShaderMaterial"/>s cannot emit light when used in a <see cref="T:Godot.GIProbe"/>. Only emissive <see cref="T:Godot.SpatialMaterial"/>s can emit light in a <see cref="T:Godot.GIProbe"/>.</para>
             </summary>
         </member>
@@ -21973,7 +21987,7 @@
         </member>
         <member name="F:Godot.GIProbe.SubdivEnum.Subdiv512">
             <summary>
-            <para>Use 512 subdivisions. This is the highest quality setting, but the slowest. On lower-end hardware this could cause the GPU to stall.</para>
+            <para>Use 512 subdivisions. This is the highest quality setting, but the slowest. On lower-end hardware, this could cause the GPU to stall.</para>
             </summary>
         </member>
         <member name="F:Godot.GIProbe.SubdivEnum.Max">
@@ -22035,6 +22049,7 @@
         <member name="M:Godot.GIProbe.Bake(Godot.Node,System.Boolean)">
             <summary>
             <para>Bakes the effect from all <see cref="T:Godot.GeometryInstance"/>s marked with <see cref="P:Godot.GeometryInstance.UseInBakedLight"/> and <see cref="T:Godot.Light"/>s marked with either <see cref="F:Godot.Light.BakeMode.Indirect"/> or <see cref="F:Godot.Light.BakeMode.All"/>. If <c>create_visual_debug</c> is <c>true</c>, after baking the light, this will generate a <see cref="T:Godot.MultiMesh"/> that has a cube representing each solid cell with each cube colored to the cell's albedo color. This can be used to visualize the <see cref="T:Godot.GIProbe"/>'s data and debug any issues that may be occurring.</para>
+            <para>Note: <see cref="M:Godot.GIProbe.Bake(Godot.Node,System.Boolean)"/> works from the editor and in exported projects. This makes it suitable for procedurally generated or user-built levels. Baking a <see cref="T:Godot.GIProbe"/> generally takes from 5 to 20 seconds in most scenes. Reducing <see cref="P:Godot.GIProbe.Subdiv"/> can speed up baking.</para>
             </summary>
         </member>
         <member name="M:Godot.GIProbe.DebugBake">
@@ -24713,7 +24728,7 @@
         </member>
         <member name="M:Godot.Image.Load(System.String)">
             <summary>
-            <para>Loads an image from file <c>path</c>. See <a href="https://docs.godotengine.org/en/3.4/getting_started/workflow/assets/importing_images.html#supported-image-formats">Supported image formats</a> for a list of supported image formats and limitations.</para>
+            <para>Loads an image from file <c>path</c>. See <a href="https://docs.godotengine.org/en/3.4/tutorials/assets_pipeline/importing_images.html#supported-image-formats">Supported image formats</a> for a list of supported image formats and limitations.</para>
             <para>Warning: This method should only be used in the editor or in cases when you need to load external images at run-time, such as images located at the <c>user://</c> directory, and may not work in exported projects.</para>
             <para>See also <see cref="T:Godot.ImageTexture"/> description for usage examples.</para>
             </summary>
@@ -25155,6 +25170,11 @@
         <member name="M:Godot.Input.IsKeyPressed(System.Int32)">
             <summary>
             <para>Returns <c>true</c> if you are pressing the key. You can pass a <see cref="T:Godot.KeyList"/> constant.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.Input.IsPhysicalKeyPressed(System.Int32)">
+            <summary>
+            <para>Returns <c>true</c> if you are pressing the key in the physical location on the 101/102-key US QWERTY keyboard. You can pass a <see cref="T:Godot.KeyList"/> constant.</para>
             </summary>
         </member>
         <member name="M:Godot.Input.IsMouseButtonPressed(System.Int32)">
@@ -26422,7 +26442,7 @@
         </member>
         <member name="M:Godot.KinematicBody.MoveAndCollide(Godot.Vector3,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            <para>Moves the body along the vector <c>rel_vec</c>. The body will stop if it collides. Returns a <see cref="T:Godot.KinematicCollision"/>, which contains information about the collision.</para>
+            <para>Moves the body along the vector <c>rel_vec</c>. The body will stop if it collides. Returns a <see cref="T:Godot.KinematicCollision"/>, which contains information about the collision when stopped, or when touching another body along the motion.</para>
             <para>If <c>test_only</c> is <c>true</c>, the body does not move but the would-be collision information is given.</para>
             </summary>
         </member>
@@ -26450,7 +26470,8 @@
         </member>
         <member name="M:Godot.KinematicBody.TestMove(Godot.Transform,Godot.Vector3,System.Boolean)">
             <summary>
-            <para>Checks for collisions without moving the body. Virtually sets the node's position, scale and rotation to that of the given <see cref="T:Godot.Transform"/>, then tries to move the body along the vector <c>rel_vec</c>. Returns <c>true</c> if a collision would occur.</para>
+            <para>Checks for collisions without moving the body. Virtually sets the node's position, scale and rotation to that of the given <see cref="T:Godot.Transform"/>, then tries to move the body along the vector <c>rel_vec</c>. Returns <c>true</c> if a collision would stop the body from moving along the whole path.</para>
+            <para>Use <see cref="M:Godot.KinematicBody.MoveAndCollide(Godot.Vector3,System.Boolean,System.Boolean,System.Boolean)"/> instead for detecting collision with touching bodies.</para>
             </summary>
         </member>
         <member name="M:Godot.KinematicBody.IsOnFloor">
@@ -26531,7 +26552,7 @@
         </member>
         <member name="M:Godot.KinematicBody2D.MoveAndCollide(Godot.Vector2,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            <para>Moves the body along the vector <c>rel_vec</c>. The body will stop if it collides. Returns a <see cref="T:Godot.KinematicCollision2D"/>, which contains information about the collision.</para>
+            <para>Moves the body along the vector <c>rel_vec</c>. The body will stop if it collides. Returns a <see cref="T:Godot.KinematicCollision2D"/>, which contains information about the collision when stopped, or when touching another body along the motion.</para>
             <para>If <c>test_only</c> is <c>true</c>, the body does not move but the would-be collision information is given.</para>
             </summary>
         </member>
@@ -26559,7 +26580,8 @@
         </member>
         <member name="M:Godot.KinematicBody2D.TestMove(Godot.Transform2D,Godot.Vector2,System.Boolean)">
             <summary>
-            <para>Checks for collisions without moving the body. Virtually sets the node's position, scale and rotation to that of the given <see cref="T:Godot.Transform2D"/>, then tries to move the body along the vector <c>rel_vec</c>. Returns <c>true</c> if a collision would occur.</para>
+            <para>Checks for collisions without moving the body. Virtually sets the node's position, scale and rotation to that of the given <see cref="T:Godot.Transform2D"/>, then tries to move the body along the vector <c>rel_vec</c>. Returns <c>true</c> if a collision would stop the body from moving along the whole path.</para>
+            <para>Use <see cref="M:Godot.KinematicBody2D.MoveAndCollide(Godot.Vector2,System.Boolean,System.Boolean,System.Boolean)"/> instead for detecting collision with touching bodies.</para>
             </summary>
         </member>
         <member name="M:Godot.KinematicBody2D.IsOnFloor">
@@ -29444,7 +29466,7 @@
             var polygon = NavigationPolygon.new()
             var vertices = PoolVector2Array([Vector2(0, 0), Vector2(0, 50), Vector2(50, 50), Vector2(50, 0)])
             polygon.set_vertices(vertices)
-            var indices = PoolIntArray(0, 3, 1)
+            var indices = PoolIntArray([0, 1, 2, 3])
             polygon.add_polygon(indices)
             $NavigationPolygonInstance.navpoly = polygon
             </code></para>
@@ -31127,8 +31149,8 @@
         </member>
         <member name="P:Godot.ParticlesMaterial.AngularVelocity">
             <summary>
-            <para>Initial angular velocity applied to each particle. Sets the speed of rotation of the particle.</para>
-            <para>Only applied when <see cref="P:Godot.ParticlesMaterial.FlagDisableZ"/> or <see cref="P:Godot.ParticlesMaterial.FlagRotateY"/> are <c>true</c> or the <see cref="T:Godot.SpatialMaterial"/> being used to draw the particle is using <see cref="F:Godot.SpatialMaterial.BillboardMode.Particles"/>.</para>
+            <para>Initial angular velocity applied to each particle in degrees per second. Sets the speed of rotation of the particle.</para>
+            <para>Note: Only applied when <see cref="P:Godot.ParticlesMaterial.FlagDisableZ"/> or <see cref="P:Godot.ParticlesMaterial.FlagRotateY"/> are <c>true</c> or the <see cref="T:Godot.SpatialMaterial"/> being used to draw the particle is using <see cref="F:Godot.SpatialMaterial.BillboardMode.Particles"/>.</para>
             </summary>
         </member>
         <member name="P:Godot.ParticlesMaterial.AngularVelocityRandom">
@@ -31144,7 +31166,7 @@
         <member name="P:Godot.ParticlesMaterial.OrbitVelocity">
             <summary>
             <para>Orbital velocity applied to each particle. Makes the particles circle around origin. Specified in number of full rotations around origin per second.</para>
-            <para>Only available when <see cref="P:Godot.ParticlesMaterial.FlagDisableZ"/> is <c>true</c>.</para>
+            <para>Note: Only available when <see cref="P:Godot.ParticlesMaterial.FlagDisableZ"/> is <c>true</c>.</para>
             </summary>
         </member>
         <member name="P:Godot.ParticlesMaterial.OrbitVelocityRandom">
@@ -31220,7 +31242,7 @@
         <member name="P:Godot.ParticlesMaterial.Angle">
             <summary>
             <para>Initial rotation applied to each particle, in degrees.</para>
-            <para>Only applied when <see cref="P:Godot.ParticlesMaterial.FlagDisableZ"/> or <see cref="P:Godot.ParticlesMaterial.FlagRotateY"/> are <c>true</c> or the <see cref="T:Godot.SpatialMaterial"/> being used to draw the particle is using <see cref="F:Godot.SpatialMaterial.BillboardMode.Particles"/>.</para>
+            <para>Note: Only applied when <see cref="P:Godot.ParticlesMaterial.FlagDisableZ"/> or <see cref="P:Godot.ParticlesMaterial.FlagRotateY"/> are <c>true</c> or the <see cref="T:Godot.SpatialMaterial"/> being used to draw the particle is using <see cref="F:Godot.SpatialMaterial.BillboardMode.Particles"/>.</para>
             </summary>
         </member>
         <member name="P:Godot.ParticlesMaterial.AngleRandom">
@@ -31693,12 +31715,12 @@
         </member>
         <member name="P:Godot.Physics2DDirectBodyState.AngularVelocity">
             <summary>
-            <para>The body's rotational velocity.</para>
+            <para>The body's rotational velocity in radians per second.</para>
             </summary>
         </member>
         <member name="P:Godot.Physics2DDirectBodyState.LinearVelocity">
             <summary>
-            <para>The body's linear velocity.</para>
+            <para>The body's linear velocity in pixels per second.</para>
             </summary>
         </member>
         <member name="P:Godot.Physics2DDirectBodyState.Sleeping">
@@ -31825,12 +31847,24 @@
             <para><c>metadata</c>: The intersecting shape's metadata. This metadata is different from <see cref="M:Godot.Object.GetMeta(System.String)"/>, and is set with <see cref="M:Godot.Physics2DServer.ShapeSetData(Godot.RID,System.Object)"/>.</para>
             <para><c>rid</c>: The intersecting object's <see cref="T:Godot.RID"/>.</para>
             <para><c>shape</c>: The shape index of the colliding shape.</para>
-            <para>Additionally, the method can take an <c>exclude</c> array of objects or <see cref="T:Godot.RID"/>s that are to be excluded from collisions, a <c>collision_mask</c> bitmask representing the physics layers to check in, or booleans to determine if the ray should collide with <see cref="T:Godot.PhysicsBody"/>s or <see cref="T:Godot.Area"/>s, respectively.</para>
+            <para>The number of intersections can be limited with the <c>max_results</c> parameter, to reduce the processing time.</para>
+            <para>Additionally, the method can take an <c>exclude</c> array of objects or <see cref="T:Godot.RID"/>s that are to be excluded from collisions, a <c>collision_mask</c> bitmask representing the physics layers to check in, or booleans to determine if the ray should collide with <see cref="T:Godot.PhysicsBody2D"/>s or <see cref="T:Godot.Area2D"/>s, respectively.</para>
             <para>Note: <see cref="T:Godot.ConcavePolygonShape2D"/>s and <see cref="T:Godot.CollisionPolygon2D"/>s in <c>Segments</c> build mode are not solid shapes. Therefore, they will not be detected.</para>
             </summary>
             <param name="exclude">If the parameter is null, then the default value is new Godot.Collections.Array { }</param>
         </member>
         <member name="M:Godot.Physics2DDirectSpaceState.IntersectPointOnCanvas(Godot.Vector2,System.UInt64,System.Int32,Godot.Collections.Array,System.UInt32,System.Boolean,System.Boolean)">
+            <summary>
+            <para>Checks whether a point is inside any solid shape, in a specific canvas layer given by <c>canvas_instance_id</c>. The shapes the point is inside of are returned in an array containing dictionaries with the following fields:</para>
+            <para><c>collider</c>: The colliding object.</para>
+            <para><c>collider_id</c>: The colliding object's ID.</para>
+            <para><c>metadata</c>: The intersecting shape's metadata. This metadata is different from <see cref="M:Godot.Object.GetMeta(System.String)"/>, and is set with <see cref="M:Godot.Physics2DServer.ShapeSetData(Godot.RID,System.Object)"/>.</para>
+            <para><c>rid</c>: The intersecting object's <see cref="T:Godot.RID"/>.</para>
+            <para><c>shape</c>: The shape index of the colliding shape.</para>
+            <para>The number of intersections can be limited with the <c>max_results</c> parameter, to reduce the processing time.</para>
+            <para>Additionally, the method can take an <c>exclude</c> array of objects or <see cref="T:Godot.RID"/>s that are to be excluded from collisions, a <c>collision_mask</c> bitmask representing the physics layers to check in, or booleans to determine if the ray should collide with <see cref="T:Godot.PhysicsBody2D"/>s or <see cref="T:Godot.Area2D"/>s, respectively.</para>
+            <para>Note: <see cref="T:Godot.ConcavePolygonShape2D"/>s and <see cref="T:Godot.CollisionPolygon2D"/>s in <c>Segments</c> build mode are not solid shapes. Therefore, they will not be detected.</para>
+            </summary>
             <param name="exclude">If the parameter is null, then the default value is new Godot.Collections.Array { }</param>
         </member>
         <member name="M:Godot.Physics2DDirectSpaceState.IntersectRay(Godot.Vector2,Godot.Vector2,Godot.Collections.Array,System.UInt32,System.Boolean,System.Boolean)">
@@ -31844,7 +31878,7 @@
             <para><c>rid</c>: The intersecting object's <see cref="T:Godot.RID"/>.</para>
             <para><c>shape</c>: The shape index of the colliding shape.</para>
             <para>If the ray did not intersect anything, then an empty dictionary is returned instead.</para>
-            <para>Additionally, the method can take an <c>exclude</c> array of objects or <see cref="T:Godot.RID"/>s that are to be excluded from collisions, a <c>collision_mask</c> bitmask representing the physics layers to check in, or booleans to determine if the ray should collide with <see cref="T:Godot.PhysicsBody"/>s or <see cref="T:Godot.Area"/>s, respectively.</para>
+            <para>Additionally, the method can take an <c>exclude</c> array of objects or <see cref="T:Godot.RID"/>s that are to be excluded from collisions, a <c>collision_mask</c> bitmask representing the physics layers to check in, or booleans to determine if the ray should collide with <see cref="T:Godot.PhysicsBody2D"/>s or <see cref="T:Godot.Area2D"/>s, respectively.</para>
             </summary>
             <param name="exclude">If the parameter is null, then the default value is new Godot.Collections.Array { }</param>
         </member>
@@ -32557,7 +32591,7 @@
         </member>
         <member name="M:Godot.Physics2DServer.BodyGetDirectState(Godot.RID)">
             <summary>
-            <para>Returns the <see cref="T:Godot.Physics2DDirectBodyState"/> of the body.</para>
+            <para>Returns the <see cref="T:Godot.Physics2DDirectBodyState"/> of the body. Returns <c>null</c> if the body is destroyed or removed from the physics space.</para>
             </summary>
         </member>
         <member name="M:Godot.Physics2DServer.JointSetParam(Godot.RID,Godot.Physics2DServer.JointParam,System.Single)">
@@ -32752,12 +32786,12 @@
         </member>
         <member name="P:Godot.PhysicsDirectBodyState.AngularVelocity">
             <summary>
-            <para>The body's rotational velocity.</para>
+            <para>The body's rotational velocity in axis-angle format. The magnitude of the vector is the rotation rate in radians per second.</para>
             </summary>
         </member>
         <member name="P:Godot.PhysicsDirectBodyState.LinearVelocity">
             <summary>
-            <para>The body's linear velocity.</para>
+            <para>The body's linear velocity in units per second.</para>
             </summary>
         </member>
         <member name="P:Godot.PhysicsDirectBodyState.Sleeping">
@@ -32877,6 +32911,18 @@
             <summary>
             <para>Direct access object to a space in the <see cref="T:Godot.PhysicsServer"/>. It's used mainly to do queries against objects and areas residing in a given space.</para>
             </summary>
+        </member>
+        <member name="M:Godot.PhysicsDirectSpaceState.IntersectPoint(Godot.Vector3,System.Int32,Godot.Collections.Array,System.UInt32,System.Boolean,System.Boolean)">
+            <summary>
+            <para>Checks whether a point is inside any solid shape. The shapes the point is inside of are returned in an array containing dictionaries with the following fields:</para>
+            <para><c>collider</c>: The colliding object.</para>
+            <para><c>collider_id</c>: The colliding object's ID.</para>
+            <para><c>rid</c>: The intersecting object's <see cref="T:Godot.RID"/>.</para>
+            <para><c>shape</c>: The shape index of the colliding shape.</para>
+            <para>The number of intersections can be limited with the <c>max_results</c> parameter, to reduce the processing time.</para>
+            <para>Additionally, the method can take an <c>exclude</c> array of objects or <see cref="T:Godot.RID"/>s that are to be excluded from collisions, a <c>collision_mask</c> bitmask representing the physics layers to check in, or booleans to determine if the ray should collide with <see cref="T:Godot.PhysicsBody"/>s or <see cref="T:Godot.Area"/>s, respectively.</para>
+            </summary>
+            <param name="exclude">If the parameter is null, then the default value is new Godot.Collections.Array { }</param>
         </member>
         <member name="M:Godot.PhysicsDirectSpaceState.IntersectRay(Godot.Vector3,Godot.Vector3,Godot.Collections.Array,System.UInt32,System.Boolean,System.Boolean)">
             <summary>
@@ -33762,7 +33808,6 @@
         <member name="M:Godot.PhysicsServer.BodyGetCollisionMask(Godot.RID)">
             <summary>
             <para>Returns the physics layer or layers a body can collide with.</para>
-            <para>-</para>
             </summary>
         </member>
         <member name="M:Godot.PhysicsServer.BodyAddShape(Godot.RID,Godot.RID,System.Nullable{Godot.Transform},System.Boolean)">
@@ -33916,7 +33961,7 @@
         </member>
         <member name="M:Godot.PhysicsServer.BodyGetDirectState(Godot.RID)">
             <summary>
-            <para>Returns the <see cref="T:Godot.PhysicsDirectBodyState"/> of the body.</para>
+            <para>Returns the <see cref="T:Godot.PhysicsDirectBodyState"/> of the body. Returns <c>null</c> if the body is destroyed or removed from the physics space.</para>
             </summary>
         </member>
         <member name="M:Godot.PhysicsServer.JointCreatePin(Godot.RID,Godot.Vector3,Godot.RID,Godot.Vector3)">
@@ -34962,8 +35007,8 @@
             <summary>
             <para>Contains global variables accessible from everywhere. Use <see cref="M:Godot.ProjectSettings.GetSetting(System.String)"/>, <see cref="M:Godot.ProjectSettings.SetSetting(System.String,System.Object)"/> or <see cref="M:Godot.ProjectSettings.HasSetting(System.String)"/> to access them. Variables stored in <c>project.godot</c> are also loaded into ProjectSettings, making this object very useful for reading custom game configuration options.</para>
             <para>When naming a Project Settings property, use the full path to the setting including the category. For example, <c>"application/config/name"</c> for the project name. Category and property names can be viewed in the Project Settings dialog.</para>
-            <para>Feature tags: Project settings can be overridden for specific platforms and configurations (debug, release, ...) using <a href="https://docs.godotengine.org/en/latest/tutorials/export/feature_tags.html">feature tags</a>.</para>
-            <para>Overriding: Any project setting can be overridden by creating a file named <c>override.cfg</c> in the project's root directory. This can also be used in exported projects by placing this file in the same directory as the project binary. Overriding will still take the base project settings' <a href="https://docs.godotengine.org/en/latest/tutorials/export/feature_tags.html">feature tags</a> in account. Therefore, make sure to also override the setting with the desired feature tags if you want them to override base project settings on all platforms and configurations.</para>
+            <para>Feature tags: Project settings can be overridden for specific platforms and configurations (debug, release, ...) using <a href="https://docs.godotengine.org/en/3.4/tutorials/export/feature_tags.html">feature tags</a>.</para>
+            <para>Overriding: Any project setting can be overridden by creating a file named <c>override.cfg</c> in the project's root directory. This can also be used in exported projects by placing this file in the same directory as the project binary. Overriding will still take the base project settings' <a href="https://docs.godotengine.org/en/3.4/tutorials/export/feature_tags.html">feature tags</a> in account. Therefore, make sure to also override the setting with the desired feature tags if you want them to override base project settings on all platforms and configurations.</para>
             </summary>
         </member>
         <member name="M:Godot.ProjectSettings.HasSetting(System.String)">
@@ -35553,24 +35598,25 @@
         <member name="T:Godot.ReflectionProbe">
             <summary>
             <para>Capture its surroundings as a dual paraboloid image, and stores versions of it with increasing levels of blur to simulate different material roughnesses.</para>
-            <para>The <see cref="T:Godot.ReflectionProbe"/> is used to create high-quality reflections at the cost of performance. It can be combined with <see cref="T:Godot.GIProbe"/>s and Screen Space Reflections to achieve high quality reflections. <see cref="T:Godot.ReflectionProbe"/>s render all objects within their <see cref="P:Godot.ReflectionProbe.CullMask"/>, so updating them can be quite expensive. It is best to update them once with the important static objects and then leave them.</para>
-            <para>Note: By default Godot will only render 16 reflection probes. If you need more, increase the number of atlas subdivisions. This setting can be found in .</para>
+            <para>The <see cref="T:Godot.ReflectionProbe"/> is used to create high-quality reflections at a low performance cost (when <see cref="P:Godot.ReflectionProbe.UpdateMode"/> is <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Once"/>). <see cref="T:Godot.ReflectionProbe"/>s can be blended together and with the rest of the scene smoothly. <see cref="T:Godot.ReflectionProbe"/>s can also be combined with <see cref="T:Godot.GIProbe"/> and screen-space reflections (<see cref="P:Godot.Environment.SsReflectionsEnabled"/>) to get more accurate reflections in specific areas. <see cref="T:Godot.ReflectionProbe"/>s render all objects within their <see cref="P:Godot.ReflectionProbe.CullMask"/>, so updating them can be quite expensive. It is best to update them once with the important static objects and then leave them as-is.</para>
+            <para>Note: Unlike <see cref="T:Godot.GIProbe"/>, <see cref="T:Godot.ReflectionProbe"/>s only source their environment from a <see cref="T:Godot.WorldEnvironment"/> node. If you specify an <see cref="T:Godot.Environment"/> resource within a <see cref="T:Godot.Camera"/> node, it will be ignored by the <see cref="T:Godot.ReflectionProbe"/>. This can lead to incorrect lighting within the <see cref="T:Godot.ReflectionProbe"/>.</para>
+            <para>Note: By default, Godot will only render 16 reflection probes. If you need more, increase the number of atlas subdivisions. This setting can be found in .</para>
             <para>Note: The GLES2 backend will only display two reflection probes at the same time for a single mesh. If possible, split up large meshes that span over multiple reflection probes into smaller ones.</para>
             </summary>
         </member>
         <member name="F:Godot.ReflectionProbe.UpdateModeEnum.Once">
             <summary>
-            <para>Update the probe once on the next frame.</para>
+            <para>Update the probe once on the next frame (recommended for most objects). The corresponding radiance map will be generated over the following six frames. This takes more time to update than <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Always"/>, but it has a lower performance cost and can result in higher-quality reflections. The ReflectionProbe is updated when its transform changes, but not when nearby geometry changes. You can force a <see cref="T:Godot.ReflectionProbe"/> update by moving the <see cref="T:Godot.ReflectionProbe"/> slightly in any direction.</para>
             </summary>
         </member>
         <member name="F:Godot.ReflectionProbe.UpdateModeEnum.Always">
             <summary>
-            <para>Update the probe every frame. This is needed when you want to capture dynamic objects. However, it results in an increased render time. Use <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Once"/> whenever possible.</para>
+            <para>Update the probe every frame. This provides better results for fast-moving dynamic objects (such as cars). However, it has a significant performance cost. Due to the cost, it's recommended to only use one ReflectionProbe with <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Always"/> at most per scene. For all other use cases, use <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Once"/>.</para>
             </summary>
         </member>
         <member name="P:Godot.ReflectionProbe.UpdateMode">
             <summary>
-            <para>Sets how frequently the probe is updated. Can be <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Once"/> or <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Always"/>.</para>
+            <para>Sets how frequently the <see cref="T:Godot.ReflectionProbe"/> is updated. Can be <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Once"/> or <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Always"/>.</para>
             </summary>
         </member>
         <member name="P:Godot.ReflectionProbe.Intensity">
@@ -35580,22 +35626,24 @@
         </member>
         <member name="P:Godot.ReflectionProbe.MaxDistance">
             <summary>
-            <para>Sets the max distance away from the probe an object can be before it is culled.</para>
+            <para>The maximum distance away from the <see cref="T:Godot.ReflectionProbe"/> an object can be before it is culled. Decrease this to improve performance, especially when using the <see cref="F:Godot.ReflectionProbe.UpdateModeEnum.Always"/> <see cref="P:Godot.ReflectionProbe.UpdateMode"/>.</para>
             </summary>
         </member>
         <member name="P:Godot.ReflectionProbe.Extents">
             <summary>
             <para>The size of the reflection probe. The larger the extents the more space covered by the probe which will lower the perceived resolution. It is best to keep the extents only as large as you need them.</para>
+            <para>Note: To better fit areas that are not aligned to the grid, you can rotate the <see cref="T:Godot.ReflectionProbe"/> node.</para>
             </summary>
         </member>
         <member name="P:Godot.ReflectionProbe.OriginOffset">
             <summary>
-            <para>Sets the origin offset to be used when this reflection probe is in box project mode.</para>
+            <para>Sets the origin offset to be used when this <see cref="T:Godot.ReflectionProbe"/> is in <see cref="P:Godot.ReflectionProbe.BoxProjection"/> mode. This can be set to a non-zero value to ensure a reflection fits a rectangle-shaped room, while reducing the amount of objects that "get in the way" of the reflection.</para>
             </summary>
         </member>
         <member name="P:Godot.ReflectionProbe.BoxProjection">
             <summary>
             <para>If <c>true</c>, enables box projection. This makes reflections look more correct in rectangle-shaped rooms by offsetting the reflection center depending on the camera's location.</para>
+            <para>Note: To better fit rectangle-shaped rooms that are not aligned to the grid, you can rotate the <see cref="T:Godot.ReflectionProbe"/> node.</para>
             </summary>
         </member>
         <member name="P:Godot.ReflectionProbe.EnableShadows">
@@ -35605,7 +35653,7 @@
         </member>
         <member name="P:Godot.ReflectionProbe.CullMask">
             <summary>
-            <para>Sets the cull mask which determines what objects are drawn by this probe. Every <see cref="T:Godot.VisualInstance"/> with a layer included in this cull mask will be rendered by the probe. It is best to only include large objects which are likely to take up a lot of space in the reflection in order to save on rendering cost.</para>
+            <para>Sets the cull mask which determines what objects are drawn by this probe. Every <see cref="T:Godot.VisualInstance"/> with a layer included in this cull mask will be rendered by the probe. To improve performance, it is best to only include large objects which are likely to take up a lot of space in the reflection.</para>
             </summary>
         </member>
         <member name="P:Godot.ReflectionProbe.InteriorEnable">
@@ -36482,7 +36530,7 @@
         </member>
         <member name="P:Godot.RigidBody.LinearVelocity">
             <summary>
-            <para>The body's linear velocity. Can be used sporadically, but don't set this every frame, because physics may run in another thread and runs at a different granularity. Use <see cref="M:Godot.RigidBody._IntegrateForces(Godot.PhysicsDirectBodyState)"/> as your process loop for precise control of the body state.</para>
+            <para>The body's linear velocity in units per second. Can be used sporadically, but don't set this every frame, because physics may run in another thread and runs at a different granularity. Use <see cref="M:Godot.RigidBody._IntegrateForces(Godot.PhysicsDirectBodyState)"/> as your process loop for precise control of the body state.</para>
             </summary>
         </member>
         <member name="P:Godot.RigidBody.LinearDamp">
@@ -36493,7 +36541,7 @@
         </member>
         <member name="P:Godot.RigidBody.AngularVelocity">
             <summary>
-            <para>RigidBody's rotational velocity.</para>
+            <para>The body's rotational velocity in axis-angle format. The magnitude of the vector is the rotation rate in radians per second.</para>
             </summary>
         </member>
         <member name="P:Godot.RigidBody.AngularDamp">
@@ -36689,7 +36737,7 @@
         </member>
         <member name="P:Godot.RigidBody2D.LinearVelocity">
             <summary>
-            <para>The body's linear velocity.</para>
+            <para>The body's linear velocity in pixels per second. Can be used sporadically, but don't set this every frame, because physics may run in another thread and runs at a different granularity. Use <see cref="M:Godot.RigidBody2D._IntegrateForces(Godot.Physics2DDirectBodyState)"/> as your process loop for precise control of the body state.</para>
             </summary>
         </member>
         <member name="P:Godot.RigidBody2D.LinearDamp">
@@ -36700,7 +36748,7 @@
         </member>
         <member name="P:Godot.RigidBody2D.AngularVelocity">
             <summary>
-            <para>The body's rotational velocity.</para>
+            <para>The body's rotational velocity in radians per second.</para>
             </summary>
         </member>
         <member name="P:Godot.RigidBody2D.AngularDamp">
@@ -36914,6 +36962,13 @@
             <summary>
             <para>Usually we don't want objects that only just cross a boundary into an adjacent <see cref="T:Godot.Room"/> to sprawl into that room. To prevent this, each <see cref="T:Godot.Portal"/> has an extra margin, or tolerance zone where objects can enter without sprawling to a neighbouring room.</para>
             <para>In most cases you can set this here for all portals. It is possible to override the margin for each portal.</para>
+            </summary>
+        </member>
+        <member name="P:Godot.RoomManager.RoamingExpansionMargin">
+            <summary>
+            <para>In order to reduce processing for roaming objects, an expansion is applied to their AABB as they move. This expanded volume is used to calculate which rooms the roaming object is within. If the object's exact AABB is still within this expanded volume on the next move, there is no need to reprocess the object, which can save considerable CPU.</para>
+            <para>The downside is that if the expansion is too much, the object may end up unexpectedly sprawling into neighbouring rooms and showing up where it might otherwise be culled.</para>
+            <para>In order to balance roaming performance against culling accuracy, this expansion margin can be customized by the user. It will typically depend on your room and object sizes, and movement speeds. The default value should work reasonably in most circumstances.</para>
             </summary>
         </member>
         <member name="M:Godot.RoomManager.RoomsConvert">
@@ -37156,7 +37211,9 @@
         </member>
         <member name="P:Godot.SceneTree.UseFontOversampling">
             <summary>
-            <para>If <c>true</c>, font oversampling is used.</para>
+            <para>If <c>true</c>, font oversampling is enabled. This means that <see cref="T:Godot.DynamicFont"/>s will be rendered at higher or lower size than configured based on the viewport's scaling ratio. For example, in a viewport scaled with a factor 1.5, a font configured with size 14 would be rendered with size 21 (<c>14 * 1.5</c>).</para>
+            <para>Note: Font oversampling is only used if the viewport stretch mode is <see cref="F:Godot.SceneTree.StretchMode.Viewport"/>, and if the stretch aspect mode is different from <see cref="F:Godot.SceneTree.StretchAspect.Ignore"/>.</para>
+            <para>Note: This property is set automatically for the active <see cref="T:Godot.SceneTree"/> when the project starts based on the configuration of <c>rendering/quality/dynamic_fonts/use_oversampling</c> in <see cref="T:Godot.ProjectSettings"/>. The property can however be overridden at runtime as needed.</para>
             </summary>
         </member>
         <member name="P:Godot.SceneTree.EditedSceneRoot">
@@ -37355,11 +37412,12 @@
                 yield(get_tree().create_timer(1.0), "timeout")
                 print("Timer ended.")
             </code></para>
+            <para>The timer will be automatically freed after its time elapses.</para>
             </summary>
         </member>
         <member name="P:Godot.SceneTreeTimer.TimeLeft">
             <summary>
-            <para>The time remaining.</para>
+            <para>The time remaining (in seconds).</para>
             </summary>
         </member>
         <member name="T:Godot.Script">
@@ -37493,6 +37551,12 @@
         <member name="M:Godot.ScrollContainer.EnsureControlVisible(Godot.Control)">
             <summary>
             <para>Ensures the given <c>control</c> is visible (must be a direct or indirect child of the ScrollContainer). Used by <see cref="P:Godot.ScrollContainer.FollowFocus"/>.</para>
+            <para>Note: This will not work on a node that was just added during the same frame. If you want to scroll to a newly added child, you must wait until the next frame using <c>SceneTree.idle_frame</c>:</para>
+            <para><code>
+            add_child(child_node)
+            yield(get_tree(), "idle_frame")
+            ensure_control_visible(child_node)
+            </code></para>
             </summary>
         </member>
         <member name="T:Godot.SegmentShape2D">
@@ -41004,6 +41068,7 @@
         <member name="M:Godot.SurfaceTool.AppendFrom(Godot.Mesh,System.Int32,Godot.Transform)">
             <summary>
             <para>Append vertices from a given <see cref="T:Godot.Mesh"/> surface onto the current vertex array with specified <see cref="T:Godot.Transform"/>.</para>
+            <para>Note: Using <see cref="M:Godot.SurfaceTool.AppendFrom(Godot.Mesh,System.Int32,Godot.Transform)"/> on a <see cref="T:Godot.Thread"/> is much slower as the GPU must communicate data back to the CPU, while also causing the main thread to stall (as OpenGL is not thread-safe). Consider requesting a copy of the mesh, converting it to an <see cref="T:Godot.ArrayMesh"/> and adding vertices manually instead.</para>
             </summary>
         </member>
         <member name="M:Godot.SurfaceTool.Commit(Godot.ArrayMesh,System.UInt32)">
@@ -41052,8 +41117,9 @@
         </member>
         <member name="T:Godot.TabContainer">
             <summary>
-            <para>Sets the active tab's <c>visible</c> property to the value <c>true</c>. Sets all other children's to <c>false</c>.</para>
+            <para>Arranges <see cref="T:Godot.Control"/> children into a tabbed view, creating a tab for each one. The active tab's corresponding <see cref="T:Godot.Control"/> has its <c>visible</c> property set to <c>true</c>, and all other children's to <c>false</c>.</para>
             <para>Ignores non-<see cref="T:Godot.Control"/> children.</para>
+            <para>Note: The drawing of the clickable tabs themselves is handled by this node. Adding <see cref="T:Godot.Tabs"/> as children is not needed.</para>
             </summary>
         </member>
         <member name="F:Godot.TabContainer.TabAlignEnum.Left">
@@ -41458,6 +41524,11 @@
             <para>If <c>true</c>, the "space" character will have a visible representation.</para>
             </summary>
         </member>
+        <member name="P:Godot.TextEdit.BookmarkGutter">
+            <summary>
+            <para>If <c>true</c>, the bookmark gutter is visible.</para>
+            </summary>
+        </member>
         <member name="P:Godot.TextEdit.BreakpointGutter">
             <summary>
             <para>If <c>true</c>, the breakpoint gutter is visible.</para>
@@ -41581,6 +41652,31 @@
             <para>Sets the text for a specific line.</para>
             </summary>
         </member>
+        <member name="M:Godot.TextEdit.GetLineWrappedText(System.Int32)">
+            <summary>
+            <para>Returns an array of <see cref="T:System.String"/>s representing each wrapped index.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.TextEdit.GetLineWidth(System.Int32,System.Int32)">
+            <summary>
+            <para>Returns the width in pixels of the <c>wrap_index</c> on <c>line</c>.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.TextEdit.GetLineHeight">
+            <summary>
+            <para>Returns the height of a largest line.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.TextEdit.IsLineWrapped(System.Int32)">
+            <summary>
+            <para>Returns if the given line is wrapped.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.TextEdit.GetLineWrapCount(System.Int32)">
+            <summary>
+            <para>Returns the number of times the given line is wrapped.</para>
+            </summary>
+        </member>
         <member name="M:Godot.TextEdit.CenterViewportToCursor">
             <summary>
             <para>Centers the viewport on the line the editing cursor is at. This also resets the <see cref="P:Godot.TextEdit.ScrollHorizontal"/> value to <c>0</c>.</para>
@@ -41607,6 +41703,23 @@
         <member name="M:Godot.TextEdit.CursorGetLine">
             <summary>
             <para>Returns the line the editing cursor is at.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.TextEdit.GetPosAtLineColumn(System.Int32,System.Int32)">
+            <summary>
+            <para>Returns the local position for the given <c>line</c> and <c>column</c>. If <c>x</c> or <c>y</c> of the returned vector equal <c>-1</c>, the position is outside of the viewable area of the control.</para>
+            <para>Note: The Y position corresponds to the bottom side of the line. Use <see cref="M:Godot.TextEdit.GetRectAtLineColumn(System.Int32,System.Int32)"/> to get the top side position.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.TextEdit.GetRectAtLineColumn(System.Int32,System.Int32)">
+            <summary>
+            <para>Returns the local position and size for the grapheme at the given <c>line</c> and <c>column</c>. If <c>x</c> or <c>y</c> position of the returned rect equal <c>-1</c>, the position is outside of the viewable area of the control.</para>
+            <para>Note: The Y position of the returned rect corresponds to the top side of the line, unlike <see cref="M:Godot.TextEdit.GetPosAtLineColumn(System.Int32,System.Int32)"/> which returns the bottom side.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.TextEdit.GetLineColumnAtPos(Godot.Vector2)">
+            <summary>
+            <para>Returns the line and column at the given position. In the returned vector, <c>x</c> is the column, <c>y</c> is the line.</para>
             </summary>
         </member>
         <member name="M:Godot.TextEdit.IsLineSetAsSafe(System.Int32)">
@@ -41744,6 +41857,11 @@
         <member name="M:Godot.TextEdit.ClearUndoHistory">
             <summary>
             <para>Clears the undo history.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.TextEdit.GetTotalGutterWidth">
+            <summary>
+            <para>Returns the total width of all gutters and internal padding.</para>
             </summary>
         </member>
         <member name="M:Godot.TextEdit.SetLineAsHidden(System.Int32,System.Boolean)">
@@ -41938,7 +42056,8 @@
         </member>
         <member name="T:Godot.Texture3D">
             <summary>
-            <para>Texture3D is a 3-dimensional texture that has a width, height, and depth.</para>
+            <para>Texture3D is a 3-dimensional <see cref="T:Godot.Texture"/> that has a width, height, and depth. See also <see cref="T:Godot.TextureArray"/>.</para>
+            <para>Note: <see cref="T:Godot.Texture3D"/>s can only be sampled in shaders in the GLES3 backend. In GLES2, their data can be accessed via scripting, but there is no way to render them in a hardware-accelerated manner.</para>
             </summary>
         </member>
         <member name="M:Godot.Texture3D.Create(System.UInt32,System.UInt32,System.UInt32,Godot.Image.Format,System.UInt32)">
@@ -41948,8 +42067,8 @@
         </member>
         <member name="T:Godot.TextureArray">
             <summary>
-            <para><see cref="T:Godot.TextureArray"/>s store an array of <see cref="T:Godot.Image"/>s in a single <see cref="T:Godot.Texture"/> primitive. Each layer of the texture array has its own mipmap chain. This makes it is a good alternative to texture atlases.</para>
-            <para><see cref="T:Godot.TextureArray"/>s must be displayed using shaders. After importing your file as a <see cref="T:Godot.TextureArray"/> and setting the appropriate Horizontal and Vertical Slices, display it by setting it as a uniform to a shader, for example:</para>
+            <para><see cref="T:Godot.TextureArray"/>s store an array of <see cref="T:Godot.Image"/>s in a single <see cref="T:Godot.Texture"/> primitive. Each layer of the texture array has its own mipmap chain. This makes it is a good alternative to texture atlases. See also <see cref="T:Godot.Texture3D"/>.</para>
+            <para><see cref="T:Godot.TextureArray"/>s must be displayed using shaders. After importing your file as a <see cref="T:Godot.TextureArray"/> and setting the appropriate Horizontal and Vertical Slices, display it by setting it as a uniform to a shader, for example (2D):</para>
             <para><code>
             shader_type canvas_item;
             
@@ -41961,6 +42080,18 @@
             }
             </code></para>
             <para>Set the integer uniform "index" to show a particular part of the texture as defined by the Horizontal and Vertical Slices in the importer.</para>
+            <para>Note: When sampling an albedo texture from a texture array in 3D, the sRGB -&gt; linear conversion hint (<c>hint_albedo</c>) should be used to prevent colors from looking washed out:</para>
+            <para><code>
+            shader_type spatial;
+            
+            uniform sampler2DArray tex : hint_albedo;
+            uniform int index;
+            
+            void fragment() {
+                ALBEDO = texture(tex, vec3(UV.x, UV.y, float(index)));
+            }
+            </code></para>
+            <para>Note: <see cref="T:Godot.TextureArray"/>s can only be sampled in shaders in the GLES3 backend. In GLES2, their data can be accessed via scripting, but there is no way to render them in a hardware-accelerated manner.</para>
             </summary>
         </member>
         <member name="M:Godot.TextureArray.Create(System.UInt32,System.UInt32,System.UInt32,Godot.Image.Format,System.UInt32)">
@@ -45230,6 +45361,7 @@
             <para>Viewports can also choose to be audio listeners, so they generate positional audio depending on a 2D or 3D camera child of it.</para>
             <para>Also, viewports can be assigned to different screens in case the devices have multiple screens.</para>
             <para>Finally, viewports can also behave as render targets, in which case they will not be visible unless the associated texture is used to draw.</para>
+            <para>Note: By default, a newly created Viewport in Godot 3.x will appear to be upside down. Enabling <see cref="P:Godot.Viewport.RenderTargetVFlip"/> will display the Viewport with the correct orientation.</para>
             </summary>
         </member>
         <member name="F:Godot.Viewport.ClearMode.Always">
@@ -45506,7 +45638,7 @@
         </member>
         <member name="P:Godot.Viewport.RenderTargetVFlip">
             <summary>
-            <para>If <c>true</c>, the result of rendering will be flipped vertically.</para>
+            <para>If <c>true</c>, the result of rendering will be flipped vertically. Since Viewports in Godot 3.x render upside-down, it's recommended to set this to <c>true</c> in most situations.</para>
             </summary>
         </member>
         <member name="P:Godot.Viewport.RenderTargetClearMode">
@@ -45583,12 +45715,12 @@
         </member>
         <member name="M:Godot.Viewport.FindWorld2d">
             <summary>
-            <para>Returns the 2D world of the viewport.</para>
+            <para>Returns the first valid <see cref="T:Godot.World2D"/> for this viewport, searching the <see cref="P:Godot.Viewport.World2d"/> property of itself and any Viewport ancestor.</para>
             </summary>
         </member>
         <member name="M:Godot.Viewport.FindWorld">
             <summary>
-            <para>Returns the 3D world of the viewport, or if none the world of the parent viewport.</para>
+            <para>Returns the first valid <see cref="T:Godot.World"/> for this viewport, searching the <see cref="P:Godot.Viewport.World"/> property of itself and any Viewport ancestor.</para>
             </summary>
         </member>
         <member name="M:Godot.Viewport.GetFinalTransform">
@@ -45731,7 +45863,7 @@
             <summary>
             <para>The VisibilityEnabler will disable <see cref="T:Godot.RigidBody"/> and <see cref="T:Godot.AnimationPlayer"/> nodes when they are not visible. It will only affect other nodes within the same scene as the VisibilityEnabler itself.</para>
             <para>If you just want to receive notifications, use <see cref="T:Godot.VisibilityNotifier"/> instead.</para>
-            <para>Note: VisibilityEnabler uses an approximate heuristic for performance reasons. It doesn't take walls and other occlusion into account. The heuristic is an implementation detail and may change in future versions. If you need precise visibility checking, use another method such as adding an <see cref="T:Godot.Area"/> node as a child of a <see cref="T:Godot.Camera"/> node and/or <c>Vector3.dot</c>.</para>
+            <para>Note: VisibilityEnabler uses an approximate heuristic for performance reasons. It doesn't take walls and other occlusion into account (unless you are using <see cref="T:Godot.Portal"/>s). The heuristic is an implementation detail and may change in future versions. If you need precise visibility checking, use another method such as adding an <see cref="T:Godot.Area"/> node as a child of a <see cref="T:Godot.Camera"/> node and/or <c>Vector3.dot</c>.</para>
             <para>Note: VisibilityEnabler will not affect nodes added after scene initialization.</para>
             </summary>
         </member>
@@ -45857,7 +45989,7 @@
             <summary>
             <para>The VisibilityNotifier detects when it is visible on the screen. It also notifies when its bounding rectangle enters or exits the screen or a <see cref="T:Godot.Camera"/>'s view.</para>
             <para>If you want nodes to be disabled automatically when they exit the screen, use <see cref="T:Godot.VisibilityEnabler"/> instead.</para>
-            <para>Note: VisibilityNotifier uses an approximate heuristic for performance reasons. It doesn't take walls and other occlusion into account. The heuristic is an implementation detail and may change in future versions. If you need precise visibility checking, use another method such as adding an <see cref="T:Godot.Area"/> node as a child of a <see cref="T:Godot.Camera"/> node and/or <c>Vector3.dot</c>.</para>
+            <para>Note: VisibilityNotifier uses an approximate heuristic for performance reasons. It doesn't take walls and other occlusion into account (unless you are using <see cref="T:Godot.Portal"/>s). The heuristic is an implementation detail and may change in future versions. If you need precise visibility checking, use another method such as adding an <see cref="T:Godot.Area"/> node as a child of a <see cref="T:Godot.Camera"/> node and/or <c>Vector3.dot</c>.</para>
             </summary>
         </member>
         <member name="P:Godot.VisibilityNotifier.Aabb">
@@ -53168,7 +53300,8 @@
         </member>
         <member name="P:Godot.Engine.IterationsPerSecond">
             <summary>
-            <para>The number of fixed iterations per second. This controls how often physics simulation and <see cref="M:Godot.Node._PhysicsProcess(System.Single)"/> methods are run. This value should generally always be set to <c>60</c> or above, as Godot doesn't interpolate the physics step. As a result, values lower than <c>60</c> will look stuttery. This value can be increased to make input more reactive or work around tunneling issues, but keep in mind doing so will increase CPU usage.</para>
+            <para>The number of fixed iterations per second. This controls how often physics simulation and <see cref="M:Godot.Node._PhysicsProcess(System.Single)"/> methods are run. This value should generally always be set to <c>60</c> or above, as Godot doesn't interpolate the physics step. As a result, values lower than <c>60</c> will look stuttery. This value can be increased to make input more reactive or work around collision tunneling issues, but keep in mind doing so will increase CPU usage. See also <see cref="P:Godot.Engine.TargetFps"/> and .</para>
+            <para>Note: Only 8 physics ticks may be simulated per rendered frame at most. If more than 8 physics ticks have to be simulated per rendered frame to keep up with rendering, the game will appear to slow down (even if <c>delta</c> is used consistently in physics calculations). Therefore, it is recommended not to increase <see cref="P:Godot.Engine.IterationsPerSecond"/> above 240. Otherwise, the game will slow down when the rendering framerate goes below 30 FPS.</para>
             </summary>
         </member>
         <member name="P:Godot.Engine.TargetFps">
@@ -53611,6 +53744,7 @@
         <member name="M:Godot.File.StoreString(System.String)">
             <summary>
             <para>Appends <c>string</c> to the file without a line return, encoding the text as UTF-8.</para>
+            <para>Note: This method is intended to be used to write text files. The string is stored as a UTF-8 encoded buffer without string length or terminating zero, which means that it can't be loaded back easily. If you want to store a retrievable string in a binary file, consider using <see cref="M:Godot.File.StorePascalString(System.String)"/> instead. For retrieving strings from a text file, you can use <c>get_buffer(length).get_string_from_utf8()</c> (if you know the length) or <see cref="M:Godot.File.GetAsText"/>.</para>
             </summary>
         </member>
         <member name="M:Godot.File.StoreVar(System.Object,System.Boolean)">
@@ -54480,17 +54614,17 @@
         </member>
         <member name="M:Godot.OS.GetScreenPosition(System.Int32)">
             <summary>
-            <para>Returns the position of the specified screen by index. If <c>screen</c> is [/code]-1[/code] (the default value), the current screen will be used.</para>
+            <para>Returns the position of the specified screen by index. If <c>screen</c> is <c>-1</c> (the default value), the current screen will be used.</para>
             </summary>
         </member>
         <member name="M:Godot.OS.GetScreenSize(System.Int32)">
             <summary>
-            <para>Returns the dimensions in pixels of the specified screen. If <c>screen</c> is [/code]-1[/code] (the default value), the current screen will be used.</para>
+            <para>Returns the dimensions in pixels of the specified screen. If <c>screen</c> is <c>-1</c> (the default value), the current screen will be used.</para>
             </summary>
         </member>
         <member name="M:Godot.OS.GetScreenDpi(System.Int32)">
             <summary>
-            <para>Returns the dots per inch density of the specified screen. If <c>screen</c> is [/code]-1[/code] (the default value), the current screen will be used.</para>
+            <para>Returns the dots per inch density of the specified screen. If <c>screen</c> is <c>-1</c> (the default value), the current screen will be used.</para>
             <para>Note: On macOS, returned value is inaccurate if fractional display scaling mode is used.</para>
             <para>Note: On Android devices, the actual screen densities are grouped into six generalized densities:</para>
             <para><code>
@@ -54506,7 +54640,7 @@
         </member>
         <member name="M:Godot.OS.GetScreenScale(System.Int32)">
             <summary>
-            <para>Return the scale factor of the specified screen by index. If <c>screen</c> is [/code]-1[/code] (the default value), the current screen will be used.</para>
+            <para>Return the scale factor of the specified screen by index. If <c>screen</c> is <c>-1</c> (the default value), the current screen will be used.</para>
             <para>Note: On macOS returned value is <c>2.0</c> for hiDPI (Retina) screen, and <c>1.0</c> for all other cases.</para>
             <para>Note: This method is implemented on macOS.</para>
             </summary>
@@ -55090,7 +55224,7 @@
         </member>
         <member name="M:Godot.OS.HasFeature(System.String)">
             <summary>
-            <para>Returns <c>true</c> if the feature for the given feature tag is supported in the currently running instance, depending on the platform, build etc. Can be used to check whether you're currently running a debug build, on a certain platform or arch, etc. Refer to the <a href="https://docs.godotengine.org/en/3.4/getting_started/workflow/export/feature_tags.html">Feature Tags</a> documentation for more details.</para>
+            <para>Returns <c>true</c> if the feature for the given feature tag is supported in the currently running instance, depending on the platform, build etc. Can be used to check whether you're currently running a debug build, on a certain platform or arch, etc. Refer to the <a href="https://docs.godotengine.org/en/3.4/tutorials/export/feature_tags.html">Feature Tags</a> documentation for more details.</para>
             <para>Note: Tag names are case-sensitive.</para>
             </summary>
         </member>
