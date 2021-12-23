@@ -5,7 +5,7 @@ This project was created based on Gurpreet Singh Matharoo's version of a turn-ba
 You can find his code at:
 https://github.com/gurpreetsinghmatharoo/gms2.3-turn-based-rpg
 
-I tried to recreate his game but using Godot instead of GameMaker
+I tried to recreate his game but using Godot instead of GameMaker Studio
 It's not 100% similar, but it's pretty close
 
 I also added some features that are not present in his project
