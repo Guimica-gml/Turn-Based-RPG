@@ -641,12 +641,17 @@
         </member>
         <member name="M:Godot.EditorInterface.EditResource(Godot.Resource)">
             <summary>
-            <para>Edits the given <see cref="T:Godot.Resource"/>.</para>
+            <para>Edits the given <see cref="T:Godot.Resource"/>. If the resource is a <see cref="T:Godot.Script"/> you can also edit it with <see cref="M:Godot.EditorInterface.EditScript(Godot.Script,System.Int32,System.Int32,System.Boolean)"/> to specify the line and column position.</para>
             </summary>
         </member>
         <member name="M:Godot.EditorInterface.EditNode(Godot.Node)">
             <summary>
             <para>Edits the given <see cref="T:Godot.Node"/>. The node will be also selected if it's inside the scene tree.</para>
+            </summary>
+        </member>
+        <member name="M:Godot.EditorInterface.EditScript(Godot.Script,System.Int32,System.Int32,System.Boolean)">
+            <summary>
+            <para>Edits the given <see cref="T:Godot.Script"/>. The line and column on which to open the script can also be specified. The script will be open with the user-configured editor for the script's language which may be an external editor.</para>
             </summary>
         </member>
         <member name="M:Godot.EditorInterface.OpenSceneFromPath(System.String)">
@@ -1645,7 +1650,7 @@
             </summary>
             <param name="modulate">If the parameter is null, then the default value is new Color(1, 1, 1, 1)</param>
         </member>
-        <member name="M:Godot.EditorSpatialGizmo.AddMesh(Godot.ArrayMesh,System.Boolean,Godot.SkinReference,Godot.Material)">
+        <member name="M:Godot.EditorSpatialGizmo.AddMesh(Godot.Mesh,System.Boolean,Godot.SkinReference,Godot.Material)">
             <summary>
             <para>Adds a mesh to the gizmo with the specified <c>billboard</c> state, <c>skeleton</c> and <c>material</c>. If <c>billboard</c> is <c>true</c>, the mesh will rotate to always face the camera. Call this function during <see cref="M:Godot.EditorSpatialGizmo.Redraw"/>.</para>
             </summary>
@@ -1765,7 +1770,7 @@
         </member>
         <member name="M:Godot.EditorSpatialGizmoPlugin.CreateMaterial(System.String,Godot.Color,System.Boolean,System.Boolean,System.Boolean)">
             <summary>
-            <para>Creates an unshaded material with its variants (selected and/or editable) and adds them to the internal material list. They can then be accessed with <see cref="M:Godot.EditorSpatialGizmoPlugin.GetMaterial(System.String,Godot.EditorSpatialGizmo)"/> and used in <see cref="M:Godot.EditorSpatialGizmo.AddMesh(Godot.ArrayMesh,System.Boolean,Godot.SkinReference,Godot.Material)"/> and <see cref="M:Godot.EditorSpatialGizmo.AddLines(Godot.Vector3[],Godot.Material,System.Boolean,System.Nullable{Godot.Color})"/>. Should not be overridden.</para>
+            <para>Creates an unshaded material with its variants (selected and/or editable) and adds them to the internal material list. They can then be accessed with <see cref="M:Godot.EditorSpatialGizmoPlugin.GetMaterial(System.String,Godot.EditorSpatialGizmo)"/> and used in <see cref="M:Godot.EditorSpatialGizmo.AddMesh(Godot.Mesh,System.Boolean,Godot.SkinReference,Godot.Material)"/> and <see cref="M:Godot.EditorSpatialGizmo.AddLines(Godot.Vector3[],Godot.Material,System.Boolean,System.Nullable{Godot.Color})"/>. Should not be overridden.</para>
             </summary>
         </member>
         <member name="M:Godot.EditorSpatialGizmoPlugin.CreateIconMaterial(System.String,Godot.Texture,System.Boolean,System.Nullable{Godot.Color})">
