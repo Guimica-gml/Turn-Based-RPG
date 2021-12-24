@@ -6,7 +6,7 @@ public class ProgrammerPauseDisplayer : PauseDisplayer
 	
 	public override void _Ready()
 	{
-		_outputPanel = GetNode<OutputPanel>("CenterContainer/PanelContainer/VBoxContainer/OutputPanel");
+		_outputPanel = GetNode<OutputPanel>("CenterContainer/PanelContainer/OutputsContainer/OutputPanel");
 	}
 	
 	public override void _Input(InputEvent @event)
