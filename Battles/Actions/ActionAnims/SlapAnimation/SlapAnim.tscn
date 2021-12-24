@@ -15,10 +15,10 @@ tracks/0/loop_wrap = true
 tracks/0/imported = false
 tracks/0/enabled = true
 tracks/0/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 0.95, 1.1, 1.25, 1.4, 1.6, 1.8, 1.95, 2.15 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.6, 1.95, 2.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ Vector2( -60, -13 ), Vector2( -49, -17 ), Vector2( -42, -14 ), Vector2( -33, -18 ), Vector2( -24, -13 ), Vector2( -17, -19 ), Vector2( -12, -21 ), Vector2( -19, -26 ), Vector2( -22, -17 ), Vector2( -17, -19 ), Vector2( -17, -19 ), Vector2( -13, -28 ), Vector2( -11, -12 ) ]
+"values": [ Vector2( -60, -13 ), Vector2( -49, -17 ), Vector2( -42, -14 ), Vector2( -33, -18 ), Vector2( -24, -13 ), Vector2( -17, -19 ), Vector2( -17, -30 ), Vector2( -13, -28 ), Vector2( -11, -12 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath("Slap:rotation_degrees")
@@ -27,10 +27,10 @@ tracks/1/loop_wrap = true
 tracks/1/imported = false
 tracks/1/enabled = true
 tracks/1/keys = {
-"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.6, 1.75, 1.95, 2.15 ),
-"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"times": PoolRealArray( 0, 0.2, 0.4, 0.6, 0.8, 1, 1.6, 1.95, 2.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
 "update": 0,
-"values": [ 61.9, 23.2, 61.9, 23.2, 61.9, 23.2, -247.8, -333.0, -356.2, -263.3 ]
+"values": [ 61.9, 23.2, 61.9, 23.2, 61.9, 23.2, -333.0, -356.2, -263.3 ]
 }
 tracks/2/type = "method"
 tracks/2/path = NodePath(".")
@@ -130,6 +130,18 @@ tracks/9/keys = {
 "update": 0,
 "values": [ Vector2( 1, 1 ), Vector2( 1, 1 ), Vector2( 1, 1e-05 ) ]
 }
+tracks/10/type = "value"
+tracks/10/path = NodePath("Slap:scale")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 1.45, 1.6, 1.95, 2.15 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 1.5, 1.5 ), Vector2( 1.5, 1.5 ), Vector2( 2, 2 ), Vector2( 2, 2 ), Vector2( 1.5, 1.5 ) ]
+}
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -157,6 +169,18 @@ tracks/1/keys = {
 "update": 0,
 "values": [ 23.2 ]
 }
+tracks/2/type = "value"
+tracks/2/path = NodePath("Slap:scale")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 1.5, 1.5 ) ]
+}
 
 [node name="SlapAnim" instance=ExtResource( 1 )]
 scale = Vector2( -1, 1 )
@@ -170,14 +194,13 @@ texture = ExtResource( 2 )
 
 [node name="Effect" type="Sprite" parent="." index="1"]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 14, -3 )
-scale = Vector2( 1, 1e-05 )
+position = Vector2( 4, -3 )
 texture = ExtResource( 3 )
 
 [node name="Effect2" type="Sprite" parent="." index="2"]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( -18, -3 )
-scale = Vector2( -1, 1e-05 )
+position = Vector2( -8, -3 )
+scale = Vector2( -1, 1 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="." index="3"]
