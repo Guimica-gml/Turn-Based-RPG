@@ -10,7 +10,7 @@ public class OutputPanel : PanelContainer
 	
 	public override void _Ready()
 	{
-		_outputsContainer = GetNode<VBoxContainer>("ScrollContainer/VBoxContainer");
+		_outputsContainer = GetNode<VBoxContainer>("ScrollContainer/OutputsContainer");
 		_scrollContainer = GetNode<ScrollContainer>("ScrollContainer");
 		_vScrollBar = _scrollContainer.GetVScrollbar();
 	}
