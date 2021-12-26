@@ -15,7 +15,6 @@ public class Stats : Resource
 	[Export] public Texture SpriteSheet = null;
 	
 	[Export(PropertyHint.Range, "1, 100")] private int _baseLevel = 1;
-	[Export] private int _baseHp = 1;
 	[Export] private int _baseMaxHp = 1;
 	[Export] private int _baseAttack = 1;
 	[Export] private int _baseDefense = 1;
@@ -29,6 +28,7 @@ public class Stats : Resource
 	
 	[Export] public Array<Action> Actions = new Array<Action>();
 	
+	private float _hp = 1.0f;
 	private int _baseXp = 0;
 	
 	public int AttackBoost
@@ -87,14 +87,14 @@ public class Stats : Resource
 		}
 	}
 	
-	public int Hp
+	public float Hp
 	{
-		get => _baseHp;
+		get => (int) (_hp * MaxHp);
 		set
 		{
-			_baseHp = value;
+			_hp = Mathf.Clamp(value, 0f, 1f);
 			EmitSignal(nameof(HpChanged), Hp);
-			if (_baseHp <= 0) EmitSignal(nameof(ZeroHp));
+			if (Hp <= 0f) EmitSignal(nameof(ZeroHp));
 		}
 	}
 	
@@ -209,7 +209,7 @@ public class Stats : Resource
 	
 	public void Heal(int amount)
 	{
-		Hp = Mathf.Min(Hp + amount, MaxHp);
+		Hp = (float) (Mathf.Min(Hp + amount, MaxHp) / MaxHp);
 	}
 	
 	public void AttackTarget(Stats target, Action action)
@@ -220,7 +220,7 @@ public class Stats : Resource
 	public void Hurt(int damage)
 	{
 		var realDamage = Mathf.Max(1, (int) (damage - GetDefenseWithTempBoost() / 15));
-		Hp = Mathf.Max(0, Hp - realDamage);
+		Hp = (float) (Mathf.Max(0, Hp - realDamage) / MaxHp);
 	}
 	
 	private void ConnectToBattleSystem()

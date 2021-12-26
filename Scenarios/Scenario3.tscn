@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://TileMaps/GroundTileSet.tres" type="TileSet" id=1]
 [ext_resource path="res://SceneTransition/SceneEntry/SceneEntry.tscn" type="PackedScene" id=2]
@@ -7,6 +7,75 @@
 [ext_resource path="res://MainCamera/MainCamera.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Interactions/Resources/Interaction_7.tres" type="Resource" id=6]
 [ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Battles/Actions/HealAction.tres" type="Resource" id=8]
+[ext_resource path="res://Battles/Actions/PunchAction.tres" type="Resource" id=9]
+[ext_resource path="res://Battles/Actions/KickAction.tres" type="Resource" id=10]
+[ext_resource path="res://Stats/Stats.cs" type="Script" id=11]
+[ext_resource path="res://Enemy/Enemy.png" type="Texture" id=12]
+
+[sub_resource type="Resource" id=1]
+resource_local_to_scene = true
+script = ExtResource( 11 )
+Name = "Masked Goon"
+SpriteSheet = ExtResource( 12 )
+_baseLevel = 1
+_baseMaxHp = 60
+_baseAttack = 60
+_baseDefense = 60
+_baseMoney = 0
+_baseMinXpDrop = 40
+_baseMaxXpDrop = 60
+_baseMinDropMoney = 100
+_baseMaxDropMoney = 200
+Actions = [ ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), null ]
+
+[sub_resource type="Resource" id=2]
+resource_local_to_scene = true
+script = ExtResource( 11 )
+Name = "Masked Goon"
+SpriteSheet = ExtResource( 12 )
+_baseLevel = 1
+_baseMaxHp = 60
+_baseAttack = 60
+_baseDefense = 60
+_baseMoney = 0
+_baseMinXpDrop = 40
+_baseMaxXpDrop = 60
+_baseMinDropMoney = 100
+_baseMaxDropMoney = 200
+Actions = [ ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), null ]
+
+[sub_resource type="Resource" id=3]
+resource_local_to_scene = true
+script = ExtResource( 11 )
+Name = "Masked Goon"
+SpriteSheet = ExtResource( 12 )
+_baseLevel = 1
+_baseMaxHp = 60
+_baseAttack = 60
+_baseDefense = 60
+_baseMoney = 0
+_baseMinXpDrop = 40
+_baseMaxXpDrop = 60
+_baseMinDropMoney = 100
+_baseMaxDropMoney = 200
+Actions = [ ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), null ]
+
+[sub_resource type="Resource" id=4]
+resource_local_to_scene = true
+script = ExtResource( 11 )
+Name = "Masked Goon"
+SpriteSheet = ExtResource( 12 )
+_baseLevel = 1
+_baseMaxHp = 60
+_baseAttack = 60
+_baseDefense = 60
+_baseMoney = 0
+_baseMinXpDrop = 40
+_baseMaxXpDrop = 60
+_baseMinDropMoney = 100
+_baseMaxDropMoney = 200
+Actions = [ ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), null ]
 
 [node name="Scenario3" type="Node2D"]
 
@@ -33,15 +102,20 @@ position = Vector2( 320, 288 )
 
 [node name="Enemy" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 112, 32 )
+Stats = SubResource( 1 )
+_customLevel = 2
 
 [node name="Enemy2" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 64, 112 )
+Stats = SubResource( 2 )
 
 [node name="Enemy3" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 256, 112 )
+Stats = SubResource( 3 )
 
 [node name="Enemy4" parent="YSort" instance=ExtResource( 7 )]
 position = Vector2( 48, 208 )
+Stats = SubResource( 4 )
 
 [node name="InteractableArea" parent="." instance=ExtResource( 4 )]
 position = Vector2( 224, 272 )

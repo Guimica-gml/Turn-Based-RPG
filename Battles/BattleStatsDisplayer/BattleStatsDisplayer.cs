@@ -49,9 +49,9 @@ public class BattleStatsDisplayer : Control
 		_nameLabel.Text = Stats.Name;
 	}
 	
-	private void UpdateHpBar(int hp)
+	private void UpdateHpBar(float hp)
 	{
-		_hpBar.UpdateBar((float) hp / (float) Stats.MaxHp);
+		_hpBar.UpdateBar(hp / Stats.MaxHp);
 	}
 	
 	private void UpdateXpBar(int xp)

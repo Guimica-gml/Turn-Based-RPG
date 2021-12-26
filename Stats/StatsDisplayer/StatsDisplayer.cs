@@ -41,7 +41,7 @@ public class StatsDisplayer : PanelContainer
 		UpdateMoney(Stats.Money);
 	}
 	
-	private void UpdateHp(int hp)
+	private void UpdateHp(float hp)
 	{
 		_hpKeyValue.Value = hp.ToString() + "/" + Stats.MaxHp.ToString();
 	}
