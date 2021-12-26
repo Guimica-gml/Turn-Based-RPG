@@ -60,15 +60,12 @@ public class Npc : Entity
 		var currPositionId = GetIdFromPosition(new Vector2(((int) GlobalPosition.x / gridSize) * gridSize, ((int) GlobalPosition.y / gridSize) * gridSize));
 		var targPositionId = GetIdFromPosition(new Vector2(((int) targPosition.x / gridSize) * gridSize, ((int) targPosition.y / gridSize) * gridSize));
 		
-		if (currPositionId == -1 || targPositionId == -1)
-		{
-			return new Array<Vector2>();
-		}
-		
+		if (currPositionId == -1 || targPositionId == -1) return new Array<Vector2>();
 		var _aStarPath = _aStar.GetPointPath(currPositionId, targPositionId);
 		return new Array<Vector2>(_aStarPath);
 	}
 	
+	// Replace to AStar2D.GetClosestPoint since I had some problems with that method
 	private int GetIdFromPosition(Vector2 position)
 	{
 		foreach (var id in _aStar.GetPoints())
@@ -84,7 +81,7 @@ public class Npc : Entity
 	{
 		var usedCells = new Array<Vector2>(_collisionTileMap.GetUsedCells());
 		var gridSize = Global.Manager.GridSize;
-		var radius = _wanderRadius / gridSize;
+		var radius = (int) (_wanderRadius / gridSize);
 		var index = 0;
 		
 		for (var y = -radius; y <= radius; ++y)
@@ -93,11 +90,14 @@ public class Npc : Entity
 			{
 				var pos = new Vector2(GlobalPosition.x + (x * gridSize), GlobalPosition.y + (y * gridSize));
 				var gridPos = new Vector2((int) (GlobalPosition.x / gridSize) + x, (int) (GlobalPosition.y / gridSize) + y);
+				
 				if (!usedCells.Contains(gridPos))
 				{
+					// Adding the point
 					_aStar.AddPoint(index, pos);
-					if (_aStar.HasPoint(index - 1)) _aStar.ConnectPoints(index, index - 1);
 					
+					// Connecting the point to its neighbors (left and top)
+					if (_aStar.HasPoint(index - 1)) _aStar.ConnectPoints(index, index - 1);
 					var up = GetIdFromPosition(pos - new Vector2(0f, gridSize));
 					if (_aStar.HasPoint(up)) _aStar.ConnectPoints(index, up);
 				}
