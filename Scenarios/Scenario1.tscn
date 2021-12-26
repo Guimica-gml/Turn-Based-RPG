@@ -105,7 +105,7 @@ position = Vector2( 160, 32 )
 _direction = Vector2( 0, 1 )
 
 [node name="Tree" parent="YSort" instance=ExtResource( 10 )]
-position = Vector2( 240, 144 )
+position = Vector2( 256, 144 )
 
 [node name="Tree2" parent="YSort" instance=ExtResource( 10 )]
 position = Vector2( 112, 192 )

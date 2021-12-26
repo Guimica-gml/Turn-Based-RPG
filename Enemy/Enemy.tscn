@@ -30,9 +30,6 @@ shape = SubResource( 2 )
 [node name="AnimationTree" parent="." index="5"]
 parameters/playback = SubResource( 1 )
 
-[node name="Timer" parent="." index="6"]
-process_mode = 0
-
 [connection signal="PlayerEnteredArea" from="PlayerDetectionArea" to="." method="OnPlayerDetectionAreaPlayerEnteredArea"]
 
 [editable path="PlayerDetectionArea"]

@@ -8,10 +8,13 @@ public class Npc : Entity
 	[Export] private int _wanderRadius = 0;
 	[Export] private float _wanderTime = 0;
 	
-	private Vector2 _initialPosition;
-	private Vector2 _targetPosition;
+	[Export] private NodePath _collisionTileMapPath = "";
+	private TileMap _collisionTileMap = null;
 	
-	private Timer _timer;
+	private Array<Vector2> _aStarPath = new Array<Vector2>();
+	private Vector2 _initialPosition;
+	private AStar2D _aStar;
+	
 	private Timer _idleTimer;
 	
 	public override void _Ready()
@@ -19,15 +22,16 @@ public class Npc : Entity
 		base._Ready();
 		GD.Randomize();
 		
+		_aStar = new AStar2D();
 		_initialPosition = GlobalPosition;
 		
-		_timer = GetNode<Timer>("Timer");
 		_idleTimer = GetNode<Timer>("IdleTimer");
 		
 		if (_wander)
 		{
-			_targetPosition = GetRandomPosition();
-			_timer.Start(_wanderTime);
+			_collisionTileMap = GetNode<TileMap>(_collisionTileMapPath);
+			MapWorld();
+			_idleTimer.Start(_wanderTime);
 		}
 		
 		UpdateDirection(_direction);
@@ -37,12 +41,69 @@ public class Npc : Entity
 	{
 		if (!_wander) return Vector2.Zero;
 		
-		if (GlobalPosition.x < _targetPosition.x) return Vector2.Right;
-		if (GlobalPosition.x > _targetPosition.x) return Vector2.Left;
-		if (GlobalPosition.y > _targetPosition.y) return Vector2.Up;
-		if (GlobalPosition.y < _targetPosition.y) return Vector2.Down;
+		if (_aStarPath.Count > 0)
+		{
+			var savePos = _aStarPath[0];
+			_aStarPath.RemoveAt(0);
+			return GlobalPosition.DirectionTo(savePos);
+		}
 		
+		if (_idleTimer.IsStopped()) _idleTimer.Start(_wanderTime);
 		return Vector2.Zero;
+	}
+	
+	private Array<Vector2> GetPathToTargetPosition()
+	{
+		var gridSize = Global.Manager.GridSize;
+		var targPosition = GetRandomPosition();
+		
+		var currPositionId = GetIdFromPosition(new Vector2(((int) GlobalPosition.x / gridSize) * gridSize, ((int) GlobalPosition.y / gridSize) * gridSize));
+		var targPositionId = GetIdFromPosition(new Vector2(((int) targPosition.x / gridSize) * gridSize, ((int) targPosition.y / gridSize) * gridSize));
+		
+		if (currPositionId == -1 || targPositionId == -1)
+		{
+			return new Array<Vector2>();
+		}
+		
+		var _aStarPath = _aStar.GetPointPath(currPositionId, targPositionId);
+		return new Array<Vector2>(_aStarPath);
+	}
+	
+	private int GetIdFromPosition(Vector2 position)
+	{
+		foreach (var id in _aStar.GetPoints())
+		{
+			var pos = _aStar.GetPointPosition((int) id);
+			if (pos == position) return (int) id;
+		}
+		
+		return -1;
+	}
+	
+	private void MapWorld()
+	{
+		var usedCells = new Array<Vector2>(_collisionTileMap.GetUsedCells());
+		var gridSize = Global.Manager.GridSize;
+		var radius = _wanderRadius / gridSize;
+		var index = 0;
+		
+		for (var y = -radius; y <= radius; ++y)
+		{
+			for (var x = -radius; x <= radius; ++x)
+			{
+				var pos = new Vector2(GlobalPosition.x + (x * gridSize), GlobalPosition.y + (y * gridSize));
+				var gridPos = new Vector2((int) (GlobalPosition.x / gridSize) + x, (int) (GlobalPosition.y / gridSize) + y);
+				if (!usedCells.Contains(gridPos))
+				{
+					_aStar.AddPoint(index, pos);
+					if (_aStar.HasPoint(index - 1)) _aStar.ConnectPoints(index, index - 1);
+					
+					var up = GetIdFromPosition(pos - new Vector2(0f, gridSize));
+					if (_aStar.HasPoint(up)) _aStar.ConnectPoints(index, up);
+				}
+				index++;
+			}
+		}
 	}
 	
 	private Vector2 GetRandomPosition()
@@ -54,14 +115,9 @@ public class Npc : Entity
 		return inGridPosition;
 	}
 	
-	private void OnTimerTimeout()
-	{
-		_idleTimer.Start((float) GD.RandRange(0.5f, 1.2f));
-	}
-	
 	private void OnIdleTimerTimeout()
 	{
-		_targetPosition = GetRandomPosition();
+		_aStarPath = GetPathToTargetPosition();
 	}
 	
 	public Dictionary Save()

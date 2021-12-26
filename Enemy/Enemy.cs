@@ -8,6 +8,8 @@ public class Enemy : Npc
 	public override void _Ready()
 	{
 		base._Ready();
+		
+		Stats = Stats.Duplicate() as Stats;
 		Stats.Level = _customLevel;
 	}
 	

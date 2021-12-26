@@ -7,7 +7,6 @@
 [ext_resource path="res://Battles/Actions/PunchAction.tres" type="Resource" id=6]
 
 [resource]
-resource_local_to_scene = true
 script = ExtResource( 1 )
 Name = "Masked Goon"
 SpriteSheet = ExtResource( 2 )

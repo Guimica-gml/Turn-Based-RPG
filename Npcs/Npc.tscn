@@ -11,10 +11,8 @@ script = ExtResource( 2 )
 [node name="AnimationTree" parent="." index="4"]
 parameters/playback = SubResource( 1 )
 
-[node name="Timer" type="Timer" parent="." index="5"]
-
-[node name="IdleTimer" type="Timer" parent="." index="6"]
+[node name="IdleTimer" type="Timer" parent="." index="5"]
+process_mode = 0
 one_shot = true
 
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
 [connection signal="timeout" from="IdleTimer" to="." method="OnIdleTimerTimeout"]
