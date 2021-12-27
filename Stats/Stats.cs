@@ -31,6 +31,8 @@ public class Stats : Resource
 	private float _hp = 1.0f;
 	private int _baseXp = 0;
 	
+	// -- PERM BOOSTS (start)
+	
 	public int AttackBoost
 	{
 		get => _attackBoost;
@@ -52,6 +54,21 @@ public class Stats : Resource
 		}
 	}
 	private int _defenseBoost = 0;
+	
+	public int MaxHpBoost 
+	{
+		get => _maxHpBoost;
+		set
+		{
+			_maxHpBoost = value;
+			EmitSignal(nameof(HpChanged), Hp);
+		}
+	}
+	private int _maxHpBoost = 0;
+	
+	// -- PERM BOOSTS (end)
+	
+	// -- TEMP BOOSTS (start)
 	
 	public int TempAttackBoost
 	{
@@ -77,6 +94,20 @@ public class Stats : Resource
 	}
 	private int _tempDefenseBoost = 0;
 	
+	public int TempMaxHpBoost 
+	{
+		get => _tempMaxHpBoost;
+		set
+		{
+			ConnectToBattleSystem();
+			_tempMaxHpBoost = value;
+			EmitSignal(nameof(HpChanged), Hp);
+		}
+	}
+	private int _tempMaxHpBoost = 0;
+	
+	// -- TEMP BOOSTS (end)
+	
 	public int Money
 	{
 		get => _baseMoney;
@@ -100,7 +131,7 @@ public class Stats : Resource
 	
 	public int MaxHp
 	{
-		get => (int) _baseMaxHp + (8 * (Level - 1));
+		get => (int) _baseMaxHp + (8 * (Level - 1)) + MaxHpBoost + TempMaxHpBoost;
 		set => _baseMaxHp = value;
 	}
 	
@@ -127,20 +158,25 @@ public class Stats : Resource
 		get => _baseLevel;
 		set
 		{
-			var maxHpBefore = MaxHp;
+			var maxHpBefore = GetMaxHpWithoutTempBoost();
 			var levelBefore = Level;
-			var attackBefore = Attack;
-			var defenseBefore = Defense;
+			var attackBefore = GetAttackWithoutTempBoost();
+			var defenseBefore = GetDefenseWithoutTempBoost();
 			
 			_baseLevel = Mathf.Clamp(value, 1, 100);
-			var message = $"Level: {levelBefore} -- {Level} \nHp: {maxHpBefore} -- {MaxHp} \nAttack: {attackBefore} -- {Attack} \nDefense: {defenseBefore} -- {Defense} \n";
+			
+			var attack = GetAttackWithoutTempBoost();
+			var defense = GetDefenseWithoutTempBoost();
+			var maxHp = GetMaxHpWithoutTempBoost();
+			
+			var message = $"Level: {levelBefore} -- {Level} \nHp: {maxHpBefore} -- {maxHp} \nAttack: {attackBefore} -- {attack} \nDefense: {defenseBefore} -- {defense} \n";
 			EmitSignal(nameof(LevelChanged), Level, message);
 		}
 	}
 	
 	public int Attack
 	{
-		get => (int) (_baseAttack + 10 * (Level - 1)) + AttackBoost;
+		get => (int) (_baseAttack + 10 * (Level - 1)) + AttackBoost + TempAttackBoost;
 		set
 		{
 			_baseAttack = value;
@@ -150,7 +186,7 @@ public class Stats : Resource
 	
 	public int Defense
 	{
-		get => (int) (_baseDefense + 5 * (Level - 1)) + DefenseBoost;
+		get => (int) (_baseDefense + 5 * (Level - 1)) + DefenseBoost + TempDefenseBoost;
 		set
 		{
 			_baseDefense = value;
@@ -182,14 +218,19 @@ public class Stats : Resource
 		set => _baseMaxDropMoney = value;
 	}
 	
-	public int GetAttackWithTempBoost()
+	public int GetAttackWithoutTempBoost()
 	{
-		return Attack + TempAttackBoost;
+		return Attack - TempAttackBoost;
 	}
 	
-	public int GetDefenseWithTempBoost()
+	public int GetDefenseWithoutTempBoost()
 	{
-		return Defense + TempDefenseBoost;
+		return Defense - TempDefenseBoost;
+	}
+	
+	public int GetMaxHpWithoutTempBoost()
+	{
+		return MaxHp - TempMaxHpBoost;
 	}
 	
 	public int GetXpDrop()
@@ -214,12 +255,12 @@ public class Stats : Resource
 	
 	public void AttackTarget(Stats target, Action action)
 	{
-		target.Hurt(action.Value + ((int) GetAttackWithTempBoost() / 15));
+		target.Hurt(action.Value + ((int) Attack / 15));
 	}
 	
 	public void Hurt(int damage)
 	{
-		var realDamage = Mathf.Max(1, (int) (damage - GetDefenseWithTempBoost() / 15));
+		var realDamage = Mathf.Max(1, (int) (damage - Defense / 15));
 		Hp = (float) (Mathf.Max(0, Hp - realDamage) / MaxHp);
 	}
 	
@@ -233,6 +274,7 @@ public class Stats : Resource
 	{
 		TempAttackBoost = 0;
 		TempDefenseBoost = 0;
+		TempMaxHpBoost = 0;
 	}
 	
 	~Stats()

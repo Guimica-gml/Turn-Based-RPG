@@ -1,0 +1,16 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Items/Sprites/BattleHp.png" type="Texture" id=1]
+[ext_resource path="res://Items/Stats/IncreaseStatsItems/IncreaseStatsItemStats.cs" type="Script" id=2]
+
+[resource]
+script = ExtResource( 2 )
+KeyItem = false
+Name = "Battle Hp"
+Texture = ExtResource( 1 )
+Description = "This item increases your hp by 15 points during a battle"
+Stackable = true
+UseJustInBattle = true
+Price = 35
+Stat = "TempMaxHpBoost"
+IncreaseAmount = 15
