@@ -31,82 +31,12 @@ public class Stats : Resource
 	private float _hp = 1.0f;
 	private int _baseXp = 0;
 	
-	// -- PERM BOOSTS (start)
-	
-	public int AttackBoost
+	public Dictionary<string, Dictionary> Boosts = new Dictionary<string, Dictionary>()
 	{
-		get => _attackBoost;
-		set
-		{
-			_attackBoost = value;
-			EmitSignal(nameof(AttackChanged), Attack);
-		}
-	}
-	private int _attackBoost = 0;
-	
-	public int DefenseBoost 
-	{
-		get => _defenseBoost;
-		set
-		{
-			_defenseBoost = value;
-			EmitSignal(nameof(DefenseChanged), Defense);
-		}
-	}
-	private int _defenseBoost = 0;
-	
-	public int MaxHpBoost 
-	{
-		get => _maxHpBoost;
-		set
-		{
-			_maxHpBoost = value;
-			EmitSignal(nameof(HpChanged), Hp);
-		}
-	}
-	private int _maxHpBoost = 0;
-	
-	// -- PERM BOOSTS (end)
-	
-	// -- TEMP BOOSTS (start)
-	
-	public int TempAttackBoost
-	{
-		get => _tempAttackBoost;
-		set
-		{
-			ConnectToBattleSystem();
-			_tempAttackBoost = value;
-			EmitSignal(nameof(AttackChanged), Attack);
-		}
-	}
-	private int _tempAttackBoost = 0;
-	
-	public int TempDefenseBoost 
-	{
-		get => _tempDefenseBoost;
-		set
-		{
-			ConnectToBattleSystem();
-			_tempDefenseBoost = value;
-			EmitSignal(nameof(DefenseChanged), Defense);
-		}
-	}
-	private int _tempDefenseBoost = 0;
-	
-	public int TempMaxHpBoost 
-	{
-		get => _tempMaxHpBoost;
-		set
-		{
-			ConnectToBattleSystem();
-			_tempMaxHpBoost = value;
-			EmitSignal(nameof(HpChanged), Hp);
-		}
-	}
-	private int _tempMaxHpBoost = 0;
-	
-	// -- TEMP BOOSTS (end)
+		{ nameof(MaxHp)  , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, {"Signal", nameof(HpChanged)      }, { "AffectedStat", nameof(Hp)      } } },
+		{ nameof(Attack) , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, {"Signal", nameof(AttackChanged)  }, { "AffectedStat", nameof(Attack)  } } },
+		{ nameof(Defense), new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, {"Signal", nameof(DefenseChanged) }, { "AffectedStat", nameof(Defense) } } },
+	};
 	
 	public int Money
 	{
@@ -131,7 +61,7 @@ public class Stats : Resource
 	
 	public int MaxHp
 	{
-		get => (int) _baseMaxHp + (8 * (Level - 1)) + MaxHpBoost + TempMaxHpBoost;
+		get => (int) _baseMaxHp + (8 * (Level - 1)) + ((int) Boosts[nameof(MaxHp)]["Perm"]) + ((int) Boosts[nameof(MaxHp)]["Temp"]);
 		set => _baseMaxHp = value;
 	}
 	
@@ -158,16 +88,16 @@ public class Stats : Resource
 		get => _baseLevel;
 		set
 		{
-			var maxHpBefore = GetMaxHpWithoutTempBoost();
+			var maxHpBefore = GetStatWithoutTempBoost(nameof(MaxHp));
 			var levelBefore = Level;
-			var attackBefore = GetAttackWithoutTempBoost();
-			var defenseBefore = GetDefenseWithoutTempBoost();
+			var attackBefore = GetStatWithoutTempBoost(nameof(Attack));
+			var defenseBefore = GetStatWithoutTempBoost(nameof(Defense));
 			
 			_baseLevel = Mathf.Clamp(value, 1, 100);
 			
-			var attack = GetAttackWithoutTempBoost();
-			var defense = GetDefenseWithoutTempBoost();
-			var maxHp = GetMaxHpWithoutTempBoost();
+			var attack = GetStatWithoutTempBoost(nameof(Attack));
+			var defense = GetStatWithoutTempBoost(nameof(Defense));
+			var maxHp = GetStatWithoutTempBoost(nameof(MaxHp));
 			
 			var message = $"Level: {levelBefore} -- {Level} \nHp: {maxHpBefore} -- {maxHp} \nAttack: {attackBefore} -- {attack} \nDefense: {defenseBefore} -- {defense} \n";
 			EmitSignal(nameof(LevelChanged), Level, message);
@@ -176,21 +106,21 @@ public class Stats : Resource
 	
 	public int Attack
 	{
-		get => (int) (_baseAttack + 10 * (Level - 1)) + AttackBoost + TempAttackBoost;
+		get => (int) (_baseAttack + 10 * (Level - 1)) + ((int) Boosts[nameof(Attack)]["Perm"]) + ((int) Boosts[nameof(Attack)]["Temp"]);
 		set
 		{
 			_baseAttack = value;
-			EmitSignal(nameof(AttackChanged), _baseAttack);
+			EmitSignal(nameof(AttackChanged), Attack);
 		}
 	}
 	
 	public int Defense
 	{
-		get => (int) (_baseDefense + 5 * (Level - 1)) + DefenseBoost + TempDefenseBoost;
+		get => (int) (_baseDefense + 5 * (Level - 1)) + ((int) Boosts[nameof(Defense)]["Perm"]) + ((int) Boosts[nameof(Defense)]["Temp"]);
 		set
 		{
 			_baseDefense = value;
-			EmitSignal(nameof(DefenseChanged), _baseDefense);
+			EmitSignal(nameof(DefenseChanged), Defense);
 		}
 	}
 	
@@ -218,19 +148,31 @@ public class Stats : Resource
 		set => _baseMaxDropMoney = value;
 	}
 	
-	public int GetAttackWithoutTempBoost()
+	public int GetStatWithoutTempBoost(string Stat)
 	{
-		return Attack - TempAttackBoost;
+		if (!Boosts.ContainsKey(Stat)) return -1;
+		return ((int) Get(Stat)) - ((int) Boosts[Stat]["Temp"]);
 	}
 	
-	public int GetDefenseWithoutTempBoost()
+	public void IncreaseStatBoost(string Stat, int amount, bool temp)
 	{
-		return Defense - TempDefenseBoost;
-	}
-	
-	public int GetMaxHpWithoutTempBoost()
-	{
-		return MaxHp - TempMaxHpBoost;
+		ConnectToBattleSystem();
+		if (!Boosts.ContainsKey(Stat)) return;
+		
+		var state = (temp) ? "Temp" : "Perm";
+		Boosts[Stat][state] = (int) Boosts[Stat][state] + amount;
+		
+		var signal = Boosts[Stat]["Signal"] as string;
+		var affectedStat = Boosts[Stat]["AffectedStat"] as string;
+		
+		try
+		{
+			EmitSignal(signal, (int) Get(affectedStat));
+		}
+		catch(System.Exception)
+		{
+			EmitSignal(signal, (float) Get(affectedStat));
+		}
 	}
 	
 	public int GetXpDrop()
@@ -272,9 +214,8 @@ public class Stats : Resource
 	
 	private void OnBattleEnded()
 	{
-		TempAttackBoost = 0;
-		TempDefenseBoost = 0;
-		TempMaxHpBoost = 0;
+		var keys = new Array<string>(Boosts.Keys);
+		foreach (var key in keys) Boosts[key]["Temp"] = 0;
 	}
 	
 	~Stats()

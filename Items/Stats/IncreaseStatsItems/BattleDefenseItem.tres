@@ -12,5 +12,6 @@ Description = "This item increases your defense by 15 points during a battle"
 Stackable = true
 UseJustInBattle = true
 Price = 35
-Stat = "TempDefenseBoost"
+Stat = "Defense"
+Temp = true
 IncreaseAmount = 15

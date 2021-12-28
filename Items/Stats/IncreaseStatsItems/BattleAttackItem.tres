@@ -12,5 +12,6 @@ Description = "This item increases your attack by 15 points during a battle"
 Stackable = true
 UseJustInBattle = true
 Price = 35
-Stat = "TempAttackBoost"
+Stat = "Attack"
+Temp = true
 IncreaseAmount = 15

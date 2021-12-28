@@ -12,5 +12,6 @@ Description = "This item increases your hp by 15 points during a battle"
 Stackable = true
 UseJustInBattle = true
 Price = 35
-Stat = "TempMaxHpBoost"
+Stat = "MaxHp"
+Temp = true
 IncreaseAmount = 15

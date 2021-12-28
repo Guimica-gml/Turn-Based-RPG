@@ -13,7 +13,7 @@ public class BattlePlayerTurnState : State
 	private Button _itemsButton;
 	
 	[Export] private NodePath _inventoryPath = "";
-	private Control _inventory;
+	private PauseDisplayer _inventory;
 	
 	private string _usedItemName = "";
 	private bool _performedAction = false;
@@ -27,7 +27,7 @@ public class BattlePlayerTurnState : State
 		_battleScenario = GetNode<BattlePauseDisplayer>(_battleScenarioPath);
 		_actionsContainer = GetNode<GridContainer>(_actionsContainerPath);
 		_itemsButton = GetNode<Button>(_itemsButtonPath);
-		_inventory = GetNode<Control>(_inventoryPath);
+		_inventory = GetNode<PauseDisplayer>(_inventoryPath);
 		
 		_battleScenario.CurrentTurn = BattlePauseDisplayer.Turns.Player;
 		_battleScenario.SetActionButtonsVisibility(true);

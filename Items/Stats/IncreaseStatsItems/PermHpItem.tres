@@ -12,5 +12,6 @@ Description = "This item increases your hp by 10 points permanently"
 Stackable = true
 UseJustInBattle = false
 Price = 40
-Stat = "MaxHpBoost"
+Stat = "MaxHp"
+Temp = false
 IncreaseAmount = 10
