@@ -194,13 +194,14 @@ texture = ExtResource( 2 )
 
 [node name="Effect" type="Sprite" parent="." index="1"]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( 4, -3 )
+position = Vector2( 14, -3 )
+scale = Vector2( 1, 1e-05 )
 texture = ExtResource( 3 )
 
 [node name="Effect2" type="Sprite" parent="." index="2"]
 modulate = Color( 1, 1, 1, 0 )
-position = Vector2( -8, -3 )
-scale = Vector2( -1, 1 )
+position = Vector2( -18, -3 )
+scale = Vector2( -1, 1e-05 )
 texture = ExtResource( 3 )
 
 [node name="AnimationPlayer" parent="." index="3"]

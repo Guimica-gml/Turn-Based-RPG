@@ -14,7 +14,7 @@ radius = 11.0
 [node name="Enemy" instance=ExtResource( 1 )]
 script = ExtResource( 3 )
 _wander = true
-_wanderBlocks = 3
+_wanderBlocks = 2
 _wanderTime = 2.0
 Stats = ExtResource( 5 )
 

@@ -22,9 +22,6 @@ public class Npc : Entity
 		base._Ready();
 		GD.Randomize();
 		
-		// We have to subtract one from _wanderBlocks, don't question it
-		_wanderBlocks = Mathf.Max(0, _wanderBlocks - 1);
-		
 		_aStar = new AStar2D();
 		_initialPosition = GlobalPosition;
 		
