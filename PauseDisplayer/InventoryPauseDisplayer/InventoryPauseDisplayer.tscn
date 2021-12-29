@@ -72,14 +72,14 @@ _itemInfoDisplayerPath = NodePath("../ItemInfoDisplayer")
 margin_left = 8.0
 margin_top = 6.0
 margin_right = -203.0
-margin_bottom = -81.0
+margin_bottom = -6.0
 Stats = ExtResource( 7 )
 
 [node name="ItemInfoDisplayer" parent="Displayers" index="2" instance=ExtResource( 3 )]
-margin_left = 8.0
-margin_top = 103.0
-margin_right = -203.0
-margin_bottom = -6.0
+margin_left = 11.0
+margin_top = 91.0
+margin_right = -206.0
+margin_bottom = -9.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." index="2"]
 autoplay = "Default"

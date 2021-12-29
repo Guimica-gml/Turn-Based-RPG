@@ -15,28 +15,24 @@ public class ItemInfoDisplayer : PanelContainer
 	
 	private Label _nameLabel;
 	private Label _descriptionLabel;
-	private AnimationPlayer _animationPlayer;
 	
 	public override void _Ready()
 	{
 		_nameLabel = GetNode<Label>("MarginContainer/VBoxContainer/NameLabel");
 		_descriptionLabel = GetNode<Label>("MarginContainer/VBoxContainer/DescriptionLabel");
-		_animationPlayer = GetNode<AnimationPlayer>("AnimationPlayer");
+		
+		UpdateDisplayer();
 	}
 	
 	private void UpdateDisplayer()
 	{
-		if (_animationPlayer.IsPlaying()) _animationPlayer.Stop();
+		_nameLabel.Text = "";
+		_descriptionLabel.Text = "";
 		
 		if (ItemStats != null)
 		{
 			_nameLabel.Text = ItemStats.Name;
 			_descriptionLabel.Text = "Description: " + ItemStats.Description;
-			_animationPlayer.Play("FadeIn");
-		}
-		else
-		{
-			_animationPlayer.Play("FadeOut");
 		}
 	}
 }

@@ -5,7 +5,7 @@ public class Npc : Entity
 {
 	[Export] private Vector2 _direction = Vector2.Zero;
 	[Export] private bool _wander = false;
-	[Export] private int _wanderRadius = 0;
+	[Export] private int _wanderBlocks = 0;
 	[Export] private float _wanderTime = 0;
 	
 	[Export] private NodePath _collisionTileMapPath = "";
@@ -21,6 +21,9 @@ public class Npc : Entity
 	{
 		base._Ready();
 		GD.Randomize();
+		
+		// We have to subtract one from _wanderBlocks, don't question it
+		_wanderBlocks = Mathf.Max(0, _wanderBlocks - 1);
 		
 		_aStar = new AStar2D();
 		_initialPosition = GlobalPosition;
@@ -62,6 +65,7 @@ public class Npc : Entity
 		
 		if (currPositionId == -1 || targPositionId == -1) return new Array<Vector2>();
 		var _aStarPath = _aStar.GetPointPath(currPositionId, targPositionId);
+		
 		return new Array<Vector2>(_aStarPath);
 	}
 	
@@ -81,7 +85,7 @@ public class Npc : Entity
 	{
 		var usedCells = new Array<Vector2>(_collisionTileMap.GetUsedCells());
 		var gridSize = Global.Manager.GridSize;
-		var radius = (int) (_wanderRadius / gridSize);
+		var radius = _wanderBlocks;
 		var index = 0;
 		
 		for (var y = -radius; y <= radius; ++y)
@@ -89,7 +93,7 @@ public class Npc : Entity
 			for (var x = -radius; x <= radius; ++x)
 			{
 				var pos = new Vector2(GlobalPosition.x + (x * gridSize), GlobalPosition.y + (y * gridSize));
-				var gridPos = new Vector2((int) (GlobalPosition.x / gridSize) + x, (int) (GlobalPosition.y / gridSize) + y);
+				var gridPos = new Vector2((int) GlobalPosition.x / gridSize + x, (int) GlobalPosition.y / gridSize + y);
 				
 				if (!usedCells.Contains(gridPos))
 				{
@@ -109,10 +113,12 @@ public class Npc : Entity
 	private Vector2 GetRandomPosition()
 	{
 		var gridSize = Global.Manager.GridSize;
-		var position = _initialPosition + new Vector2((int) GD.RandRange(-_wanderRadius, _wanderRadius), (int) GD.RandRange(-_wanderRadius, _wanderRadius));
-		var inGridPosition = new Vector2(((int) position.x / gridSize) * gridSize, ((int) position.y / gridSize) * gridSize);
+		var wanderRadius = _wanderBlocks * gridSize;
 		
-		return inGridPosition;
+		var position = _initialPosition + new Vector2((int) GD.RandRange(-wanderRadius, wanderRadius), (int) GD.RandRange(-wanderRadius, wanderRadius));
+		var randomPosition = new Vector2((int) position.x / gridSize * gridSize, (int) position.y / gridSize * gridSize);
+		
+		return randomPosition;
 	}
 	
 	private void OnIdleTimerTimeout()
@@ -127,7 +133,7 @@ public class Npc : Entity
 			{ "DirX", _direction.x },
 			{ "DirY", _direction.y },
 			{ "Wander", _wander },
-			{ "WanderRadius", _wanderRadius },
+			{ "WanderRadius", _wanderBlocks },
 			{ "WanderTime", _wanderTime },
 		};
 		return saveDict;
@@ -137,7 +143,7 @@ public class Npc : Entity
 	{
 		_direction = new Vector2((float) infoDict["DirX"], (float) infoDict["DirY"]);
 		_wander = (bool) infoDict["Wander"];
-		_wanderRadius = (int) infoDict["WanderRadius"];
+		_wanderBlocks = (int) infoDict["WanderRadius"];
 		_wanderTime = (float) infoDict["WanderTime"];
 	}
 }
