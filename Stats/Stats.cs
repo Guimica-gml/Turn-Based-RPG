@@ -33,9 +33,9 @@ public class Stats : Resource
 	
 	public Dictionary<string, Dictionary> Boosts = new Dictionary<string, Dictionary>()
 	{
-		{ nameof(MaxHp)  , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, {"Signal", nameof(HpChanged)      }, { "AffectedStat", nameof(Hp)      } } },
-		{ nameof(Attack) , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, {"Signal", nameof(AttackChanged)  }, { "AffectedStat", nameof(Attack)  } } },
-		{ nameof(Defense), new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, {"Signal", nameof(DefenseChanged) }, { "AffectedStat", nameof(Defense) } } },
+		{ nameof(MaxHp)  , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, { "Signal", nameof(HpChanged)      }, { "AffectedStat", nameof(Hp)      } } },
+		{ nameof(Attack) , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, { "Signal", nameof(AttackChanged)  }, { "AffectedStat", nameof(Attack)  } } },
+		{ nameof(Defense), new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, { "Signal", nameof(DefenseChanged) }, { "AffectedStat", nameof(Defense) } } },
 	};
 	
 	public int Money

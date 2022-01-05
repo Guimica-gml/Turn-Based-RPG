@@ -9,7 +9,7 @@ public class TransitionEffect : Control
 	[Signal] private delegate void EffectTransition();
 	[Signal] private delegate void EffectEnded();
 	
-	public bool Active { get; private set; }
+	public bool Active { get; private set; } = false;
 	private Tween _tween;
 	
 	private Dictionary<Types, TransitionInfo> _transitionsInfo = new Dictionary<Types, TransitionInfo>()
@@ -28,7 +28,7 @@ public class TransitionEffect : Control
 	{
 		if (Active)
 		{
-			GD.Print("Trying to start an effect while TransitionEffect is already active");
+			GD.PrintErr("Trying to start an effect while TransitionEffect is already active");
 			return;
 		}
 		Active = true;
@@ -38,7 +38,7 @@ public class TransitionEffect : Control
 		Material.Set("shader_param/smoothsize", info.SmoothSize);
 		Material.Set("shader_param/mask", GD.Load<Texture>(info.TexturePath));
 		
-		// Transtion
+		// Transition
 		EmitSignal(nameof(EffectStarted));
 		StartTween(1f, 0f);
 		

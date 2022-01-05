@@ -37,7 +37,8 @@ public class DialogManager : CanvasLayer
 		DialogPath = "";
 	}
 	
-	/// --- DIALOG DEFINITIONS
+	// --- DIALOG DEFINITIONS
+	// These methods can be used from the DialogBox
 	
 	private Dictionary<string, string> _variableDefinitions = new Dictionary<string, string>();
 	

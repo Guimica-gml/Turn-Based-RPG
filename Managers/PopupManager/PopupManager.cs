@@ -2,7 +2,7 @@ using Godot;
 
 public class PopupManager : CanvasLayer
 {
-	public PopupScreen PopupScreen;
+	public PopupScreen PopupScreen { get; private set; }
 	
 	private PackedScene _popupScreenPacked = GD.Load<PackedScene>("res://Popups/Screen/PopupScreen.tscn");
 	
@@ -14,12 +14,6 @@ public class PopupManager : CanvasLayer
 	
 	public void AddPopup(GenericPopup popup)
 	{
-		if (PopupScreen == null)
-		{
-			GD.Print("PopupScreen was not set properly in PopupManager.cs");
-			return;
-		}
-		
 		PopupScreen.AddPopup(popup);
 	}
 }

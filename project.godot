@@ -17,8 +17,8 @@ config/icon="res://Icon.png"
 [autoload]
 
 Manager="*res://Managers/Manager.tscn"
-TransitionManager="*res://Managers/TransitionManager/TransitionManager.tscn"
 PopupManager="*res://Managers/PopupManager/PopupManager.tscn"
+TransitionManager="*res://Managers/TransitionManager/TransitionManager.tscn"
 DialogManager="*res://Managers/DialogManager/DialogManager.tscn"
 InteractionManager="*res://Managers/InteractionManager/InteractionManager.tscn"
 BattleManager="*res://Managers/BattleManager/BattleManager.tscn"

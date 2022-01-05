@@ -18,6 +18,7 @@ public class Manager : CanvasLayer
 	
 	public async override void _Ready()
 	{
+		// Waiting one frame so the TransitionManager loads properly
 		await ToSignal(GetTree(), "idle_frame");
 		
 		Global.TransitionManager.Connect("TransitionTriggered", this, nameof(OnTransitionTriggered));
@@ -97,6 +98,8 @@ public class Manager : CanvasLayer
 		var nodesToSave = new Array<Node>(GetTree().GetNodesInGroup("Save"));
 		var saveList = new Array();
 		
+		// Some variables are saved by default
+		// You can add more with the optional Save() method in each node
 		foreach (Node2D node in nodesToSave)
 		{
 			var saveDict = new Dictionary();
@@ -118,15 +121,17 @@ public class Manager : CanvasLayer
 		var sceneName = GetTree().CurrentScene.Name;
 		if (!_sceneInfo.ContainsKey(sceneName)) return;
 		
-		var nodesToDestroy = new Array<Node>(GetTree().GetNodesInGroup("Save"));
+		var nodesToFree = new Array<Node>(GetTree().GetNodesInGroup("Save"));
 		var nodesSaved = new Array<Dictionary>(_sceneInfo[sceneName]);
 		
-		foreach (var node in nodesToDestroy)
+		// Delete nodes that we are going to replace
+		foreach (var node in nodesToFree)
 		{
 			node.Name = "Deleted";
 			node.QueueFree();
 		}
 		
+		// Adding the saved nodes, all nodes have their own optional Load() method
 		foreach (var nodeInfo in nodesSaved)
 		{
 			var nodePacked = GD.Load<PackedScene>(nodeInfo["Filename"] as string);

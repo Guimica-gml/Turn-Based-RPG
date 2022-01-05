@@ -102,6 +102,7 @@ public class Npc : Entity
 					var up = GetIdFromPosition(pos - new Vector2(0f, gridSize));
 					if (_aStar.HasPoint(up)) _aStar.ConnectPoints(index, up);
 				}
+				
 				index++;
 			}
 		}

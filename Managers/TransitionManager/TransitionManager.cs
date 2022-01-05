@@ -58,6 +58,7 @@ public class TransitionManager : Node
 		var sceneEntriesList = new Array<SceneEntry>(GetTree().GetNodesInGroup("SceneEntry"));
 		if (sceneEntryIndetifier == "none") return;
 		
+		// Searchs for the correct entry to spawn the player at
 		foreach (SceneEntry sceneEntry in sceneEntriesList)
 		{
 			if (sceneEntry.Indentifier != sceneEntryIndetifier) continue;
@@ -73,7 +74,7 @@ public class TransitionManager : Node
 	{
 		InTransition = true;
 		
-		// Getting player information
+		// Saving player information if it exists
 		var player = GetTree().CurrentScene.FindNode("Player", true, false) as Player;
 		_playerPackedScene = null;
 		if (player != null)
@@ -91,7 +92,7 @@ public class TransitionManager : Node
 		
 		await ToSignal(GetTree(), "idle_frame");
 		
-		// Placing the player in the new Scene
+		// Placing the player in the new scene
 		PlacePlayer(_sceneEntryIndetifier, _playerPackedScene);
 		
 		EmitSignal(nameof(SceneChanged));

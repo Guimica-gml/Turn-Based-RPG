@@ -1,6 +1,6 @@
 using Godot;
 
-public class BattleStatsDisplayer : Control
+public class BattleStatsDisplayer : PanelContainer
 {
 	private Stats _stats = null;
 	[Export] public Stats Stats
@@ -17,15 +17,17 @@ public class BattleStatsDisplayer : Control
 	
 	private Label _nameLabel;
 	private Label _levelLabel;
+	private Label _hpLabel;
 	private StatBar _hpBar;
 	private StatBar _xpBar;
 	
 	public override void _Ready()
 	{
-		_nameLabel = GetNode<Label>("PanelContainer/VBoxContainer/HBoxContainer/NameLabel");
-		_levelLabel = GetNode<Label>("PanelContainer/VBoxContainer/HBoxContainer/LevelLabel");
-		_hpBar = GetNode<StatBar>("PanelContainer/VBoxContainer/HpBar");
-		_xpBar = GetNode<StatBar>("PanelContainer/VBoxContainer/XpBar");
+		_nameLabel = GetNode<Label>("VBoxContainer/HBoxContainer/NameLabel");
+		_levelLabel = GetNode<Label>("VBoxContainer/HBoxContainer/LevelLabel");
+		_hpLabel = GetNode<Label>("VBoxContainer/HpBar/NameLabel");
+		_hpBar = GetNode<StatBar>("VBoxContainer/HpBar");
+		_xpBar = GetNode<StatBar>("VBoxContainer/XpBar");
 		
 		if (!_showXp) _xpBar.Visible = false;
 	}
@@ -52,6 +54,7 @@ public class BattleStatsDisplayer : Control
 	private void UpdateHpBar(float hp)
 	{
 		_hpBar.UpdateBar(hp / Stats.MaxHp);
+		_hpLabel.Text = $"{hp}/{Stats.MaxHp}";
 	}
 	
 	private void UpdateXpBar(int xp)
