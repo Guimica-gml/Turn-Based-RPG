@@ -8,9 +8,6 @@ public class Npc : Entity
 	[Export] private int _wanderBlocks = 0;
 	[Export] private float _wanderTime = 0;
 	
-	[Export] private NodePath _collisionTileMapPath = "";
-	private TileMap _collisionTileMap = null;
-	
 	private Array<Vector2> _aStarPath = new Array<Vector2>();
 	private Vector2 _initialPosition;
 	private AStar2D _aStar;
@@ -29,7 +26,6 @@ public class Npc : Entity
 		
 		if (_wander)
 		{
-			_collisionTileMap = GetNode<TileMap>(_collisionTileMapPath);
 			MapWorld();
 			_idleTimer.Start(_wanderTime);
 		}
@@ -80,19 +76,17 @@ public class Npc : Entity
 	
 	private void MapWorld()
 	{
-		var usedCells = new Array<Vector2>(_collisionTileMap.GetUsedCells());
 		var gridSize = Global.Manager.GridSize;
-		var radius = _wanderBlocks;
 		var index = 0;
 		
-		for (var y = -radius; y <= radius; ++y)
+		for (var y = -_wanderBlocks; y <= _wanderBlocks; ++y)
 		{
-			for (var x = -radius; x <= radius; ++x)
+			for (var x = -_wanderBlocks; x <= _wanderBlocks; ++x)
 			{
 				var pos = new Vector2(GlobalPosition.x + (x * gridSize), GlobalPosition.y + (y * gridSize));
 				var gridPos = new Vector2((int) GlobalPosition.x / gridSize + x, (int) GlobalPosition.y / gridSize + y);
 				
-				if (!usedCells.Contains(gridPos))
+				if (!TestCollisionAtPosition(pos))
 				{
 					// Adding the point
 					_aStar.AddPoint(index, pos);
@@ -106,6 +100,17 @@ public class Npc : Entity
 				index++;
 			}
 		}
+	}
+	
+	private bool TestCollisionAtPosition(Vector2 position)
+	{
+		var savePos = GlobalPosition;
+		GlobalPosition = position;
+		
+		var result = TestMove(new Transform2D(0f, GlobalPosition), Vector2.Zero);
+		
+		GlobalPosition = savePos;
+		return result;
 	}
 	
 	private Vector2 GetRandomPosition()

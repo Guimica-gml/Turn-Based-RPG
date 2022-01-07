@@ -26,21 +26,16 @@ position = Vector2( 320, 288 )
 [node name="YSort" type="YSort" parent="."]
 
 [node name="Enemy" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 112, 32 )
-_collisionTileMapPath = NodePath("../CollisionTileMap")
-_customLevel = 2
+position = Vector2( 256, 112 )
 
 [node name="Enemy2" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 64, 112 )
-_collisionTileMapPath = NodePath("../CollisionTileMap")
+position = Vector2( 96, 48 )
 
 [node name="Enemy3" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 256, 112 )
-_collisionTileMapPath = NodePath("../CollisionTileMap")
+position = Vector2( 48, 208 )
 
 [node name="Enemy4" parent="YSort" instance=ExtResource( 7 )]
-position = Vector2( 48, 208 )
-_collisionTileMapPath = NodePath("../CollisionTileMap")
+position = Vector2( 64, 112 )
 
 [node name="CollisionTileMap" type="TileMap" parent="YSort"]
 tile_set = ExtResource( 3 )
@@ -56,5 +51,8 @@ Interaction = ExtResource( 6 )
 [node name="SceneEntry" parent="." instance=ExtResource( 2 )]
 position = Vector2( 224, 256 )
 Indentifier = "Entry06"
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2( 288, 80 )
 
 [editable path="MainCamera"]
