@@ -87,6 +87,7 @@ ItemStats = ExtResource( 12 )
 
 [node name="Jessica" parent="YSort" instance=ExtResource( 2 )]
 position = Vector2( 160, 32 )
+collision_layer = 4
 _direction = Vector2( 0, 1 )
 
 [node name="CollisionTileMap" type="TileMap" parent="YSort"]

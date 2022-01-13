@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://MainMenu/TtileFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://MainMenu/ButtonFont.tres" type="DynamicFont" id=2]
@@ -6,48 +6,68 @@
 [ext_resource path="res://MainMenu/Buttons/MenuButtonHover.tres" type="StyleBox" id=4]
 [ext_resource path="res://MainMenu/MainMenu.cs" type="Script" id=5]
 [ext_resource path="res://Interactions/Resources/Interaction_Menu.tres" type="Resource" id=6]
+[ext_resource path="res://MainMenu/MenuBackground.png" type="Texture" id=8]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+void fragment()
+{
+	vec2 uv = UV;
+	uv.x += TIME * 0.05f;
+	
+	COLOR = texture(TEXTURE, uv);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
-[node name="MainMenu" type="Control" groups=["Menu"]]
-anchor_right = 1.0
-anchor_bottom = 1.0
+[node name="MainMenu" type="Node2D" groups=["Menu"]]
 script = ExtResource( 5 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 interaction = ExtResource( 6 )
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="Sprite" parent="."]
+material = SubResource( 3 )
+texture = ExtResource( 8 )
+centered = false
+region_rect = Rect2( 0, 0, 320, 180 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
-color = Color( 0.113725, 0.113725, 0.113725, 1 )
+color = Color( 0, 0, 0, 0.666667 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="CenterContainer" type="CenterContainer" parent="."]
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchor_right = 1.0
 anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="CenterContainer"]
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/CenterContainer"]
 margin_left = 46.0
 margin_top = 13.0
 margin_right = 274.0
 margin_bottom = 167.0
 custom_constants/margin_bottom = 40
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer/MarginContainer"]
 margin_right = 228.0
 margin_bottom = 114.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="CenterContainer/MarginContainer/VBoxContainer"]
+[node name="Label" type="Label" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
 margin_right = 228.0
 margin_bottom = 60.0
 grow_horizontal = 2
@@ -61,7 +81,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="StartButton" type="Button" parent="CenterContainer/MarginContainer/VBoxContainer"]
+[node name="StartButton" type="Button" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
 margin_left = 74.0
 margin_top = 64.0
 margin_right = 154.0
@@ -77,7 +97,7 @@ custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
 text = "Start"
 
-[node name="ExitButton" type="Button" parent="CenterContainer/MarginContainer/VBoxContainer"]
+[node name="ExitButton" type="Button" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
 margin_left = 74.0
 margin_top = 91.0
 margin_right = 154.0
@@ -93,5 +113,5 @@ custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
 text = "Exit"
 
-[connection signal="pressed" from="CenterContainer/MarginContainer/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
-[connection signal="pressed" from="CenterContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="OnExitButtonPressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="OnExitButtonPressed"]

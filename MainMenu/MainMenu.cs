@@ -1,6 +1,6 @@
 using Godot;
 
-public class MainMenu : Control
+public class MainMenu : Node2D
 {
 	[Export] private Interaction interaction = null;
 	

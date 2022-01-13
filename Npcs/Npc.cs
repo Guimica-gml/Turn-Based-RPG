@@ -13,6 +13,7 @@ public class Npc : Entity
 	private AStar2D _aStar;
 	
 	private Timer _idleTimer;
+	private KinematicBody2D _worldChecker;
 	
 	public override void _Ready()
 	{
@@ -79,12 +80,13 @@ public class Npc : Entity
 		var gridSize = Global.Manager.GridSize;
 		var index = 0;
 		
+		CreateWorldChecker();
+		
 		for (var y = -_wanderBlocks; y <= _wanderBlocks; ++y)
 		{
 			for (var x = -_wanderBlocks; x <= _wanderBlocks; ++x)
 			{
 				var pos = new Vector2(GlobalPosition.x + (x * gridSize), GlobalPosition.y + (y * gridSize));
-				var gridPos = new Vector2((int) GlobalPosition.x / gridSize + x, (int) GlobalPosition.y / gridSize + y);
 				
 				if (!TestCollisionAtPosition(pos))
 				{
@@ -100,17 +102,35 @@ public class Npc : Entity
 				index++;
 			}
 		}
+		
+		_worldChecker.QueueFree();
+		_worldChecker = null;
+	}
+	
+	private void CreateWorldChecker()
+	{
+		_worldChecker = new KinematicBody2D();
+		var collisionShape = new CollisionShape2D();
+		var shape = new RectangleShape2D();
+		
+		_worldChecker.AddChild(collisionShape);
+		
+		_worldChecker.CollisionLayer = 0;
+		_worldChecker.CollisionMask = 1;
+		shape.Extents = new Vector2(2f, 2f);
+		collisionShape.Position = Vector2.Zero;
+		collisionShape.Shape = shape;
+		
+		AddChild(_worldChecker);
 	}
 	
 	private bool TestCollisionAtPosition(Vector2 position)
 	{
-		var savePos = GlobalPosition;
-		GlobalPosition = position;
-		
-		var result = TestMove(new Transform2D(0f, GlobalPosition), Vector2.Zero);
-		
-		GlobalPosition = savePos;
-		return result;
+		var savePos = _worldChecker.GlobalPosition;
+		_worldChecker.GlobalPosition = position + new Vector2(8f, 8f);
+		var result = _worldChecker.MoveAndCollide(Vector2.Zero);
+		_worldChecker.GlobalPosition = savePos;
+		return (result != null);
 	}
 	
 	private Vector2 GetRandomPosition()
