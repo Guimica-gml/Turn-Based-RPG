@@ -4,12 +4,12 @@ public abstract class BattleState : Resource
 {
 	[Signal] protected delegate void Finished(string newScheme);
 	
-	public BattlePauseDisplayer BattlePauseDisplayer;
+	public BattleDisplayer BattleDisplayer;
 	public string NextScheme;
 	
-	public BattleState(BattlePauseDisplayer battlePauseDisplayer, string nextScheme = "")
+	public BattleState(BattleDisplayer battleDisplayer, string nextScheme = "")
 	{
-		BattlePauseDisplayer = battlePauseDisplayer;
+		BattleDisplayer = battleDisplayer;
 		NextScheme = nextScheme;
 	}
 	

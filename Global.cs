@@ -12,12 +12,14 @@ public class Global : Node
 	
 	public override void _Ready()
 	{
-		InteractionManager = GetTree().Root.GetNode<InteractionManager>("InteractionManager");
-		TransitionManager = GetTree().Root.GetNode<TransitionManager>("TransitionManager");
-		DialogManager = GetTree().Root.GetNode<DialogManager>("DialogManager");
-		BattleManager = GetTree().Root.GetNode<BattleManager>("BattleManager");
-		PopupManager = GetTree().Root.GetNode<PopupManager>("PopupManager");
-		ShopManager = GetTree().Root.GetNode<ShopManager>("ShopManager");
-		Manager = GetTree().Root.GetNode<Manager>("Manager");
+		var root = GetTree().Root;
+		
+		InteractionManager = root.GetNode<InteractionManager>("InteractionManager");
+		TransitionManager = root.GetNode<TransitionManager>("TransitionManager");
+		DialogManager = root.GetNode<DialogManager>("DialogManager");
+		BattleManager = root.GetNode<BattleManager>("BattleManager");
+		PopupManager = root.GetNode<PopupManager>("PopupManager");
+		ShopManager = root.GetNode<ShopManager>("ShopManager");
+		Manager = root.GetNode<Manager>("Manager");
 	}
 }

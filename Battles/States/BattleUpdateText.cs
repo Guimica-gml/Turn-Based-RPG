@@ -5,8 +5,8 @@ public class BattleUpdateText : BattleState
 	public string Text = "";
 	public bool StartInvisible = false;
 	
-	public BattleUpdateText(BattlePauseDisplayer battlePauseDisplayer, string text = "", bool startInvisible = true, string nextScheme = "") :
-	base(battlePauseDisplayer, nextScheme)
+	public BattleUpdateText(BattleDisplayer battleDisplayer, string text = "", bool startInvisible = true, string nextScheme = "") :
+	base(battleDisplayer, nextScheme)
 	{
 		Text = text;
 		StartInvisible = startInvisible;
@@ -14,12 +14,12 @@ public class BattleUpdateText : BattleState
 	
 	public override void OnReady()
 	{
-		BattlePauseDisplayer.SetBattleText(Text, StartInvisible);
+		BattleDisplayer.SetBattleText(Text, StartInvisible);
 	}
 	
 	public override void OnProcess(float delta)
 	{
-		if (BattlePauseDisplayer.CanChangeText() && BattlePauseDisplayer.MouseHoverTextBox && Input.IsActionJustPressed("left_click"))
+		if (BattleDisplayer.CanChangeText() && BattleDisplayer.MouseHoverTextBox && Input.IsActionJustPressed("left_click"))
 		{
 			EmitSignal(nameof(Finished), NextScheme);
 		}
@@ -32,6 +32,6 @@ public class BattleUpdateText : BattleState
 	
 	public override bool CanShowNextStateArrow()
 	{
-		return BattlePauseDisplayer.CanChangeText();
+		return BattleDisplayer.CanChangeText();
 	}
 }

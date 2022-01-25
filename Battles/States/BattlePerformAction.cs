@@ -7,8 +7,8 @@ public class BattlePerformAction : BattleUpdateText
 	
 	private bool _animEnded = false;
 	
-	public BattlePerformAction(BattlePauseDisplayer battlePauseDisplayer, BattleCharacterDisplayer userCharacterDisplayer, BattleCharacterDisplayer targetCharacterDisplayer, string nextScheme = "") :
-	base(battlePauseDisplayer, nextScheme:nextScheme)
+	public BattlePerformAction(BattleDisplayer battleDisplayer, BattleCharacterDisplayer userCharacterDisplayer, BattleCharacterDisplayer targetCharacterDisplayer, string nextScheme = "") :
+	base(battleDisplayer, nextScheme:nextScheme)
 	{
 		UserCharacterDisplayer = userCharacterDisplayer;
 		TargetCharacterDisplayer = targetCharacterDisplayer;
@@ -16,23 +16,23 @@ public class BattlePerformAction : BattleUpdateText
 	
 	public override void OnReady()
 	{
-		if (BattlePauseDisplayer.CurrentAction == null)
+		if (BattleDisplayer.CurrentAction == null)
 		{
 			EmitSignal(nameof(Finished), NextScheme);
 			return;
 		}
 		
-		Text = $"{UserCharacterDisplayer.Stats.Name} used action {BattlePauseDisplayer.CurrentAction.Name}.";
+		Text = $"{UserCharacterDisplayer.Stats.Name} used action {BattleDisplayer.CurrentAction.Name}.";
 		base.OnReady();
 		
-		if (!BattlePauseDisplayer.CurrentAction.Heal)
+		if (!BattleDisplayer.CurrentAction.Heal)
 		{
-			TargetCharacterDisplayer.ApplyAction(BattlePauseDisplayer.CurrentAction, UserCharacterDisplayer.Stats);
+			TargetCharacterDisplayer.ApplyAction(BattleDisplayer.CurrentAction, UserCharacterDisplayer.Stats);
 			TargetCharacterDisplayer.Connect("AnimEnded", this, nameof(OnAnimEnded));
 		}
 		else
 		{
-			UserCharacterDisplayer.ApplyAction(BattlePauseDisplayer.CurrentAction);
+			UserCharacterDisplayer.ApplyAction(BattleDisplayer.CurrentAction);
 			UserCharacterDisplayer.Connect("AnimEnded", this, nameof(OnAnimEnded));
 		}
 	}
@@ -51,12 +51,12 @@ public class BattlePerformAction : BattleUpdateText
 			UserCharacterDisplayer.Disconnect("AnimEnded", this, nameof(OnAnimEnded));
 		
 		_animEnded = false;
-		BattlePauseDisplayer.CurrentAction = null;
+		BattleDisplayer.CurrentAction = null;
 	}
 	
 	public override bool CanShowNextStateArrow()
 	{
-		return BattlePauseDisplayer.CanChangeText() && _animEnded;
+		return BattleDisplayer.CanChangeText() && _animEnded;
 	}
 	
 	private void OnAnimEnded()

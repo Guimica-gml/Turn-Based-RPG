@@ -103,9 +103,9 @@ public class DialogBox : Control
 	
 	private void DeleteResponses()
 	{
-		foreach (Button response in _resposnsesContainer.GetChildren())
+		foreach (Button responseButton in _resposnsesContainer.GetChildren())
 		{
-			response.QueueFree();
+			responseButton.QueueFree();
 		}
 	}
 	
@@ -273,7 +273,7 @@ public class DialogBox : Control
 		{
 			_textLabel.VisibleCharacters += 1;
 			var lastChar = _textLabel.Text[_textLabel.VisibleCharacters - 1];
-			_timer.Start((_slowerCharacters.Contains(lastChar)) ? _textSpeed * 10f : _textSpeed);
+			_timer.Start((_slowerCharacters.Contains(lastChar)) ? _textSpeed * 8f : _textSpeed);
 			return;
 		}
 		

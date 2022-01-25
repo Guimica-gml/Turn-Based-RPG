@@ -9,18 +9,18 @@ public class BattleManager : Node
 	
 	private Enemy _currentEnemy = null;
 	
-	private BattlePauseDisplayer _battleScenario = null;
-	private PackedScene _battleScenarioPacked = GD.Load<PackedScene>("res://PauseDisplayer/BattlePauseDisplayer/BattlePauseDisplayer.tscn");
+	private BattleDisplayer _battleDisplayer = null;
+	private PackedScene _battleScenarioPacked = GD.Load<PackedScene>("res://Battles/BattleDisplayer.tscn");
 	
 	public void StartBattle(Enemy enemy)
 	{
 		InBattle = true;
 		
-		_battleScenario = _battleScenarioPacked.Instance<BattlePauseDisplayer>();
-		_battleScenario.EnemyStats = enemy.Stats;
-		_battleScenario.Connect("Close", this, nameof(OnBattleEnded));
+		_battleDisplayer = _battleScenarioPacked.Instance<BattleDisplayer>();
+		_battleDisplayer.EnemyStats = enemy.Stats;
+		_battleDisplayer.Connect("Close", this, nameof(OnBattleEnded));
 		
-		Global.Manager.PauseGame(_battleScenario);
+		Global.Manager.PauseGame(_battleDisplayer);
 		
 		_currentEnemy = enemy;
 		EmitSignal(nameof(BattleStarted));

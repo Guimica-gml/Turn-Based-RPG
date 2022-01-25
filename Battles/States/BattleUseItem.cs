@@ -2,25 +2,25 @@ using Godot;
 
 public class BattleUseItem : BattleUpdateText
 {
-	public BattleUseItem(BattlePauseDisplayer battlePauseDisplayer, string nextScheme = "") : base(battlePauseDisplayer, nextScheme:nextScheme)
+	public BattleUseItem(BattleDisplayer battleDisplayer, string nextScheme = "") : base(battleDisplayer, nextScheme:nextScheme)
 	{
 		// Don't need anything here
 	}
 	
 	public override void OnReady()
 	{
-		if (BattlePauseDisplayer.UsedItemName == "")
+		if (BattleDisplayer.UsedItemName == "")
 		{
 			EmitSignal(nameof(Finished), NextScheme);
 			return;
 		}
 		
-		Text = $"You used item {BattlePauseDisplayer.UsedItemName}";
+		Text = $"You used item {BattleDisplayer.UsedItemName}";
 		base.OnReady();
 	}
 	
 	public override void OnFinish()
 	{
-		BattlePauseDisplayer.UsedItemName = "";
+		BattleDisplayer.UsedItemName = "";
 	}
 }

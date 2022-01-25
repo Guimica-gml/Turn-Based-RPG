@@ -9,8 +9,8 @@ public class BattlePlayerSelectAction : BattleUpdateText
 	
 	private Inventory PlayerInventory;
 	
-	public BattlePlayerSelectAction(BattlePauseDisplayer battlePauseDisplayer, GridContainer actionsContainer, Button inventoryButton, PauseDisplayer inventory, string text, bool startInvisible, string nextScheme = "") :
-	base(battlePauseDisplayer, text, startInvisible:startInvisible, nextScheme:nextScheme)
+	public BattlePlayerSelectAction(BattleDisplayer battleDisplayer, GridContainer actionsContainer, Button inventoryButton, PauseDisplayer inventory, string text, bool startInvisible, string nextScheme = "") :
+	base(battleDisplayer, text, startInvisible:startInvisible, nextScheme:nextScheme)
 	{
 		ActionsContainer = actionsContainer;
 		InventoryButton = inventoryButton;
@@ -19,7 +19,7 @@ public class BattlePlayerSelectAction : BattleUpdateText
 	
 	public override void OnReady()
 	{
-		BattlePauseDisplayer.SetActionButtonsVisibility(true);
+		BattleDisplayer.SetActionButtonsVisibility(true);
 		base.OnReady();
 		
 		PlayerInventory = GD.Load<Inventory>("res://Inventory/PlayerInventory.tres");
@@ -43,7 +43,7 @@ public class BattlePlayerSelectAction : BattleUpdateText
 	
 	public override void OnFinish()
 	{
-		BattlePauseDisplayer.SetActionButtonsVisibility(false);
+		BattleDisplayer.SetActionButtonsVisibility(false);
 		
 		foreach (var actionButton in new Array<ActionButton>(ActionsContainer.GetChildren()))
 		{
@@ -56,7 +56,7 @@ public class BattlePlayerSelectAction : BattleUpdateText
 	
 	private void OnInventoryItemRemoved(string itemName)
 	{
-		BattlePauseDisplayer.UsedItemName = itemName;
+		BattleDisplayer.UsedItemName = itemName;
 		Inventory.Visible = false;
 		EmitSignal(nameof(Finished), NextScheme);
 	}
@@ -68,7 +68,7 @@ public class BattlePlayerSelectAction : BattleUpdateText
 	
 	private void OnActionButtonSelected(Action action)
 	{
-		BattlePauseDisplayer.CurrentAction = action;
+		BattleDisplayer.CurrentAction = action;
 		EmitSignal(nameof(Finished), NextScheme);
 	}
 }

@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Inventory/ItemInfoDisplayer/ItemDescriptionFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://Inventory/InventoryDisplayer/InventoryNameFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://Inventory/InventoryContainer/InventoryNameFont.tres" type="DynamicFont" id=2]
 [ext_resource path="res://Inventory/ItemInfoDisplayer/ItemInfoDisplay.png" type="Texture" id=3]
 [ext_resource path="res://Inventory/ItemInfoDisplayer/ItemInfoDisplayer.cs" type="Script" id=4]
 

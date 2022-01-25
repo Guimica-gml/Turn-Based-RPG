@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
-ScenePath = "res://Scenarios/Scenario1.tscn"
+ScenePath = "res://Scenarios/Outside1.tscn"
 SceneEntryIndetifier = "Entry01"
 transitionType = 0

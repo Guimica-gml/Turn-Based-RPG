@@ -5,8 +5,8 @@ public class BattleEnemySelectAction : BattleState
 {
 	public Array<Action> EnemyActions;
 	
-	public BattleEnemySelectAction(BattlePauseDisplayer battlePauseDisplayer, Array<Action> enemyActions, string nextScheme = "") :
-	base(battlePauseDisplayer, nextScheme:nextScheme)
+	public BattleEnemySelectAction(BattleDisplayer battleDisplayer, Array<Action> enemyActions, string nextScheme = "") :
+	base(battleDisplayer, nextScheme:nextScheme)
 	{
 		EnemyActions = enemyActions;
 	}
@@ -15,7 +15,7 @@ public class BattleEnemySelectAction : BattleState
 	{
 		GD.Randomize();
 		
-		BattlePauseDisplayer.CurrentAction = GetAction();
+		BattleDisplayer.CurrentAction = GetAction();
 		EmitSignal(nameof(Finished), NextScheme);
 	}
 	
@@ -36,7 +36,7 @@ public class BattleEnemySelectAction : BattleState
 	
 	private Action GetAction()
 	{
-		var enemyStats = BattlePauseDisplayer.EnemyDisplayer.Stats;
+		var enemyStats = BattleDisplayer.EnemyDisplayer.Stats;
 		var healActions = new Array<Action>();
 		var attackActions = new Array<Action>();
 		

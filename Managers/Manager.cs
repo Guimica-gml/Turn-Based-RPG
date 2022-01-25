@@ -13,8 +13,8 @@ public class Manager : CanvasLayer
 	
 	private PackedScene _playerPreload = GD.Load<PackedScene>("res://Player/Player.tscn");
 	
-	private PackedScene _pauseDisplayerPreload = GD.Load<PackedScene>("res://PauseDisplayer/InventoryPauseDisplayer/InventoryPauseDisplayer.tscn");
-	private PackedScene _programmerDisplayerPreload = GD.Load<PackedScene>("res://PauseDisplayer/ProgrammerPauseDisplayer/ProgrammerPauseDisplayer.tscn");
+	private PackedScene _pauseDisplayerPreload = GD.Load<PackedScene>("res://Inventory/InventoryDisplayer/InventoryDisplayer.tscn");
+	private PackedScene _programmerDisplayerPreload = GD.Load<PackedScene>("res://GameConsole/GameConsole.tscn");
 	
 	public async override void _Ready()
 	{
@@ -38,7 +38,7 @@ public class Manager : CanvasLayer
 			// This should be accessible just if you run the game from the editor
 			else if (OS.HasFeature("editor") && @event.IsActionPressed("ui_programmer_access"))
 			{
-				var programmerDisplayer = _programmerDisplayerPreload.Instance<ProgrammerPauseDisplayer>();
+				var programmerDisplayer = _programmerDisplayerPreload.Instance<GameConsole>();
 				PauseGame(programmerDisplayer);
 			}
 		}

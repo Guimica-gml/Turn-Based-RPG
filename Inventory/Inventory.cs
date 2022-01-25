@@ -33,7 +33,7 @@ public class Inventory : Resource
 	public Array<ItemStats> Items
 	{
 		get => _items;
-		set
+		private set
 		{
 			_items = value;
 			EmitSignal(nameof(ItemsChanged), Items);

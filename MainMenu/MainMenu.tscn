@@ -55,14 +55,14 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/CenterContainer"]
 margin_left = 46.0
-margin_top = 13.0
+margin_top = 11.0
 margin_right = 274.0
-margin_bottom = 167.0
+margin_bottom = 169.0
 custom_constants/margin_bottom = 40
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer/MarginContainer"]
 margin_right = 228.0
-margin_bottom = 114.0
+margin_bottom = 118.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -74,7 +74,7 @@ grow_horizontal = 2
 grow_vertical = 2
 rect_min_size = Vector2( 0, 60 )
 custom_fonts/font = ExtResource( 1 )
-text = "Turn-Based RPG"
+text = "TURN-BASED RPG"
 align = 1
 valign = 1
 __meta__ = {
@@ -85,7 +85,7 @@ __meta__ = {
 margin_left = 74.0
 margin_top = 64.0
 margin_right = 154.0
-margin_bottom = 87.0
+margin_bottom = 89.0
 rect_min_size = Vector2( 80, 0 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -95,13 +95,13 @@ custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = SubResource( 1 )
 custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
-text = "Start"
+text = "START"
 
 [node name="ExitButton" type="Button" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
 margin_left = 74.0
-margin_top = 91.0
+margin_top = 93.0
 margin_right = 154.0
-margin_bottom = 114.0
+margin_bottom = 118.0
 rect_min_size = Vector2( 80, 0 )
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -111,7 +111,7 @@ custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = SubResource( 1 )
 custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
-text = "Exit"
+text = "EXIT"
 
 [connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
 [connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="OnExitButtonPressed"]

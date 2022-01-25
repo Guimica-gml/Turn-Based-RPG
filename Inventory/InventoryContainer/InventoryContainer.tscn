@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Inventory/InventoryContainer/InventoryContainer.cs" type="Script" id=1]
+[ext_resource path="res://Inventory/InventoryContainer/InventoryPanel.tres" type="StyleBox" id=2]
+[ext_resource path="res://Inventory/ItemsTab/TabSelected.png" type="Texture" id=3]
+[ext_resource path="res://Inventory/ItemsTab/Tab.png" type="Texture" id=4]
+[ext_resource path="res://Inventory/ItemsTab/ItemsTab.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Inventory/InventoryContainer/InventoryNameFont.tres" type="DynamicFont" id=6]
+
+[sub_resource type="StyleBoxTexture" id=1]
+texture = ExtResource( 3 )
+region_rect = Rect2( 0, 0, 11, 8 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+
+[sub_resource type="StyleBoxTexture" id=2]
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 11, 8 )
+margin_left = 6.0
+margin_right = 6.0
+margin_top = 6.0
+
+[node name="InventoryDisplayer" type="TabContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_colors/font_color_disabled = Color( 1, 1, 1, 1 )
+custom_colors/font_color_bg = Color( 1, 1, 1, 1 )
+custom_colors/font_color_fg = Color( 1, 1, 1, 1 )
+custom_constants/side_margin = 2
+custom_fonts/font = ExtResource( 6 )
+custom_styles/tab_fg = SubResource( 1 )
+custom_styles/tab_bg = SubResource( 2 )
+custom_styles/panel = ExtResource( 2 )
+tab_align = 0
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Items" parent="." instance=ExtResource( 5 )]
+margin_left = 3.0
+margin_top = 20.0
+margin_right = -3.0
+margin_bottom = -3.0
+
+[node name="KeyItems" parent="." instance=ExtResource( 5 )]
+visible = false
+margin_left = 3.0
+margin_top = 20.0
+margin_right = -3.0
+margin_bottom = -3.0
+_displayKeyItems = true

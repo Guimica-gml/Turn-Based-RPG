@@ -5,7 +5,7 @@ public class BattleCheckForWinner : BattleState
 	public string SchemeWon = "";
 	public string SchemeLost = "";
 	
-	public BattleCheckForWinner(BattlePauseDisplayer battlePauseDisplayer, string schemeWon, string schemeLost, string nextScheme = "") : base(battlePauseDisplayer, nextScheme)
+	public BattleCheckForWinner(BattleDisplayer battleDisplayer, string schemeWon, string schemeLost, string nextScheme = "") : base(battleDisplayer, nextScheme)
 	{
 		SchemeWon = schemeWon;
 		SchemeLost = schemeLost;
@@ -13,11 +13,11 @@ public class BattleCheckForWinner : BattleState
 	
 	public override void OnReady()
 	{
-		if (BattlePauseDisplayer.PlayerStats.Hp <= 0)
+		if (BattleDisplayer.PlayerStats.Hp <= 0)
 		{
 			NextScheme = SchemeLost;
 		}
-		else if (BattlePauseDisplayer.EnemyStats.Hp <= 0)
+		else if (BattleDisplayer.EnemyStats.Hp <= 0)
 		{
 			NextScheme = SchemeLost;
 		}
