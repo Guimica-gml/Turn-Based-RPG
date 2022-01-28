@@ -6,7 +6,7 @@ public class TransitionInteraction : Interaction
 	[Export(PropertyHint.File, "*.tscn")] public string ScenePath;
 	[Export] public ItemStats Key;
 	[Export] public string SceneEntryIndetifier;
-	[Export] public TransitionEffect.Types transitionType = TransitionEffect.Types.Default;
+	[Export] public TransitionTypes transitionType = TransitionTypes.Default;
 	
 	private Inventory _playerInventory;
 	

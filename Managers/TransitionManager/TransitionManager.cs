@@ -28,7 +28,7 @@ public class TransitionManager : Node
 		_transitionEffect.Connect("EffectEnded", this, nameof(OnEffectEnded));
 	}
 	
-	public void ChangeSceneTo(string scenePath, string sceneEntryIndetifier = "none", TransitionEffect.Types transitionType = TransitionEffect.Types.Default)
+	public void ChangeSceneTo(string scenePath, string sceneEntryIndetifier = "none", TransitionTypes transitionType = TransitionTypes.Default)
 	{
 		if (InTransition)
 		{

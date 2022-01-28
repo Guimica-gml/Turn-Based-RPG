@@ -1,10 +1,15 @@
 using Godot;
 using Godot.Collections;
 
+public enum TransitionTypes
+{
+	Default,
+	Courtain,
+	FromCenter
+}
+
 public class TransitionEffect : Control
 {
-	public enum Types { Default, Courtain, FromCenter }
-	
 	[Signal] private delegate void EffectStarted();
 	[Signal] private delegate void EffectTransition();
 	[Signal] private delegate void EffectEnded();
@@ -12,11 +17,11 @@ public class TransitionEffect : Control
 	public bool Active { get; private set; } = false;
 	private Tween _tween;
 	
-	private Dictionary<Types, TransitionInfo> _transitionsInfo = new Dictionary<Types, TransitionInfo>()
+	private Dictionary<TransitionTypes, TransitionInfo> _transitionsInfo = new Dictionary<TransitionTypes, TransitionInfo>()
 	{
-		{ Types.Default, new TransitionInfo(1f, "res://SceneTransition/Masks/Default.png") },
-		{ Types.Courtain, new TransitionInfo(0.25f, "res://SceneTransition/Masks/Courtains.png") },
-		{ Types.FromCenter, new TransitionInfo(0.25f, "res://SceneTransition/Masks/FromCenter.png") },
+		{ TransitionTypes.Default, new TransitionInfo(1f, "res://SceneTransition/Masks/Default.png") },
+		{ TransitionTypes.Courtain, new TransitionInfo(0.25f, "res://SceneTransition/Masks/Courtains.png") },
+		{ TransitionTypes.FromCenter, new TransitionInfo(0.25f, "res://SceneTransition/Masks/FromCenter.png") },
 	};
 	
 	public override void _Ready()
@@ -24,7 +29,7 @@ public class TransitionEffect : Control
 		_tween = GetNode<Tween>("Tween");
 	}
 	
-	public async void StartEffect(Types transitionType = Types.Default)
+	public async void StartEffect(TransitionTypes transitionType = TransitionTypes.Default)
 	{
 		if (Active)
 		{

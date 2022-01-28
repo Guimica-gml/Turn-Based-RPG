@@ -5,7 +5,7 @@ using Godot.Collections;
 
 public class BattleDisplayer : PauseDisplayer
 {
-	[Export] public TransitionEffect.Types TransitionType = TransitionEffect.Types.Default;
+	[Export] public TransitionTypes TransitionType = TransitionTypes.Default;
 	[Export] private float _textSpeed = 0.025f;
 	
 	[Export] public Stats EnemyStats;
@@ -48,17 +48,17 @@ public class BattleDisplayer : PauseDisplayer
 		_timer = GetNode<Timer>("Timer");
 		_inventory = GetNode<PauseDisplayer>("InventoryPauseDisplayer");
 		_transitionEffect = GetNode<TransitionEffect>("TransitionEffect");
-		_optionsContainer = GetNode<HBoxContainer>("VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer");
-		_inventoryButton = GetNode<Button>("VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer/ItemsButton");
-		_actionsContainer = GetNode<GridContainer>("VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer/ActionsContainer");
-		_textLabel = GetNode<RichTextLabel>("VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel");
-		_nextMessageArrow = GetNode<TextureRect>("VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel/NextMessageRect");
+		_optionsContainer = GetNode<HBoxContainer>("VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer");
+		_inventoryButton = GetNode<Button>("VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer/ItemsButton");
+		_actionsContainer = GetNode<GridContainer>("VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer/ActionsContainer");
+		_textLabel = GetNode<RichTextLabel>("VBoxContainer/OptionsPanel/HboxContainer/TextLabel");
+		_nextMessageArrow = GetNode<TextureRect>("VBoxContainer/OptionsPanel/HboxContainer/TextLabel/NextMessageRect");
 		
-		_playerStatsDisplayer = GetNode<BattleStatsDisplayer>("VBoxContainer/TextureRect/PlayerStatsDisplayer");
-		_enemyStatsDisplayer = GetNode<BattleStatsDisplayer>("VBoxContainer/TextureRect/EnemyStatsDisplayer");
+		_playerStatsDisplayer = GetNode<BattleStatsDisplayer>("VBoxContainer/Background/PlayerStatsDisplayer");
+		_enemyStatsDisplayer = GetNode<BattleStatsDisplayer>("VBoxContainer/Background/EnemyStatsDisplayer");
 		
-		PlayerDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/TextureRect/PlayerDisplayer");
-		EnemyDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/TextureRect/EnemyDisplayer");
+		PlayerDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/Background/PlayerDisplayer");
+		EnemyDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/Background/EnemyDisplayer");
 		
 		// Setting information about the battle
 		_playerStatsDisplayer.Stats = PlayerStats;

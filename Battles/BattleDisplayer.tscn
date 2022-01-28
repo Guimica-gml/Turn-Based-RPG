@@ -34,7 +34,10 @@ _baseMaxDropMoney = 200
 Actions = [ ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ), null ]
 
 [sub_resource type="StyleBoxTexture" id=1]
+content_margin_left = 3.0
+content_margin_right = 3.0
 content_margin_top = 3.0
+content_margin_bottom = 3.0
 texture = ExtResource( 16 )
 region_rect = Rect2( 0, 0, 25, 13 )
 margin_left = 3.0
@@ -58,7 +61,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="TextureRect" type="TextureRect" parent="VBoxContainer" index="0"]
+[node name="Background" type="TextureRect" parent="VBoxContainer" index="0"]
 margin_right = 320.0
 margin_bottom = 130.0
 mouse_filter = 2
@@ -67,14 +70,14 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PlayerDisplayer" parent="VBoxContainer/TextureRect" index="0" instance=ExtResource( 1 )]
+[node name="PlayerDisplayer" parent="VBoxContainer/Background" index="0" instance=ExtResource( 1 )]
 position = Vector2( 86, 112 )
 
-[node name="EnemyDisplayer" parent="VBoxContainer/TextureRect" index="1" instance=ExtResource( 1 )]
+[node name="EnemyDisplayer" parent="VBoxContainer/Background" index="1" instance=ExtResource( 1 )]
 position = Vector2( 248, 64 )
 _flip = true
 
-[node name="PlayerStatsDisplayer" parent="VBoxContainer/TextureRect" index="2" instance=ExtResource( 3 )]
+[node name="PlayerStatsDisplayer" parent="VBoxContainer/Background" index="2" instance=ExtResource( 3 )]
 anchor_top = 1.0
 anchor_right = 0.0
 margin_left = 2.0
@@ -82,7 +85,7 @@ margin_top = -26.0
 margin_right = 62.0
 margin_bottom = -2.0
 
-[node name="EnemyStatsDisplayer" parent="VBoxContainer/TextureRect" index="3" instance=ExtResource( 3 )]
+[node name="EnemyStatsDisplayer" parent="VBoxContainer/Background" index="3" instance=ExtResource( 3 )]
 anchor_left = 1.0
 anchor_bottom = 0.0
 margin_left = -65.0
@@ -103,28 +106,17 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/OptionsPanel" index="0"]
+[node name="HboxContainer" type="HBoxContainer" parent="VBoxContainer/OptionsPanel" index="0"]
 margin_left = 3.0
 margin_top = 3.0
 margin_right = 317.0
 margin_bottom = 47.0
 mouse_filter = 2
-custom_constants/margin_right = 1
-custom_constants/margin_top = 1
-custom_constants/margin_left = 1
-custom_constants/margin_bottom = 1
-
-[node name="HboxContainer" type="HBoxContainer" parent="VBoxContainer/OptionsPanel/MarginContainer" index="0"]
-margin_left = 1.0
-margin_top = 1.0
-margin_right = 313.0
-margin_bottom = 43.0
-mouse_filter = 2
 custom_constants/separation = 0
 
-[node name="TextLabel" type="RichTextLabel" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer" index="0"]
-margin_right = 282.0
-margin_bottom = 42.0
+[node name="TextLabel" type="RichTextLabel" parent="VBoxContainer/OptionsPanel/HboxContainer" index="0"]
+margin_right = 284.0
+margin_bottom = 44.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 custom_fonts/mono_font = ExtResource( 12 )
@@ -135,7 +127,7 @@ custom_fonts/normal_font = ExtResource( 12 )
 text = "Here's where the text is going to appear lol"
 scroll_active = false
 
-[node name="NextMessageRect" type="TextureRect" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel" index="1"]
+[node name="NextMessageRect" type="TextureRect" parent="VBoxContainer/OptionsPanel/HboxContainer/TextLabel" index="1"]
 visible = false
 anchor_left = 1.0
 anchor_top = 1.0
@@ -148,24 +140,24 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="OptionsContainer" type="HBoxContainer" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer" index="1"]
-margin_left = 282.0
-margin_right = 312.0
-margin_bottom = 42.0
+[node name="OptionsContainer" type="HBoxContainer" parent="VBoxContainer/OptionsPanel/HboxContainer" index="1"]
+margin_left = 284.0
+margin_right = 314.0
+margin_bottom = 44.0
 size_flags_horizontal = 5
 size_flags_vertical = 3
 alignment = 2
 
-[node name="ActionsContainer" type="GridContainer" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer" index="0"]
-margin_bottom = 42.0
+[node name="ActionsContainer" type="GridContainer" parent="VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer" index="0"]
+margin_bottom = 44.0
 size_flags_horizontal = 5
 size_flags_vertical = 3
 columns = 2
 
-[node name="ItemsButton" type="Button" parent="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/OptionsContainer" index="1"]
+[node name="ItemsButton" type="Button" parent="VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer" index="1"]
 margin_left = 4.0
 margin_right = 30.0
-margin_bottom = 42.0
+margin_bottom = 44.0
 custom_fonts/font = ExtResource( 12 )
 custom_styles/hover = ExtResource( 4 )
 custom_styles/pressed = ExtResource( 4 )
@@ -182,6 +174,6 @@ visible = false
 [node name="Timer" type="Timer" parent="." index="3"]
 process_mode = 0
 
-[connection signal="mouse_entered" from="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel" to="." method="OnTextLabelMouseEntered"]
-[connection signal="mouse_exited" from="VBoxContainer/OptionsPanel/MarginContainer/HboxContainer/TextLabel" to="." method="OnTextLabelMouseExited"]
+[connection signal="mouse_entered" from="VBoxContainer/OptionsPanel/HboxContainer/TextLabel" to="." method="OnTextLabelMouseEntered"]
+[connection signal="mouse_exited" from="VBoxContainer/OptionsPanel/HboxContainer/TextLabel" to="." method="OnTextLabelMouseExited"]
 [connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]
