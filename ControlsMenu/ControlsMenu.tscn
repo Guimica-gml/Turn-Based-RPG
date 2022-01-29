@@ -1,0 +1,157 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://MainMenu/TtileFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://MainMenu/ButtonFont.tres" type="DynamicFont" id=2]
+[ext_resource path="res://ControlsMenu/InfoFont.tres" type="DynamicFont" id=3]
+[ext_resource path="res://MainMenu/MenuBackground.png" type="Texture" id=4]
+[ext_resource path="res://MainMenu/Buttons/MenuButton.tres" type="StyleBox" id=5]
+[ext_resource path="res://MainMenu/Buttons/MenuButtonHover.tres" type="StyleBox" id=6]
+[ext_resource path="res://ControlsMenu/ControlsMenu.cs" type="Script" id=7]
+[ext_resource path="res://Interactions/Resources/Interaction_Controls_Menu.tres" type="Resource" id=8]
+
+[sub_resource type="Shader" id=2]
+code = "shader_type canvas_item;
+
+void fragment()
+{
+	vec2 uv = UV;
+	uv.x += TIME * 0.05f;
+	
+	COLOR = texture(TEXTURE, uv);
+}
+"
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = SubResource( 2 )
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[node name="ControlsMenu" type="Node2D" groups=["Menu"]]
+script = ExtResource( 7 )
+_interaction = ExtResource( 8 )
+
+[node name="Background" type="Sprite" parent="."]
+material = SubResource( 3 )
+texture = ExtResource( 4 )
+centered = false
+region_rect = Rect2( 0, 0, 320, 180 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 2
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 0.666667 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 150.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="TitleLabel" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+margin_right = 320.0
+margin_bottom = 60.0
+grow_horizontal = 2
+grow_vertical = 2
+rect_min_size = Vector2( 0, 60 )
+custom_fonts/font = ExtResource( 1 )
+text = "CONTROLS"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label1" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+margin_top = 64.0
+margin_right = 320.0
+margin_bottom = 73.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = ExtResource( 3 )
+text = "Use the arrows to move"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+margin_top = 77.0
+margin_right = 320.0
+margin_bottom = 86.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = ExtResource( 3 )
+text = "You can interact with objects in the world with 'z'"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+margin_top = 90.0
+margin_right = 320.0
+margin_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = ExtResource( 3 )
+text = "You can use the left button to interact with inventory and battles"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="CanvasLayer/VBoxContainer/VBoxContainer"]
+margin_top = 103.0
+margin_right = 320.0
+margin_bottom = 112.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = ExtResource( 3 )
+text = "You can pause the game (open the inventory) pressing 'esc'"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/VBoxContainer"]
+margin_top = 150.0
+margin_right = 320.0
+margin_bottom = 180.0
+rect_min_size = Vector2( 0, 30 )
+size_flags_horizontal = 3
+
+[node name="ControlsButton" type="Button" parent="CanvasLayer/VBoxContainer/CenterContainer"]
+margin_left = 120.0
+margin_top = 2.0
+margin_right = 200.0
+margin_bottom = 27.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 6 )
+custom_styles/pressed = ExtResource( 6 )
+custom_styles/focus = SubResource( 4 )
+custom_styles/disabled = ExtResource( 5 )
+custom_styles/normal = ExtResource( 5 )
+text = "BACK"
+
+[connection signal="pressed" from="CanvasLayer/VBoxContainer/CenterContainer/ControlsButton" to="." method="OnControlsButtonPressed"]

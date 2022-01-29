@@ -230,7 +230,10 @@ public class BattleDisplayer : PauseDisplayer
 		_optionsPanel.SetText("You lost.");
 		await ToSignal(_optionsPanel, "Interacted");
 		
-		EndBattle();
+		Global.TransitionManager.ChangeSceneTo("res://GameOver/GameOver.tscn");
+		
+		await ToSignal(Global.TransitionManager, "SceneChanged");
+		Destroy();
 	}
 	
 	public void EndBattle()

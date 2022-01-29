@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://MainMenu/TtileFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://MainMenu/ButtonFont.tres" type="DynamicFont" id=2]
@@ -6,9 +6,10 @@
 [ext_resource path="res://MainMenu/Buttons/MenuButtonHover.tres" type="StyleBox" id=4]
 [ext_resource path="res://MainMenu/MainMenu.cs" type="Script" id=5]
 [ext_resource path="res://Interactions/Resources/Interaction_Menu.tres" type="Resource" id=6]
+[ext_resource path="res://Interactions/Resources/Interaction_Menu_2.tres" type="Resource" id=7]
 [ext_resource path="res://MainMenu/MenuBackground.png" type="Texture" id=8]
 
-[sub_resource type="Shader" id=2]
+[sub_resource type="Shader" id=4]
 code = "shader_type canvas_item;
 
 void fragment()
@@ -21,13 +22,14 @@ void fragment()
 "
 
 [sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 2 )
+shader = SubResource( 4 )
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
 [node name="MainMenu" type="Node2D" groups=["Menu"]]
 script = ExtResource( 5 )
 _interaction = ExtResource( 6 )
+_controlsInteraction = ExtResource( 7 )
 
 [node name="Background" type="Sprite" parent="."]
 material = SubResource( 3 )
@@ -55,14 +57,13 @@ __meta__ = {
 
 [node name="MarginContainer" type="MarginContainer" parent="CanvasLayer/CenterContainer"]
 margin_left = 46.0
-margin_top = 11.0
 margin_right = 274.0
-margin_bottom = 169.0
+margin_bottom = 187.0
 custom_constants/margin_bottom = 40
 
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/CenterContainer/MarginContainer"]
 margin_right = 228.0
-margin_bottom = 118.0
+margin_bottom = 147.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -97,7 +98,7 @@ custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
 text = "START"
 
-[node name="ExitButton" type="Button" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
+[node name="ControlsButton2" type="Button" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
 margin_left = 74.0
 margin_top = 93.0
 margin_right = 154.0
@@ -111,7 +112,24 @@ custom_styles/pressed = ExtResource( 4 )
 custom_styles/focus = SubResource( 1 )
 custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
+text = "CONTROLS"
+
+[node name="ExitButton" type="Button" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
+margin_left = 74.0
+margin_top = 122.0
+margin_right = 154.0
+margin_bottom = 147.0
+rect_min_size = Vector2( 80, 0 )
+size_flags_horizontal = 4
+size_flags_vertical = 4
+custom_fonts/font = ExtResource( 2 )
+custom_styles/hover = ExtResource( 4 )
+custom_styles/pressed = ExtResource( 4 )
+custom_styles/focus = SubResource( 1 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
 text = "EXIT"
 
 [connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/ControlsButton2" to="." method="OnControlsButtonPressed"]
 [connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="OnExitButtonPressed"]

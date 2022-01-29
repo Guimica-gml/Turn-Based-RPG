@@ -1,6 +1,6 @@
 using Godot;
 
-public class GameOver : Control
+public class GameOver : Node2D
 {
 	public override void _Input(InputEvent @event)
 	{
