@@ -5,7 +5,7 @@ public class BattleDisplayer : PauseDisplayer
 {
 	private enum Turns { None, Player, Enemy }
 	
-	[Export] public TransitionTypes TransitionType = TransitionTypes.Default;
+	[Export] private TransitionTypes _transitionType = TransitionTypes.Default;
 	
 	[Export] public Stats EnemyStats;
 	public Stats PlayerStats;
@@ -62,7 +62,7 @@ public class BattleDisplayer : PauseDisplayer
 		_transitionEffect.Connect("EffectTransition", this, nameof(OnEffectTransition));
 		_transitionEffect.Connect("EffectEnded", this, nameof(OnEffectEnded));
 		
-		_transitionEffect.StartEffect(TransitionType);
+		_transitionEffect.StartEffect(_transitionType);
 	}
 	
 	public override void _Input(InputEvent @event)
@@ -86,7 +86,7 @@ public class BattleDisplayer : PauseDisplayer
 		_currentTurn = Turns.Player;
 		
 		_optionsPanel.SetText("Select your action.");
-		await ToSignal(_optionsPanel, "Interacted");
+		await ToSignal(_optionsPanel, "TextDisplayed");
 		
 		_optionsPanel.SetActionsVisibility(true);
 		var vars = await ToSignal(_optionsPanel, "ActionSelected");
@@ -95,7 +95,8 @@ public class BattleDisplayer : PauseDisplayer
 		if (PlayerDisplayer.Active || EnemyDisplayer.Active) return;
 		
 		_optionsPanel.SetActionsVisibility(false);
-		_optionsPanel.SetText($"You selected action {action.Name}.");
+		_optionsPanel.SetText($"You selected action {action.Name}.", () => !PlayerDisplayer.Active && !EnemyDisplayer.Active);
+		_optionsPanel.EnableInput = false;
 		
 		if (!action.Heal)
 		{
@@ -108,6 +109,7 @@ public class BattleDisplayer : PauseDisplayer
 			await ToSignal(PlayerDisplayer, "AnimEnded");
 		}
 		
+		_optionsPanel.EnableInput = true;
 		await ToSignal(_optionsPanel, "Interacted");
 		
 		CheckWinner();
@@ -134,7 +136,8 @@ public class BattleDisplayer : PauseDisplayer
 		
 		var action = GetEnemyAction();
 		
-		_optionsPanel.SetText($"{EnemyStats.Name} used action {action.Name}.");
+		_optionsPanel.SetText($"{EnemyStats.Name} used action {action.Name}.", () => !PlayerDisplayer.Active && !EnemyDisplayer.Active);
+		_optionsPanel.EnableInput = false;
 		
 		if (!action.Heal)
 		{
@@ -147,6 +150,7 @@ public class BattleDisplayer : PauseDisplayer
 			await ToSignal(EnemyDisplayer, "AnimEnded");
 		}
 		
+		_optionsPanel.EnableInput = true;
 		await ToSignal(_optionsPanel, "Interacted");
 		
 		CheckWinner();
@@ -230,7 +234,7 @@ public class BattleDisplayer : PauseDisplayer
 		_optionsPanel.SetText("You lost.");
 		await ToSignal(_optionsPanel, "Interacted");
 		
-		Global.TransitionManager.ChangeSceneTo("res://GameOver/GameOver.tscn");
+		Global.TransitionManager.ChangeSceneTo("res://GameOver/GameOver.tscn", transitionType:_transitionType);
 		
 		await ToSignal(Global.TransitionManager, "SceneChanged");
 		Destroy();
@@ -240,7 +244,7 @@ public class BattleDisplayer : PauseDisplayer
 	{
 		if (_transitionEffect.Active) return;
 		_destroyState = true;
-		_transitionEffect.StartEffect(TransitionType);
+		_transitionEffect.StartEffect(_transitionType);
 	}
 	
 	public void Destroy()

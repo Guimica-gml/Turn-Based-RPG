@@ -31,7 +31,7 @@ Actions = [ ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ), null ]
 
 [node name="BattleDisplayer" instance=ExtResource( 6 )]
 script = ExtResource( 13 )
-TransitionType = 2
+_transitionType = 2
 EnemyStats = SubResource( 3 )
 
 [node name="VBoxContainer" type="VBoxContainer" parent="." index="0"]
