@@ -25,10 +25,11 @@ public class BattleStatsDisplayer : PanelContainer
 	{
 		_nameLabel = GetNode<Label>("VBoxContainer/HBoxContainer/NameLabel");
 		_levelLabel = GetNode<Label>("VBoxContainer/HBoxContainer/LevelLabel");
-		_hpLabel = GetNode<Label>("VBoxContainer/HpBar/NameLabel");
+		_hpLabel = GetNode<Label>("VBoxContainer/HpBar/HpLabel");
 		_hpBar = GetNode<StatBar>("VBoxContainer/HpBar");
 		_xpBar = GetNode<StatBar>("VBoxContainer/XpBar");
 		
+		_hpLabel.Visible = true;
 		if (!_showXp) _xpBar.Visible = false;
 	}
 	

@@ -37,7 +37,7 @@ tracks/1/keys = {
 "values": [ Color( 1, 1, 1, 0.588235 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[node name="InventoryPauseDisplayer" instance=ExtResource( 1 )]
+[node name="InventoryDisplayer" instance=ExtResource( 1 )]
 
 [node name="Background" type="NinePatchRect" parent="." index="0"]
 anchor_right = 1.0

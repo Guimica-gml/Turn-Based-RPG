@@ -1,0 +1,102 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Battles/Resources/BattleFont.tres" type="DynamicFont" id=1]
+[ext_resource path="res://Battles/ActionButton/ActionButtonHover.tres" type="StyleBox" id=2]
+[ext_resource path="res://Battles/ActionButton/ActionButtonNormal.tres" type="StyleBox" id=3]
+[ext_resource path="res://Battles/Resources/BattleOptionsDisplay.png" type="Texture" id=4]
+[ext_resource path="res://Battles/Resources/NextBattleMessage.png" type="Texture" id=5]
+[ext_resource path="res://Battles/BattleOptionsPanel/BattleOptionsPanel.cs" type="Script" id=6]
+
+[sub_resource type="StyleBoxTexture" id=1]
+content_margin_left = 3.0
+content_margin_right = 3.0
+content_margin_top = 3.0
+content_margin_bottom = 3.0
+texture = ExtResource( 4 )
+region_rect = Rect2( 0, 0, 25, 13 )
+margin_left = 3.0
+margin_right = 3.0
+margin_top = 6.0
+margin_bottom = 3.0
+
+[sub_resource type="StyleBoxEmpty" id=2]
+
+[node name="OptionsPanel" type="PanelContainer"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_styles/panel = SubResource( 1 )
+script = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HboxContainer" type="HBoxContainer" parent="."]
+margin_left = 3.0
+margin_top = 3.0
+margin_right = 317.0
+margin_bottom = 177.0
+mouse_filter = 2
+custom_constants/separation = 0
+
+[node name="TextLabel" type="RichTextLabel" parent="HboxContainer"]
+margin_right = 314.0
+margin_bottom = 174.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_fonts/mono_font = ExtResource( 1 )
+custom_fonts/bold_italics_font = ExtResource( 1 )
+custom_fonts/italics_font = ExtResource( 1 )
+custom_fonts/bold_font = ExtResource( 1 )
+custom_fonts/normal_font = ExtResource( 1 )
+scroll_active = false
+
+[node name="NextMessageRect" type="TextureRect" parent="HboxContainer/TextLabel"]
+visible = false
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -24.0
+margin_top = -15.0
+texture = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="OptionsContainer" type="HBoxContainer" parent="HboxContainer"]
+visible = false
+margin_left = 284.0
+margin_right = 314.0
+margin_bottom = 174.0
+size_flags_horizontal = 5
+size_flags_vertical = 3
+alignment = 2
+
+[node name="ActionsContainer" type="GridContainer" parent="HboxContainer/OptionsContainer"]
+margin_bottom = 174.0
+size_flags_horizontal = 5
+size_flags_vertical = 3
+columns = 2
+
+[node name="ItemsButton" type="Button" parent="HboxContainer/OptionsContainer"]
+margin_left = 4.0
+margin_right = 30.0
+margin_bottom = 174.0
+custom_fonts/font = ExtResource( 1 )
+custom_styles/hover = ExtResource( 2 )
+custom_styles/pressed = ExtResource( 2 )
+custom_styles/focus = SubResource( 2 )
+custom_styles/disabled = ExtResource( 3 )
+custom_styles/normal = ExtResource( 3 )
+text = "Items"
+
+[node name="Timer" type="Timer" parent="."]
+process_mode = 0
+
+[connection signal="mouse_entered" from="HboxContainer/TextLabel" to="." method="OnTextLabelMouseEntered"]
+[connection signal="mouse_exited" from="HboxContainer/TextLabel" to="." method="OnTextLabelMouseExited"]
+[connection signal="pressed" from="HboxContainer/OptionsContainer/ItemsButton" to="." method="OnItemsButtonPressed"]
+[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

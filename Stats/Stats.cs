@@ -180,7 +180,7 @@ public class Stats : Resource
 		return (int) GD.RandRange(MinXpDrop, MaxXpDrop);
 	}
 	
-	public int GetDropMoney()
+	public int GetMoneyDrop()
 	{
 		return (int) GD.RandRange(MinDropMoney, MaxDropMoney);
 	}

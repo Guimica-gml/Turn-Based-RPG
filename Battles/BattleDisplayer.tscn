@@ -1,21 +1,17 @@
-[gd_scene load_steps=21 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://Battles/BattleCharacterDisplayer/BattleCharacterDisplayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://SceneTransition/TransitionEffect.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Battles/BattleStatsDisplayer/BattleStatsDisplayer.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Battles/ActionButton/ActionButtonHover.tres" type="StyleBox" id=4]
-[ext_resource path="res://Battles/ActionButton/ActionButtonNormal.tres" type="StyleBox" id=5]
+[ext_resource path="res://Battles/BattleOptionsPanel/BattleOptionsPanel.tscn" type="PackedScene" id=4]
 [ext_resource path="res://PauseDisplayer/PauseDisplayer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Inventory/InventoryDisplayer/InventoryDisplayer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Battles/Actions/PunchAction.tres" type="Resource" id=8]
 [ext_resource path="res://Battles/Actions/HealAction.tres" type="Resource" id=9]
 [ext_resource path="res://Battles/Actions/KickAction.tres" type="Resource" id=10]
 [ext_resource path="res://Stats/Stats.cs" type="Script" id=11]
-[ext_resource path="res://Battles/Resources/BattleFont.tres" type="DynamicFont" id=12]
 [ext_resource path="res://Battles/BattleDisplayer.cs" type="Script" id=13]
 [ext_resource path="res://Battles/Resources/BattleBackground.png" type="Texture" id=14]
-[ext_resource path="res://Battles/Resources/NextBattleMessage.png" type="Texture" id=15]
-[ext_resource path="res://Battles/Resources/BattleOptionsDisplay.png" type="Texture" id=16]
 [ext_resource path="res://Enemy/Enemy.png" type="Texture" id=17]
 
 [sub_resource type="Resource" id=3]
@@ -27,25 +23,11 @@ _baseMaxHp = 60
 _baseAttack = 60
 _baseDefense = 60
 _baseMoney = 0
-_baseMinXpDrop = 40
-_baseMaxXpDrop = 60
+_baseMinXpDrop = 1000
+_baseMaxXpDrop = 1000
 _baseMinDropMoney = 100
 _baseMaxDropMoney = 200
 Actions = [ ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ), null ]
-
-[sub_resource type="StyleBoxTexture" id=1]
-content_margin_left = 3.0
-content_margin_right = 3.0
-content_margin_top = 3.0
-content_margin_bottom = 3.0
-texture = ExtResource( 16 )
-region_rect = Rect2( 0, 0, 25, 13 )
-margin_left = 3.0
-margin_right = 3.0
-margin_top = 6.0
-margin_bottom = 3.0
-
-[sub_resource type="StyleBoxEmpty" id=2]
 
 [node name="BattleDisplayer" instance=ExtResource( 6 )]
 script = ExtResource( 13 )
@@ -75,7 +57,7 @@ position = Vector2( 86, 112 )
 
 [node name="EnemyDisplayer" parent="VBoxContainer/Background" index="1" instance=ExtResource( 1 )]
 position = Vector2( 248, 64 )
-_flip = true
+scale = Vector2( -1, 1 )
 
 [node name="PlayerStatsDisplayer" parent="VBoxContainer/Background" index="2" instance=ExtResource( 3 )]
 anchor_top = 1.0
@@ -94,86 +76,15 @@ margin_right = -2.0
 margin_bottom = 24.0
 _showXp = false
 
-[node name="OptionsPanel" type="PanelContainer" parent="VBoxContainer" index="1"]
+[node name="OptionsPanel" parent="VBoxContainer" index="1" instance=ExtResource( 4 )]
+anchor_right = 0.0
+anchor_bottom = 0.0
 margin_top = 130.0
 margin_right = 320.0
 margin_bottom = 180.0
-mouse_filter = 2
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_styles/panel = SubResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
+_inventoryPath = NodePath("../../InventoryDisplayer")
 
-[node name="HboxContainer" type="HBoxContainer" parent="VBoxContainer/OptionsPanel" index="0"]
-margin_left = 3.0
-margin_top = 3.0
-margin_right = 317.0
-margin_bottom = 47.0
-mouse_filter = 2
-custom_constants/separation = 0
-
-[node name="TextLabel" type="RichTextLabel" parent="VBoxContainer/OptionsPanel/HboxContainer" index="0"]
-margin_right = 284.0
-margin_bottom = 44.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-custom_fonts/mono_font = ExtResource( 12 )
-custom_fonts/bold_italics_font = ExtResource( 12 )
-custom_fonts/italics_font = ExtResource( 12 )
-custom_fonts/bold_font = ExtResource( 12 )
-custom_fonts/normal_font = ExtResource( 12 )
-text = "Here's where the text is going to appear lol"
-scroll_active = false
-
-[node name="NextMessageRect" type="TextureRect" parent="VBoxContainer/OptionsPanel/HboxContainer/TextLabel" index="1"]
-visible = false
-anchor_left = 1.0
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-margin_left = -24.0
-margin_top = -15.0
-texture = ExtResource( 15 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
-
-[node name="OptionsContainer" type="HBoxContainer" parent="VBoxContainer/OptionsPanel/HboxContainer" index="1"]
-margin_left = 284.0
-margin_right = 314.0
-margin_bottom = 44.0
-size_flags_horizontal = 5
-size_flags_vertical = 3
-alignment = 2
-
-[node name="ActionsContainer" type="GridContainer" parent="VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer" index="0"]
-margin_bottom = 44.0
-size_flags_horizontal = 5
-size_flags_vertical = 3
-columns = 2
-
-[node name="ItemsButton" type="Button" parent="VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer" index="1"]
-margin_left = 4.0
-margin_right = 30.0
-margin_bottom = 44.0
-custom_fonts/font = ExtResource( 12 )
-custom_styles/hover = ExtResource( 4 )
-custom_styles/pressed = ExtResource( 4 )
-custom_styles/focus = SubResource( 2 )
-custom_styles/disabled = ExtResource( 5 )
-custom_styles/normal = ExtResource( 5 )
-text = "Items"
-
-[node name="InventoryPauseDisplayer" parent="." index="1" instance=ExtResource( 7 )]
+[node name="InventoryDisplayer" parent="." index="1" instance=ExtResource( 7 )]
 visible = false
 
 [node name="TransitionEffect" parent="." index="2" instance=ExtResource( 2 )]
-
-[node name="Timer" type="Timer" parent="." index="3"]
-process_mode = 0
-
-[connection signal="mouse_entered" from="VBoxContainer/OptionsPanel/HboxContainer/TextLabel" to="." method="OnTextLabelMouseEntered"]
-[connection signal="mouse_exited" from="VBoxContainer/OptionsPanel/HboxContainer/TextLabel" to="." method="OnTextLabelMouseExited"]
-[connection signal="timeout" from="Timer" to="." method="OnTimerTimeout"]

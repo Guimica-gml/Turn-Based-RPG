@@ -1,36 +1,26 @@
 using Godot;
 using Godot.Collections;
 
-// TODO: Make this good (this is going to be very hard)
-
 public class BattleDisplayer : PauseDisplayer
 {
+	private enum Turns { None, Player, Enemy }
+	
 	[Export] public TransitionTypes TransitionType = TransitionTypes.Default;
-	[Export] private float _textSpeed = 0.025f;
 	
 	[Export] public Stats EnemyStats;
 	public Stats PlayerStats;
 	
-	public string UsedItemName = "";
-	public string LevelUpMessage = "";
-	public Action CurrentAction = null;
+	private Turns _currentTurn = Turns.None;
 	private bool _destroyState = false;
 	
-	private Dictionary<string, Array<BattleState>> _battleSchemes = new Dictionary<string, Array<BattleState>>();
+	private string _levelUpMessage = "";
+	private string _usedItemName = "";
 	
-	private string _currentScheme = "";
-	private int _currentState = 0;
+	private Inventory _playerInventory;
 	
-	public bool MouseHoverTextBox { get; private set; }
-	
-	private Button _inventoryButton;
-	private PauseDisplayer _inventory;
-	private HBoxContainer _optionsContainer;
-	private GridContainer _actionsContainer;
-	private RichTextLabel _textLabel;
-	private TextureRect _nextMessageArrow;
+	private PauseDisplayer _inventoryDisplayer;
+	private BattleOptionsPanel _optionsPanel;
 	private TransitionEffect _transitionEffect;
-	private Timer _timer;
 	
 	private BattleStatsDisplayer _playerStatsDisplayer;
 	private BattleStatsDisplayer _enemyStatsDisplayer;
@@ -38,21 +28,15 @@ public class BattleDisplayer : PauseDisplayer
 	public BattleCharacterDisplayer PlayerDisplayer;
 	public BattleCharacterDisplayer EnemyDisplayer;
 	
-	private PackedScene _actionPuttonPacked = GD.Load<PackedScene>("res://Battles/ActionButton/ActionButton.tscn");
-	
 	public override void _Ready()
 	{
 		// Getting some resource and node references
 		PlayerStats = GD.Load<Stats>("res://Stats/PlayerStats.tres");
+		_playerInventory = GD.Load<Inventory>("res://Inventory/PlayerInventory.tres");
 		
-		_timer = GetNode<Timer>("Timer");
-		_inventory = GetNode<PauseDisplayer>("InventoryPauseDisplayer");
+		_inventoryDisplayer = GetNode<PauseDisplayer>("InventoryDisplayer");
 		_transitionEffect = GetNode<TransitionEffect>("TransitionEffect");
-		_optionsContainer = GetNode<HBoxContainer>("VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer");
-		_inventoryButton = GetNode<Button>("VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer/ItemsButton");
-		_actionsContainer = GetNode<GridContainer>("VBoxContainer/OptionsPanel/HboxContainer/OptionsContainer/ActionsContainer");
-		_textLabel = GetNode<RichTextLabel>("VBoxContainer/OptionsPanel/HboxContainer/TextLabel");
-		_nextMessageArrow = GetNode<TextureRect>("VBoxContainer/OptionsPanel/HboxContainer/TextLabel/NextMessageRect");
+		_optionsPanel = GetNode<BattleOptionsPanel>("VBoxContainer/OptionsPanel");
 		
 		_playerStatsDisplayer = GetNode<BattleStatsDisplayer>("VBoxContainer/Background/PlayerStatsDisplayer");
 		_enemyStatsDisplayer = GetNode<BattleStatsDisplayer>("VBoxContainer/Background/EnemyStatsDisplayer");
@@ -67,43 +51,10 @@ public class BattleDisplayer : PauseDisplayer
 		PlayerDisplayer.Stats = PlayerStats;
 		EnemyDisplayer.Stats = EnemyStats;
 		
-		CreatePlayerActionButtons();
-		SetActionButtonsVisibility(false);
+		_optionsPanel.SetPlayerActionButtons(PlayerStats.Actions);
 		
-		// Setting up the battle schemes and states
-		_battleSchemes.Add("Start", new Array<BattleState>()
-		{
-			new BattleUpdateText(this, $"A {EnemyStats.Name} appeared.", nextScheme:"PlayerTurn"),
-		});
-		
-		_battleSchemes.Add("PlayerTurn", new Array<BattleState>()
-		{
-			new BattleUpdateText(this, "It's your turn."),
-			new BattlePlayerSelectAction(this, _actionsContainer, _inventoryButton, _inventory, "Select your action.", startInvisible:false),
-			new BattlePerformAction(this, PlayerDisplayer, EnemyDisplayer),
-			new BattleUseItem(this),
-			new BattleCheckForWinner(this, "PlayerLost", "PlayerWon", nextScheme:"EnemyTurn"),
-		});
-		
-		_battleSchemes.Add("EnemyTurn", new Array<BattleState>()
-		{
-			new BattleUpdateText(this, $"It's {EnemyStats.Name}'s turn."),
-			new BattleEnemySelectAction(this, EnemyStats.Actions),
-			new BattlePerformAction(this, EnemyDisplayer, PlayerDisplayer),
-			new BattleCheckForWinner(this, "PlayerLost", "PlayerWon", nextScheme:"PlayerTurn"),
-		});
-		
-		_battleSchemes.Add("PlayerWon", new Array<BattleState>()
-		{
-			new BattleUpdateText(this, $"You defeated {EnemyStats.Name}."),
-			new BattleRewardPlayer(this, EnemyStats.GetDropMoney(), EnemyStats.GetXpDrop()),
-			new BattlePlayerLevelUp(this),
-		});
-		
-		_battleSchemes.Add("PlayerLost", new Array<BattleState>()
-		{
-			new BattleUpdateText(this, "You lost."),
-		});
+		PlayerStats.Connect("LevelChanged", this, "OnPlayerStatsLevelChanged");
+		_playerInventory.Connect("ItemRemoved", this, "OnPlayerInventoryItemRemoved");
 		
 		// Setting up animtions for fade in and fade out
 		Visible = false;
@@ -114,34 +65,172 @@ public class BattleDisplayer : PauseDisplayer
 		_transitionEffect.StartEffect(TransitionType);
 	}
 	
-	private void UpdateState(string schemeName, int stateIndex)
-	{
-		if (_battleSchemes.ContainsKey(_currentScheme))
-		{
-			_battleSchemes[_currentScheme][_currentState].OnFinish();
-			_battleSchemes[_currentScheme][_currentState].Disconnect("Finished", this, nameof(OnBattleStateFinished));
-		}
-		
-		_currentScheme = schemeName;
-		_currentState = stateIndex;
-		
-		_battleSchemes[_currentScheme][_currentState].Connect("Finished", this, nameof(OnBattleStateFinished));
-		_battleSchemes[_currentScheme][_currentState].OnReady();
-	}
-	
-	public override void _Process(float delta)
-	{
-		if (!_battleSchemes.ContainsKey(_currentScheme)) return;
-		_battleSchemes[_currentScheme][_currentState].OnProcess(delta);
-		
-		if (MouseHoverTextBox && !CanChangeText() && Input.IsActionJustPressed("left_click"))
-			_textLabel.VisibleCharacters = _textLabel.GetTotalCharacterCount();
-	}
-	
 	public override void _Input(InputEvent @event)
 	{
-		// This must be empty, do not dare removing this function
+		if (_inventoryDisplayer.Visible && @event.IsActionPressed("ui_pause"))
+			_inventoryDisplayer.Visible = false;
+		
 		@event.Dispose();
+	}
+	
+	public async void StartBattle()
+	{
+		_optionsPanel.SetActionsVisibility(false);
+		_optionsPanel.SetText($"A {EnemyStats.Name} appeared.");
+		await ToSignal(_optionsPanel, "Interacted");
+		PlayerTurn();
+	}
+	
+	public async void PlayerTurn()
+	{
+		_currentTurn = Turns.Player;
+		
+		_optionsPanel.SetText("Select your action.");
+		await ToSignal(_optionsPanel, "Interacted");
+		
+		_optionsPanel.SetActionsVisibility(true);
+		var vars = await ToSignal(_optionsPanel, "ActionSelected");
+		var action = vars[0] as Action;
+		
+		if (PlayerDisplayer.Active || EnemyDisplayer.Active) return;
+		
+		_optionsPanel.SetActionsVisibility(false);
+		_optionsPanel.SetText($"You selected action {action.Name}.");
+		
+		if (!action.Heal)
+		{
+			EnemyDisplayer.ApplyAction(action, PlayerDisplayer.Stats);
+			await ToSignal(EnemyDisplayer, "AnimEnded");
+		}
+		else
+		{
+			PlayerDisplayer.ApplyAction(action);
+			await ToSignal(PlayerDisplayer, "AnimEnded");
+		}
+		
+		await ToSignal(_optionsPanel, "Interacted");
+		
+		CheckWinner();
+	}
+	
+	public async void UseItem()
+	{
+		_optionsPanel.SetActionsVisibility(false);
+		_inventoryDisplayer.Visible = false;
+		
+		_optionsPanel.SetText($"You used item {_usedItemName}");
+		await ToSignal(_optionsPanel, "Interacted");
+		
+		_usedItemName = "";
+		CheckWinner();
+	}
+	
+	public async void EnemyTurn()
+	{
+		_currentTurn = Turns.Enemy;
+		
+		_optionsPanel.SetText($"It's {EnemyStats.Name}'s turn.");
+		await ToSignal(_optionsPanel, "Interacted");
+		
+		var action = GetEnemyAction();
+		
+		_optionsPanel.SetText($"{EnemyStats.Name} used action {action.Name}.");
+		
+		if (!action.Heal)
+		{
+			PlayerDisplayer.ApplyAction(action, EnemyDisplayer.Stats);
+			await ToSignal(PlayerDisplayer, "AnimEnded");
+		}
+		else
+		{
+			EnemyDisplayer.ApplyAction(action);
+			await ToSignal(EnemyDisplayer, "AnimEnded");
+		}
+		
+		await ToSignal(_optionsPanel, "Interacted");
+		
+		CheckWinner();
+	}
+	
+	private Action GetEnemyAction()
+	{
+		var enemyStats = EnemyDisplayer.Stats;
+		var healActions = new Array<Action>();
+		var attackActions = new Array<Action>();
+		
+		foreach (var action in EnemyStats.Actions)
+		{
+			if (action == null) continue;
+			
+			if (action.Heal)
+			{
+				healActions.Add(action);
+			}
+			else
+			{
+				attackActions.Add(action);
+			}
+		}
+		
+		if (enemyStats.Hp < enemyStats.MaxHp && GD.RandRange(0f, 100f) > 70f)
+		{
+			return healActions[(int) GD.RandRange(0, healActions.Count)];
+		}
+		
+		return attackActions[(int) GD.RandRange(0, attackActions.Count)];
+	}
+	
+	public void CheckWinner()
+	{
+		if (PlayerStats.Hp <= 0)
+		{
+			PlayerLost();
+		}
+		else if (EnemyStats.Hp <= 0)
+		{
+			PlayerWon();
+		}
+		else if (_currentTurn == Turns.Player)
+		{
+			EnemyTurn();
+		}
+		else if (_currentTurn == Turns.Enemy)
+		{
+			PlayerTurn();
+		}
+	}
+	
+	public async void PlayerWon()
+	{
+		_optionsPanel.SetText("You won.");
+		await ToSignal(_optionsPanel, "Interacted");
+		
+		var moneyDrop = EnemyStats.GetMoneyDrop();
+		var xpDrop = EnemyStats.GetXpDrop();
+		
+		PlayerStats.Money = moneyDrop;
+		PlayerStats.Xp += xpDrop;
+		
+		_optionsPanel.SetText($"You gained {xpDrop} xp and {moneyDrop} ruppies.");
+		await ToSignal(_optionsPanel, "Interacted");
+		
+		if (_levelUpMessage != "")
+		{
+			_optionsPanel.SetText($"You leveled up! \n{_levelUpMessage}.");
+			await ToSignal(_optionsPanel, "Interacted");
+			
+			_levelUpMessage = "";
+		}
+		
+		EndBattle();
+	}
+	
+	public async void PlayerLost()
+	{
+		_optionsPanel.SetText("You lost.");
+		await ToSignal(_optionsPanel, "Interacted");
+		
+		EndBattle();
 	}
 	
 	public void EndBattle()
@@ -151,93 +240,35 @@ public class BattleDisplayer : PauseDisplayer
 		_transitionEffect.StartEffect(TransitionType);
 	}
 	
-	public bool CanChangeText()
-	{
-		return (_textLabel.VisibleCharacters >= _textLabel.GetTotalCharacterCount());
-	}
-	
-	public void SetBattleText(string text, bool startInvisible = true)
-	{
-		_timer.Stop();
-		
-		_nextMessageArrow.Visible = false;
-		if (startInvisible) _textLabel.VisibleCharacters = 0;
-		_textLabel.Text = text;
-		
-		_timer.Start(_textSpeed);
-	}
-	
-	public void SetActionButtonsVisibility(bool visible)
-	{
-		_optionsContainer.Visible = visible;
-	}
-	
 	public void Destroy()
 	{
 		EmitSignal(nameof(Close));
 		QueueFree();
 	}
 	
-	private void CreatePlayerActionButtons()
+	private void OnPlayerInventoryItemRemoved(string itemName)
 	{
-		foreach (var action in PlayerStats.Actions)
-		{
-			var actionButton = _actionPuttonPacked.Instance<ActionButton>();
-			actionButton.Action = action;
-			_actionsContainer.AddChild(actionButton);
-		}
+		UseItem();
 	}
 	
-	private void OnBattleStateFinished(string nextScheme)
+	private void OnPlayerStatsLevelChanged(int level, string message)
 	{
-		if (nextScheme != "")
-		{
-			UpdateState(nextScheme, 0);
-			return;
-		}
-		
-		// The end of the battle
-		if (_battleSchemes[_currentScheme].Count <= (_currentState + 1))
-		{
-			EndBattle();
-			return;
-		}
-		
-		UpdateState(_currentScheme, _currentState + 1);
+		_levelUpMessage = message;
 	}
 	
-	private void OnTextLabelMouseEntered()
-	{
-		MouseHoverTextBox = true;
-	}
-	
-	private void OnTextLabelMouseExited()
-	{
-		MouseHoverTextBox = false;
-	}
-	
-	private async void OnEffectTransition()
+	private void OnEffectTransition()
 	{
 		Visible = !_destroyState;
-		
-		if (!_destroyState)
-		{
-			await ToSignal(GetTree().CreateTimer(0.5f), "timeout");
-			
-			// Starting the first state
-			UpdateState("Start", 0);
-		}
 	}
 	
 	private void OnEffectEnded()
 	{
-		if (!_destroyState) return;
+		if (!_destroyState)
+		{
+			StartBattle();
+			return;
+		}
+		
 		Destroy();
-	}
-	
-	private void OnTimerTimeout()
-	{
-		_textLabel.VisibleCharacters++;
-		if (!_optionsContainer.Visible && _battleSchemes[_currentScheme][_currentState].CanShowNextStateArrow()) _nextMessageArrow.Visible = true;
 	}
 }

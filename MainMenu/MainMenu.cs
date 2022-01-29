@@ -2,12 +2,12 @@ using Godot;
 
 public class MainMenu : Node2D
 {
-	[Export] private Interaction interaction = null;
+	[Export] private Interaction _interaction = null;
 	
 	private void OnStartButtonPressed()
 	{
 		if (Global.TransitionManager.InTransition) return;
-		Global.InteractionManager.StartInteraction(interaction);
+		Global.InteractionManager.StartInteraction(_interaction);
 	}
 	
 	private void OnExitButtonPressed()

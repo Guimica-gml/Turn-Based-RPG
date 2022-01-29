@@ -4,8 +4,6 @@ public class BattleCharacterDisplayer : Node2D
 {
 	[Signal] private delegate void AnimEnded();
 	
-	[Export] private bool _flip = false;
-	
 	private Stats _stats = null;
 	[Export] public Stats Stats
 	{
@@ -23,12 +21,12 @@ public class BattleCharacterDisplayer : Node2D
 	private Sprite _sprite;
 	private Node2D _scalePivot;
 	
+	public bool Active { get; private set; } = false;
+	
 	public override void _Ready()
 	{
 		_sprite = GetNode<Sprite>("ScalePivot/Sprite");
 		_scalePivot = GetNode<Node2D>("ScalePivot");
-		
-		if (_flip) _scalePivot.Scale = new Vector2(-1f, 1f);
 	}
 	
 	public void ApplyAction(Action action, Stats userStats = null)
@@ -48,6 +46,8 @@ public class BattleCharacterDisplayer : Node2D
 		anim.Connect("ApplyAction", this, nameof(ApplyActionEffect));
 		anim.Connect("Ended", this, nameof(OnAnimEnded));
 		_scalePivot.AddChild(anim);
+		
+		Active = true;
 	}
 	
 	private void ApplyActionEffect()
@@ -70,6 +70,7 @@ public class BattleCharacterDisplayer : Node2D
 	
 	private void OnAnimEnded()
 	{
+		Active = false;
 		EmitSignal(nameof(AnimEnded));
 		_userStats = null;
 		_action = null;

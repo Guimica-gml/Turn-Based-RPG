@@ -27,7 +27,7 @@ shader = SubResource( 2 )
 
 [node name="MainMenu" type="Node2D" groups=["Menu"]]
 script = ExtResource( 5 )
-interaction = ExtResource( 6 )
+_interaction = ExtResource( 6 )
 
 [node name="Background" type="Sprite" parent="."]
 material = SubResource( 3 )
