@@ -27,7 +27,7 @@ public class Manager : CanvasLayer
 	
 	public override void _Input(InputEvent @event)
 	{
-		if (!Global.InteractionManager.InInteraction)
+		if (!Global.InteractionManager.Active)
 		{
 			// Opens the player's inventory
 			if (@event.IsActionPressed("ui_pause"))

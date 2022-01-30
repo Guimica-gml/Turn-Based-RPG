@@ -5,7 +5,7 @@ public class BattleManager : Node
 	[Signal] private delegate void BattleStarted();
 	[Signal] private delegate void BattleEnded();
 	
-	public bool InBattle { get; private set; } = false;
+	public bool Active { get; private set; } = false;
 	
 	private Enemy _currentEnemy = null;
 	
@@ -14,7 +14,7 @@ public class BattleManager : Node
 	
 	public void StartBattle(Enemy enemy)
 	{
-		InBattle = true;
+		Active = true;
 		
 		_battleDisplayer = _battleScenarioPacked.Instance<BattleDisplayer>();
 		_battleDisplayer.EnemyStats = enemy.Stats;
@@ -34,7 +34,7 @@ public class BattleManager : Node
 			_currentEnemy = null;
 		}
 		
-		InBattle = false;
+		Active = false;
 		EmitSignal(nameof(BattleEnded));
 	}
 }

@@ -5,13 +5,13 @@ public class InteractionManager : Node
 	[Signal] private delegate void InteractionTriggered(Interaction interaction);
 	[Signal] private delegate void InteractionEnded(Interaction interaction);
 	
-	public bool InInteraction { get; private set; } = false;
+	public bool Active { get; private set; } = false;
 	private Interaction _interaction = null;
 	
 	public void StartInteraction(Interaction interaction)
 	{
 		if (_interaction != null) return;
-		InInteraction = true;
+		Active = true;
 		
 		_interaction = interaction;
 		_interaction.Connect("Ended", this, nameof(EndInteraction));
@@ -27,6 +27,6 @@ public class InteractionManager : Node
 		EmitSignal(nameof(InteractionEnded), _interaction);
 		
 		_interaction = null;
-		InInteraction = false;
+		Active = false;
 	}
 }

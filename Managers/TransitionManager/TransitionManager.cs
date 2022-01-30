@@ -7,7 +7,7 @@ public class TransitionManager : Node
 	[Signal] private delegate void SceneChanged();
 	[Signal] private delegate void TransitionEnded();
 	
-	public bool InTransition = false;
+	public bool Active = false;
 	private TransitionEffect _transitionEffect;
 	
 	private string _scenePath = "";
@@ -30,7 +30,7 @@ public class TransitionManager : Node
 	
 	public void ChangeSceneTo(string scenePath, string sceneEntryIndetifier = "none", TransitionTypes transitionType = TransitionTypes.Default)
 	{
-		if (InTransition)
+		if (Active)
 		{
 			GD.PrintErr("Trying to start a transition while another transition is already happening");
 			return;
@@ -72,7 +72,7 @@ public class TransitionManager : Node
 	
 	private void OnEffectStarted()
 	{
-		InTransition = true;
+		Active = true;
 		
 		// Saving player information if it exists
 		var player = GetTree().CurrentScene.FindNode("Player", true, false) as Player;
@@ -100,7 +100,7 @@ public class TransitionManager : Node
 	
 	private void OnEffectEnded()
 	{
-		InTransition = false;
+		Active = false;
 		EmitSignal(nameof(TransitionEnded));
 	}
 }

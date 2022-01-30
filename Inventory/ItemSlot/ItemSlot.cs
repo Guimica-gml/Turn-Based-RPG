@@ -45,7 +45,7 @@ public class ItemSlot : CenterContainer
 			if (!ItemStats.KeyItem)
 			{
 				_amountLabel.Text = ItemStats.Amount.ToString();
-				_button.Modulate = (_itemStats.UseJustInBattle && !Global.BattleManager.InBattle) ? new Color(1f, 1f, 1f, 0.5f) : new Color(1f, 1f, 1f, 1f);
+				_button.Modulate = (_itemStats.UseJustInBattle && !Global.BattleManager.Active) ? new Color(1f, 1f, 1f, 0.5f) : new Color(1f, 1f, 1f, 1f);
 			}
 			else
 			{
@@ -66,7 +66,7 @@ public class ItemSlot : CenterContainer
 	private void OnButtonPressed()
 	{
 		if (ItemStats == null || ItemStats.KeyItem) return;
-		if (ItemStats.UseJustInBattle && !Global.BattleManager.InBattle) return;
+		if (ItemStats.UseJustInBattle && !Global.BattleManager.Active) return;
 		
 		ItemStats.Use();
 		Inventory.RemoveItem(GetIndex(), 1);

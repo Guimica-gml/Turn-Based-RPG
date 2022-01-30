@@ -7,19 +7,19 @@ public class MainMenu : Node2D
 	
 	private void OnStartButtonPressed()
 	{
-		if (Global.TransitionManager.InTransition) return;
+		if (Global.TransitionManager.Active) return;
 		Global.InteractionManager.StartInteraction(_interaction);
 	}
 	
 	private void OnControlsButtonPressed()
 	{
-		if (Global.TransitionManager.InTransition) return;
+		if (Global.TransitionManager.Active) return;
 		Global.InteractionManager.StartInteraction(_controlsInteraction);
 	}
 	
 	private void OnExitButtonPressed()
 	{
-		if (Global.TransitionManager.InTransition) return;
+		if (Global.TransitionManager.Active) return;
 		GetTree().Quit();
 	}
 }

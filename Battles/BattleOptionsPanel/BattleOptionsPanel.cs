@@ -8,7 +8,7 @@ public class BattleOptionsPanel : PanelContainer
 	[Signal] private delegate void TextDisplayed();
 	[Signal] private delegate void ActionSelected(Action action);
 	
-	public bool EnableInput = true;
+	public bool InputEnabled = true;
 	
 	[Export] private NodePath _inventoryPath = "";
 	private PauseDisplayer _inventory;
@@ -47,7 +47,7 @@ public class BattleOptionsPanel : PanelContainer
 				return;
 			}
 			
-			if (!EnableInput) return;
+			if (!InputEnabled) return;
 			
 			_nextMessageArrow.Visible = false;
 			EmitSignal(nameof(Interacted));

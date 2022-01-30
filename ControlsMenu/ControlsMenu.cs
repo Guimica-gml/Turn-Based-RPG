@@ -6,7 +6,7 @@ public class ControlsMenu : Node2D
 	
 	private void OnControlsButtonPressed()
 	{
-		if (Global.TransitionManager.InTransition) return;
+		if (Global.TransitionManager.Active) return;
 		Global.InteractionManager.StartInteraction(_interaction);
 	}
 }

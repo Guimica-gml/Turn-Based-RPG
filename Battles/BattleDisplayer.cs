@@ -8,7 +8,7 @@ public class BattleDisplayer : PauseDisplayer
 	[Export] private TransitionTypes _transitionType = TransitionTypes.Default;
 	
 	[Export] public Stats EnemyStats;
-	public Stats PlayerStats;
+	private Stats _playerStats;
 	
 	private Turns _currentTurn = Turns.None;
 	private bool _destroyState = false;
@@ -31,7 +31,7 @@ public class BattleDisplayer : PauseDisplayer
 	public override void _Ready()
 	{
 		// Getting some resource and node references
-		PlayerStats = GD.Load<Stats>("res://Stats/PlayerStats.tres");
+		_playerStats = GD.Load<Stats>("res://Stats/PlayerStats.tres");
 		_playerInventory = GD.Load<Inventory>("res://Inventory/PlayerInventory.tres");
 		
 		_inventoryDisplayer = GetNode<PauseDisplayer>("InventoryDisplayer");
@@ -45,15 +45,15 @@ public class BattleDisplayer : PauseDisplayer
 		EnemyDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/Background/EnemyDisplayer");
 		
 		// Setting information about the battle
-		_playerStatsDisplayer.Stats = PlayerStats;
+		_playerStatsDisplayer.Stats = _playerStats;
 		_enemyStatsDisplayer.Stats = EnemyStats;
 		
-		PlayerDisplayer.Stats = PlayerStats;
+		PlayerDisplayer.Stats = _playerStats;
 		EnemyDisplayer.Stats = EnemyStats;
 		
-		_optionsPanel.SetPlayerActionButtons(PlayerStats.Actions);
+		_optionsPanel.SetPlayerActionButtons(_playerStats.Actions);
 		
-		PlayerStats.Connect("LevelChanged", this, "OnPlayerStatsLevelChanged");
+		_playerStats.Connect("LevelChanged", this, "OnPlayerStatsLevelChanged");
 		_playerInventory.Connect("ItemRemoved", this, "OnPlayerInventoryItemRemoved");
 		
 		// Setting up animtions for fade in and fade out
@@ -96,7 +96,7 @@ public class BattleDisplayer : PauseDisplayer
 		
 		_optionsPanel.SetActionsVisibility(false);
 		_optionsPanel.SetText($"You selected action {action.Name}.", () => !PlayerDisplayer.Active && !EnemyDisplayer.Active);
-		_optionsPanel.EnableInput = false;
+		_optionsPanel.InputEnabled = false;
 		
 		if (!action.Heal)
 		{
@@ -109,7 +109,7 @@ public class BattleDisplayer : PauseDisplayer
 			await ToSignal(PlayerDisplayer, "AnimEnded");
 		}
 		
-		_optionsPanel.EnableInput = true;
+		_optionsPanel.InputEnabled = true;
 		await ToSignal(_optionsPanel, "Interacted");
 		
 		CheckWinner();
@@ -120,7 +120,7 @@ public class BattleDisplayer : PauseDisplayer
 		_optionsPanel.SetActionsVisibility(false);
 		_inventoryDisplayer.Visible = false;
 		
-		_optionsPanel.SetText($"You used item {_usedItemName}.");
+		_optionsPanel.SetText($"You used item '{_usedItemName}'.");
 		await ToSignal(_optionsPanel, "Interacted");
 		
 		_usedItemName = "";
@@ -137,7 +137,7 @@ public class BattleDisplayer : PauseDisplayer
 		var action = GetEnemyAction();
 		
 		_optionsPanel.SetText($"{EnemyStats.Name} used action {action.Name}.", () => !PlayerDisplayer.Active && !EnemyDisplayer.Active);
-		_optionsPanel.EnableInput = false;
+		_optionsPanel.InputEnabled = false;
 		
 		if (!action.Heal)
 		{
@@ -150,7 +150,7 @@ public class BattleDisplayer : PauseDisplayer
 			await ToSignal(EnemyDisplayer, "AnimEnded");
 		}
 		
-		_optionsPanel.EnableInput = true;
+		_optionsPanel.InputEnabled = true;
 		await ToSignal(_optionsPanel, "Interacted");
 		
 		CheckWinner();
@@ -186,7 +186,7 @@ public class BattleDisplayer : PauseDisplayer
 	
 	public void CheckWinner()
 	{
-		if (PlayerStats.Hp <= 0)
+		if (_playerStats.Hp <= 0)
 		{
 			PlayerLost();
 		}
@@ -212,8 +212,8 @@ public class BattleDisplayer : PauseDisplayer
 		var moneyDrop = EnemyStats.GetMoneyDrop();
 		var xpDrop = EnemyStats.GetXpDrop();
 		
-		PlayerStats.Money = moneyDrop;
-		PlayerStats.Xp += xpDrop;
+		_playerStats.Money = moneyDrop;
+		_playerStats.Xp += xpDrop;
 		
 		_optionsPanel.SetText($"You gained {xpDrop} xp and {moneyDrop} ruppies.");
 		await ToSignal(_optionsPanel, "Interacted");
@@ -222,7 +222,6 @@ public class BattleDisplayer : PauseDisplayer
 		{
 			_optionsPanel.SetText($"You leveled up! \n{_levelUpMessage}.");
 			await ToSignal(_optionsPanel, "Interacted");
-			
 			_levelUpMessage = "";
 		}
 		
