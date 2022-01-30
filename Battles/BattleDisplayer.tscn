@@ -12,7 +12,7 @@
 [ext_resource path="res://Stats/Stats.cs" type="Script" id=11]
 [ext_resource path="res://Battles/BattleDisplayer.cs" type="Script" id=13]
 [ext_resource path="res://Battles/Resources/BattleBackground.png" type="Texture" id=14]
-[ext_resource path="res://Enemy/Enemy.png" type="Texture" id=17]
+[ext_resource path="res://Enemy/MaskedGoon/MaskedGoon.png" type="Texture" id=17]
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 11 )
@@ -70,10 +70,10 @@ margin_bottom = -2.0
 [node name="EnemyStatsDisplayer" parent="VBoxContainer/Background" index="3" instance=ExtResource( 3 )]
 anchor_left = 1.0
 anchor_bottom = 0.0
-margin_left = -65.0
+margin_left = -62.0
 margin_top = 2.0
 margin_right = -2.0
-margin_bottom = 24.0
+margin_bottom = 26.0
 _showXp = false
 
 [node name="OptionsPanel" parent="VBoxContainer" index="1" instance=ExtResource( 4 )]

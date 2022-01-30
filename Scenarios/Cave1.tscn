@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Scenarios/Scenario.tscn" type="PackedScene" id=1]
 [ext_resource path="res://SceneTransition/SceneEntry/SceneEntry.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Interactions/InteractableArea/InteractableArea.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Interactions/Resources/Interaction_7.tres" type="Resource" id=4]
-[ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Enemy/MaskedGoon/MaskedGoon.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Enemy/InvertedMaskedGoon/InvertedMasedGoon.tscn" type="PackedScene" id=6]
 
 [node name="Cave1" instance=ExtResource( 1 )]
 
@@ -14,18 +15,18 @@ tile_data = PoolIntArray( 65537, 6, 0, 65538, 6, 0, 65539, 6, 0, 65540, 6, 0, 65
 [node name="BottomRightLimit" parent="MainCamera/Limits" index="1"]
 position = Vector2( 320, 288 )
 
-[node name="Enemy" parent="YSort" index="0" instance=ExtResource( 5 )]
-position = Vector2( 256, 112 )
-
-[node name="Enemy2" parent="YSort" index="1" instance=ExtResource( 5 )]
-position = Vector2( 112, 32 )
-_customLevel = 2
-
-[node name="Enemy3" parent="YSort" index="2" instance=ExtResource( 5 )]
+[node name="MaskedGoon2" parent="YSort" index="0" instance=ExtResource( 5 )]
 position = Vector2( 64, 112 )
 
-[node name="Enemy4" parent="YSort" index="3" instance=ExtResource( 5 )]
+[node name="MaskedGoon3" parent="YSort" index="1" instance=ExtResource( 5 )]
 position = Vector2( 64, 208 )
+
+[node name="MaskedGoon4" parent="YSort" index="2" instance=ExtResource( 5 )]
+position = Vector2( 256, 112 )
+
+[node name="InvertedMasedGoon" parent="YSort" index="3" instance=ExtResource( 6 )]
+position = Vector2( 112, 32 )
+_customLevel = 2
 
 [node name="CollisionTileMap" parent="YSort" index="4"]
 tile_data = PoolIntArray( 0, 20, 0, 1, 21, 0, 2, 21, 0, 3, 21, 0, 4, 21, 0, 5, 21, 0, 6, 21, 0, 7, 21, 0, 8, 21, 0, 9, 21, 0, 10, 21, 0, 11, 21, 0, 12, 21, 0, 13, 21, 0, 14, 21, 0, 15, 21, 0, 16, 21, 0, 17, 21, 0, 18, 21, 0, 19, 22, 0, 65536, 16, 0, 65555, 24, 0, 131072, 16, 0, 131075, 6, 0, 131088, 8, 0, 131091, 24, 0, 196608, 16, 0, 196613, 7, 0, 196621, 8, 0, 196627, 24, 0, 262144, 16, 0, 262147, 7, 0, 262163, 24, 0, 327680, 16, 0, 327687, 6, 0, 327694, 8, 0, 327697, 6, 0, 327699, 24, 0, 393216, 16, 0, 393235, 24, 0, 458752, 16, 0, 458755, 8, 0, 458763, 8, 0, 458771, 24, 0, 524288, 16, 0, 524297, 8, 0, 524301, 8, 0, 524307, 24, 0, 589824, 16, 0, 589826, 7, 0, 589830, 6, 0, 589843, 24, 0, 655360, 16, 0, 655370, 11, 0, 655371, 12, 0, 655372, 12, 0, 655373, 12, 0, 655374, 13, 0, 655379, 24, 0, 720896, 16, 0, 720900, 8, 0, 720906, 14, 0, 720907, 15, 0, 720908, 15, 0, 720909, 15, 0, 720910, 16, 0, 720912, 8, 0, 720915, 24, 0, 786432, 16, 0, 786439, 6, 0, 786442, 14, 0, 786443, 15, 0, 786444, 15, 0, 786445, 15, 0, 786446, 16, 0, 786451, 24, 0, 851968, 16, 0, 851970, 6, 0, 851978, 17, 0, 851979, 21, 0, 851980, 21, 0, 851981, 21, 0, 851982, 19, 0, 851987, 24, 0, 917504, 16, 0, 917523, 24, 0, 983040, 16, 0, 983045, 7, 0, 983050, 8, 0, 983057, 6, 0, 983059, 24, 0, 1048576, 16, 0, 1048595, 14, 0, 1114112, 25, 0, 1114113, 26, 0, 1114114, 26, 0, 1114115, 26, 0, 1114116, 26, 0, 1114117, 26, 0, 1114118, 26, 0, 1114119, 26, 0, 1114120, 26, 0, 1114121, 26, 0, 1114122, 26, 0, 1114123, 26, 0, 1114124, 26, 0, 1114125, 26, 0, 1114126, 35, 0, 1114127, 26, 0, 1114128, 26, 0, 1114129, 26, 0, 1114130, 26, 0, 1114131, 27, 0 )

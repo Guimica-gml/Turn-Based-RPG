@@ -197,7 +197,7 @@ public class Stats : Resource
 	
 	public void AttackTarget(Stats target, Action action)
 	{
-		target.Hurt(action.Value + ((int) Attack / 15));
+		target.Hurt(action.Value + (int) ((Attack / 15) * GD.RandRange(0.85f, 1f)));
 	}
 	
 	public void Hurt(int damage)

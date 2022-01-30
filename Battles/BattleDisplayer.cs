@@ -120,7 +120,7 @@ public class BattleDisplayer : PauseDisplayer
 		_optionsPanel.SetActionsVisibility(false);
 		_inventoryDisplayer.Visible = false;
 		
-		_optionsPanel.SetText($"You used item {_usedItemName}");
+		_optionsPanel.SetText($"You used item {_usedItemName}.");
 		await ToSignal(_optionsPanel, "Interacted");
 		
 		_usedItemName = "";
@@ -235,8 +235,8 @@ public class BattleDisplayer : PauseDisplayer
 		await ToSignal(_optionsPanel, "Interacted");
 		
 		Global.TransitionManager.ChangeSceneTo("res://GameOver/GameOver.tscn", transitionType:_transitionType);
-		
 		await ToSignal(Global.TransitionManager, "SceneChanged");
+		
 		Destroy();
 	}
 	
@@ -255,6 +255,7 @@ public class BattleDisplayer : PauseDisplayer
 	
 	private void OnPlayerInventoryItemRemoved(string itemName)
 	{
+		_usedItemName = itemName;
 		UseItem();
 	}
 	

@@ -38,8 +38,6 @@ public class BattleOptionsPanel : PanelContainer
 	
 	public override void _Input(InputEvent @event)
 	{
-		if (!EnableInput) return;
-		
 		if (_mouseInsideArea && @event.IsActionPressed("left_click"))
 		{
 			if (!(_textLabel.VisibleCharacters >= _textLabel.GetTotalCharacterCount()))
@@ -48,6 +46,8 @@ public class BattleOptionsPanel : PanelContainer
 				ShowText();
 				return;
 			}
+			
+			if (!EnableInput) return;
 			
 			_nextMessageArrow.Visible = false;
 			EmitSignal(nameof(Interacted));

@@ -1,0 +1,14 @@
+[gd_scene load_steps=4 format=2]
+
+[ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Stats/MaskedGoonStats.tres" type="Resource" id=2]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
+
+[node name="MaskedGoon" instance=ExtResource( 1 )]
+Stats = ExtResource( 2 )
+
+[node name="AnimationTree" parent="." index="5"]
+parameters/playback = SubResource( 1 )
+
+[editable path="PlayerDetectionArea"]

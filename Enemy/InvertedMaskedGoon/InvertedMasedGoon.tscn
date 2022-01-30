@@ -1,0 +1,19 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Enemy/Enemy.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Stats/InvertedMaskedGoonStats.tres" type="Resource" id=2]
+[ext_resource path="res://Enemy/InvertedMaskedGoon/InvenrtedMaskedGoon.png" type="Texture" id=3]
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=1]
+
+[node name="InvertedMasedGoon" instance=ExtResource( 1 )]
+_wanderBlocks = 3
+Stats = ExtResource( 2 )
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource( 3 )
+
+[node name="AnimationTree" parent="." index="5"]
+parameters/playback = SubResource( 1 )
+
+[editable path="PlayerDetectionArea"]

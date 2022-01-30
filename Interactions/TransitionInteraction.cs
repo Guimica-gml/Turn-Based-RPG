@@ -4,8 +4,8 @@ using Godot.Collections;
 public class TransitionInteraction : Interaction
 {
 	[Export(PropertyHint.File, "*.tscn")] public string ScenePath;
-	[Export] public ItemStats Key;
-	[Export] public string SceneEntryIndetifier;
+	[Export] public ItemStats Key = null;
+	[Export] public string SceneEntryIndetifier = "none";
 	[Export] public TransitionTypes transitionType = TransitionTypes.Default;
 	
 	private Inventory _playerInventory;
