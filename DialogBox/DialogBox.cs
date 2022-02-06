@@ -9,7 +9,7 @@ public class DialogBox : Control
 	[Export] private float _textSpeed = 0.025f;
 	[Export] public Array<string> Replaces = new Array<string>();
 	
-	private Array<char> _slowerCharacters = new Array<char>() { ',', '.', '!', '?' };
+	private Array<char> _slowerCharacters = new Array<char>() { ',', '.', '!', '?', ':', ';' };
 	
 	private bool _selectingResponseState = false;
 	private string _part = "default";
@@ -182,7 +182,7 @@ public class DialogBox : Control
 		var dir = new Directory();
 		if (!dir.FileExists(talkerPath))
 		{
-			GD.PrintErr($"There's no such file as {talkerPath}");
+			GD.PrintErr($"There's no such file as `{talkerPath}`");
 		}
 		
 		return GD.Load<Talker>(talkerPath);

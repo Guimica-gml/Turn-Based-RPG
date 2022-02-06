@@ -12,7 +12,7 @@ cell_size = Vector2( 16, 16 )
 format = 1
 
 [node name="MainCamera" parent="." instance=ExtResource( 5 )]
-position = Vector2( 160, 90 )
+position = Vector2( 0, 0 )
 _useLimits = true
 
 [node name="Items" type="Node2D" parent="."]

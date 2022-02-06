@@ -5,8 +5,8 @@
 [ext_resource path="res://MainMenu/Buttons/MenuButton.tres" type="StyleBox" id=3]
 [ext_resource path="res://MainMenu/Buttons/MenuButtonHover.tres" type="StyleBox" id=4]
 [ext_resource path="res://MainMenu/MainMenu.cs" type="Script" id=5]
-[ext_resource path="res://Interactions/Resources/Interaction_Menu.tres" type="Resource" id=6]
-[ext_resource path="res://Interactions/Resources/Interaction_Menu_2.tres" type="Resource" id=7]
+[ext_resource path="res://Interactions/Resources/Menus/I_MainMenu_To_Outside1.tres" type="Resource" id=6]
+[ext_resource path="res://Interactions/Resources/Menus/I_MainMenu_To_ControlsMenu_.tres" type="Resource" id=7]
 [ext_resource path="res://MainMenu/MenuBackground.png" type="Texture" id=8]
 
 [sub_resource type="Shader" id=4]

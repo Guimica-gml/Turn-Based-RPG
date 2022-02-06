@@ -6,7 +6,7 @@ public class TransitionInteraction : Interaction
 	[Export(PropertyHint.File, "*.tscn")] public string ScenePath;
 	[Export] public ItemStats Key = null;
 	[Export] public string SceneEntryIndetifier = "none";
-	[Export] public TransitionTypes transitionType = TransitionTypes.Default;
+	[Export] public TransitionTypes TransitionType = TransitionTypes.Default;
 	
 	private Inventory _playerInventory;
 	
@@ -17,7 +17,7 @@ public class TransitionInteraction : Interaction
 		if (Key == null || _playerInventory.HasKeyItem(Key.Name))
 		{
 			Global.TransitionManager.Connect("TransitionEnded", this, "OnTransitionEnded");
-			Global.TransitionManager.ChangeSceneTo(ScenePath, SceneEntryIndetifier, transitionType);
+			Global.TransitionManager.ChangeSceneTo(ScenePath, SceneEntryIndetifier, TransitionType);
 		}
 		else
 		{

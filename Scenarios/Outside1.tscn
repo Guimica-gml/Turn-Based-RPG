@@ -1,12 +1,9 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://Scenarios/Scenario.tscn" type="PackedScene" id=1]
 [ext_resource path="res://SceneTransition/SceneEntry/SceneEntry.tscn" type="PackedScene" id=2]
-[ext_resource path="res://Interactions/Resources/Interaction_0.tres" type="Resource" id=3]
-[ext_resource path="res://Interactions/Resources/Iteraction_Shop_Scenario1.tres" type="Resource" id=4]
-[ext_resource path="res://Interactions/Resources/Interaction_1.tres" type="Resource" id=5]
-[ext_resource path="res://Interactions/Resources/Interaction_2.tres" type="Resource" id=6]
-[ext_resource path="res://Interactions/Resources/Interaction_Plaque_Scenraio1.tres" type="Resource" id=7]
+[ext_resource path="res://Interactions/Resources/Outside1/I_Shop_Outside1.tres" type="Resource" id=3]
+[ext_resource path="res://Interactions/Resources/Outside1/I_Plaque_Outside1.tres" type="Resource" id=4]
 [ext_resource path="res://Interactions/InteractableArea/InteractableArea.tscn" type="PackedScene" id=8]
 [ext_resource path="res://Npcs/Jessica/Jessica.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Items/Stats/IncreaseStatsItems/PermAttackItem.tres" type="Resource" id=10]
@@ -81,23 +78,20 @@ tile_data = PoolIntArray( -196608, 29, 0, -196607, 18, 0, -196606, 18, 0, -19660
 
 [node name="InteractableArea" parent="." index="4" instance=ExtResource( 8 )]
 position = Vector2( 0, 80 )
-Interaction = ExtResource( 6 )
 
 [node name="InteractableArea2" parent="." index="5" instance=ExtResource( 8 )]
 position = Vector2( 352, 80 )
-Interaction = ExtResource( 5 )
 
 [node name="InteractableArea3" parent="." index="6" instance=ExtResource( 8 )]
 position = Vector2( 288, 32 )
-Interaction = ExtResource( 7 )
+_interaction = ExtResource( 4 )
 
 [node name="InteractableArea4" parent="." index="7" instance=ExtResource( 8 )]
 position = Vector2( 160, 32 )
-Interaction = ExtResource( 3 )
 
 [node name="InteractableArea5" parent="." index="8" instance=ExtResource( 8 )]
 position = Vector2( 208, 32 )
-Interaction = ExtResource( 4 )
+_interaction = ExtResource( 3 )
 
 [node name="SceneEntry" parent="SceneEntries" index="0" instance=ExtResource( 2 )]
 position = Vector2( 16, 80 )

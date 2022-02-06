@@ -61,7 +61,7 @@ public class Stats : Resource
 	
 	public int MaxHp
 	{
-		get => (int) _baseMaxHp + (8 * (Level - 1)) + ((int) Boosts[nameof(MaxHp)]["Perm"]) + ((int) Boosts[nameof(MaxHp)]["Temp"]);
+		get => (int) (_baseMaxHp + (Mathf.Pow(1.8f, Level - 1) - 1) + ((int) Boosts[nameof(MaxHp)]["Perm"]) + ((int) Boosts[nameof(MaxHp)]["Temp"]));
 		set => _baseMaxHp = value;
 	}
 	
@@ -99,14 +99,21 @@ public class Stats : Resource
 			var defense = GetStatWithoutTempBoost(nameof(Defense));
 			var maxHp = GetStatWithoutTempBoost(nameof(MaxHp));
 			
-			var message = $"Level: {levelBefore} -- {Level} \nHp: {maxHpBefore} -- {maxHp} \nAttack: {attackBefore} -- {attack} \nDefense: {defenseBefore} -- {defense} \n";
+			var message = string.Join(
+				System.Environment.NewLine,
+				$"Level: {levelBefore} -- {Level}",
+				$"Hp: {maxHpBefore} -- {maxHp}",
+				$"Attack: {attackBefore} -- {attack}",
+				$"Defense: {defenseBefore} -- {defense}"
+			);
+			
 			EmitSignal(nameof(LevelChanged), Level, message);
 		}
 	}
 	
 	public int Attack
 	{
-		get => (int) (_baseAttack + 10 * (Level - 1)) + ((int) Boosts[nameof(Attack)]["Perm"]) + ((int) Boosts[nameof(Attack)]["Temp"]);
+		get => (int) (_baseAttack + (Mathf.Pow(1.9f, Level - 1) - 1)) + ((int) Boosts[nameof(Attack)]["Perm"]) + ((int) Boosts[nameof(Attack)]["Temp"]);
 		set
 		{
 			_baseAttack = value;
@@ -116,7 +123,7 @@ public class Stats : Resource
 	
 	public int Defense
 	{
-		get => (int) (_baseDefense + 5 * (Level - 1)) + ((int) Boosts[nameof(Defense)]["Perm"]) + ((int) Boosts[nameof(Defense)]["Temp"]);
+		get => (int) (_baseDefense + (Mathf.Pow(1.5f, Level - 1) - 1)) + ((int) Boosts[nameof(Defense)]["Perm"]) + ((int) Boosts[nameof(Defense)]["Temp"]);
 		set
 		{
 			_baseDefense = value;
@@ -127,25 +134,21 @@ public class Stats : Resource
 	public int MinXpDrop
 	{
 		get => (int) _baseMinXpDrop + ((Level - 1) * 20);
-		set => _baseMinXpDrop = value;
 	}
 	
 	public int MaxXpDrop
 	{
 		get => (int) _baseMaxXpDrop + ((Level - 1) * 20);
-		set => _baseMaxXpDrop = value;
 	}
 	
 	public int MinDropMoney
 	{
 		get => (int) _baseMinDropMoney + ((Level - 1) * 20);
-		set => _baseMinDropMoney = value;
 	}
 	
 	public int MaxDropMoney
 	{
 		get => (int) _baseMaxDropMoney + ((Level - 1) * 20);
-		set => _baseMaxDropMoney = value;
 	}
 	
 	public int GetStatWithoutTempBoost(string Stat)
@@ -216,10 +219,5 @@ public class Stats : Resource
 	{
 		var keys = new Array<string>(Boosts.Keys);
 		foreach (var key in keys) Boosts[key]["Temp"] = 0;
-	}
-	
-	~Stats()
-	{
-		Dispose();
 	}
 }

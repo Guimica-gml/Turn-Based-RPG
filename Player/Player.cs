@@ -40,11 +40,11 @@ public class Player : Entity
 		var interactable = _interactionRayCast.GetCollider() as InteractableArea;
 		
 		_interactionSprite.Texture = null;
-		if (interactable == null || !interactable.Interaction.CanTrigger() || !CanMove) return;
-		_interactionSprite.Texture = interactable.Interaction.GetIcon();
+		if (interactable == null || !interactable.CanTrigger() || !CanMove) return;
+		_interactionSprite.Texture = interactable.GetIcon();
 		
 		if (!Input.IsActionJustPressed("ui_interact")) return;
-		Global.InteractionManager.StartInteraction(interactable.Interaction);
+		interactable.Interact();
 	}
 	
 	protected override Vector2 CheckForInput()

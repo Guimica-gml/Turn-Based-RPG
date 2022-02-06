@@ -25,8 +25,8 @@ public class BattleDisplayer : PauseDisplayer
 	private BattleStatsDisplayer _playerStatsDisplayer;
 	private BattleStatsDisplayer _enemyStatsDisplayer;
 	
-	public BattleCharacterDisplayer PlayerDisplayer;
-	public BattleCharacterDisplayer EnemyDisplayer;
+	private BattleCharacterDisplayer _playerDisplayer;
+	private BattleCharacterDisplayer _enemyDisplayer;
 	
 	public override void _Ready()
 	{
@@ -41,15 +41,15 @@ public class BattleDisplayer : PauseDisplayer
 		_playerStatsDisplayer = GetNode<BattleStatsDisplayer>("VBoxContainer/Background/PlayerStatsDisplayer");
 		_enemyStatsDisplayer = GetNode<BattleStatsDisplayer>("VBoxContainer/Background/EnemyStatsDisplayer");
 		
-		PlayerDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/Background/PlayerDisplayer");
-		EnemyDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/Background/EnemyDisplayer");
+		_playerDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/Background/PlayerDisplayer");
+		_enemyDisplayer = GetNode<BattleCharacterDisplayer>("VBoxContainer/Background/EnemyDisplayer");
 		
 		// Setting information about the battle
 		_playerStatsDisplayer.Stats = _playerStats;
 		_enemyStatsDisplayer.Stats = EnemyStats;
 		
-		PlayerDisplayer.Stats = _playerStats;
-		EnemyDisplayer.Stats = EnemyStats;
+		_playerDisplayer.Stats = _playerStats;
+		_enemyDisplayer.Stats = EnemyStats;
 		
 		_optionsPanel.SetPlayerActionButtons(_playerStats.Actions);
 		
@@ -92,21 +92,21 @@ public class BattleDisplayer : PauseDisplayer
 		var vars = await ToSignal(_optionsPanel, "ActionSelected");
 		var action = vars[0] as Action;
 		
-		if (PlayerDisplayer.Active || EnemyDisplayer.Active) return;
+		if (_playerDisplayer.Active || _enemyDisplayer.Active) return;
 		
 		_optionsPanel.SetActionsVisibility(false);
-		_optionsPanel.SetText($"You selected action {action.Name}.", () => !PlayerDisplayer.Active && !EnemyDisplayer.Active);
+		_optionsPanel.SetText($"You selected action {action.Name}.", () => !_playerDisplayer.Active && !_enemyDisplayer.Active);
 		_optionsPanel.InputEnabled = false;
 		
 		if (!action.Heal)
 		{
-			EnemyDisplayer.ApplyAction(action, PlayerDisplayer.Stats);
-			await ToSignal(EnemyDisplayer, "AnimEnded");
+			_enemyDisplayer.ApplyAction(action, _playerDisplayer.Stats);
+			await ToSignal(_enemyDisplayer, "AnimEnded");
 		}
 		else
 		{
-			PlayerDisplayer.ApplyAction(action);
-			await ToSignal(PlayerDisplayer, "AnimEnded");
+			_playerDisplayer.ApplyAction(action);
+			await ToSignal(_playerDisplayer, "AnimEnded");
 		}
 		
 		_optionsPanel.InputEnabled = true;
@@ -136,18 +136,18 @@ public class BattleDisplayer : PauseDisplayer
 		
 		var action = GetEnemyAction();
 		
-		_optionsPanel.SetText($"{EnemyStats.Name} used action {action.Name}.", () => !PlayerDisplayer.Active && !EnemyDisplayer.Active);
+		_optionsPanel.SetText($"{EnemyStats.Name} used action {action.Name}.", () => !_playerDisplayer.Active && !_enemyDisplayer.Active);
 		_optionsPanel.InputEnabled = false;
 		
 		if (!action.Heal)
 		{
-			PlayerDisplayer.ApplyAction(action, EnemyDisplayer.Stats);
-			await ToSignal(PlayerDisplayer, "AnimEnded");
+			_playerDisplayer.ApplyAction(action, _enemyDisplayer.Stats);
+			await ToSignal(_playerDisplayer, "AnimEnded");
 		}
 		else
 		{
-			EnemyDisplayer.ApplyAction(action);
-			await ToSignal(EnemyDisplayer, "AnimEnded");
+			_enemyDisplayer.ApplyAction(action);
+			await ToSignal(_enemyDisplayer, "AnimEnded");
 		}
 		
 		_optionsPanel.InputEnabled = true;
@@ -158,7 +158,7 @@ public class BattleDisplayer : PauseDisplayer
 	
 	private Action GetEnemyAction()
 	{
-		var enemyStats = EnemyDisplayer.Stats;
+		var enemyStats = _enemyDisplayer.Stats;
 		var healActions = new Array<Action>();
 		var attackActions = new Array<Action>();
 		
@@ -220,7 +220,7 @@ public class BattleDisplayer : PauseDisplayer
 		
 		if (_levelUpMessage != "")
 		{
-			_optionsPanel.SetText($"You leveled up! \n{_levelUpMessage}.");
+			_optionsPanel.SetText($"You leveled up! \n{_levelUpMessage}");
 			await ToSignal(_optionsPanel, "Interacted");
 			_levelUpMessage = "";
 		}

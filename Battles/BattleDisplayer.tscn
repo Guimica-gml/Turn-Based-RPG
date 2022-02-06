@@ -62,18 +62,18 @@ scale = Vector2( -1, 1 )
 [node name="PlayerStatsDisplayer" parent="VBoxContainer/Background" index="2" instance=ExtResource( 3 )]
 anchor_top = 1.0
 anchor_right = 0.0
-margin_left = 2.0
-margin_top = -26.0
-margin_right = 62.0
-margin_bottom = -2.0
+margin_left = 3.0
+margin_top = -27.0
+margin_right = 63.0
+margin_bottom = -3.0
 
 [node name="EnemyStatsDisplayer" parent="VBoxContainer/Background" index="3" instance=ExtResource( 3 )]
 anchor_left = 1.0
 anchor_bottom = 0.0
-margin_left = -62.0
-margin_top = 2.0
-margin_right = -2.0
-margin_bottom = 26.0
+margin_left = -63.0
+margin_top = 3.0
+margin_right = -3.0
+margin_bottom = 27.0
 _showXp = false
 
 [node name="OptionsPanel" parent="VBoxContainer" index="1" instance=ExtResource( 4 )]

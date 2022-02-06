@@ -10,14 +10,9 @@ public class Inventory : Resource
 	
 	[Export] public int Size
 	{
-		get => _size;
-		set
-		{
-			_size = value;
-			Items.Resize(_size);
-		}
+		get => Items.Count;
+		set => Items.Resize(value);
 	}
-	private int _size = 1;
 	
 	public Array<ItemStats> KeyItems
 	{
@@ -55,7 +50,6 @@ public class Inventory : Resource
 		
 		if (item.KeyItem)
 			return AddKeyItem(item);
-		
 		if (item.Stackable)
 			return AddStackableItem(item);
 		return AddNonStackableItem(item);
@@ -72,6 +66,7 @@ public class Inventory : Resource
 	private bool AddStackableItem(ItemStats item)
 	{
 		var itemInInventory = FindItems(item.Name);
+		
 		if (itemInInventory.Count > 0)
 		{
 			itemInInventory[0].Amount += item.Amount;
@@ -154,7 +149,7 @@ public class Inventory : Resource
 	{
 		int amount = 0;
 		
-		foreach (ItemStats item in Items)
+		foreach (var item in FindItems(itemName))
 		{
 			amount += item.Amount;
 		}
@@ -238,10 +233,5 @@ public class Inventory : Resource
 		}
 		
 		return hasKeyItem;
-	}
-	
-	~Inventory()
-	{
-		Dispose();
 	}
 }

@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource( 1 )
 ScenePath = "res://Scenarios/Outside1.tscn"
-SceneEntryIndetifier = "Entry03"
-transitionType = 0
+SceneEntryIndetifier = "Default"
+TransitionType = 0

@@ -89,7 +89,6 @@ public class TransitionManager : Node
 	private async void OnEffectTransition()
 	{
 		GetTree().ChangeScene(_scenePath);
-		
 		await ToSignal(GetTree(), "idle_frame");
 		
 		// Placing the player in the new scene
