@@ -49,4 +49,5 @@ placeholder_text = "Type the command here"
 placeholder_alpha = 0.4
 caret_blink = true
 
+[connection signal="text_changed" from="HBoxContainer/LineEdit" to="." method="OnLineEditTextChanged"]
 [connection signal="text_entered" from="HBoxContainer/LineEdit" to="." method="OnLineEditTextEntered"]

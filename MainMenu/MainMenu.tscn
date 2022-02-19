@@ -5,8 +5,8 @@
 [ext_resource path="res://MainMenu/Buttons/MenuButton.tres" type="StyleBox" id=3]
 [ext_resource path="res://MainMenu/Buttons/MenuButtonHover.tres" type="StyleBox" id=4]
 [ext_resource path="res://MainMenu/MainMenu.cs" type="Script" id=5]
-[ext_resource path="res://Interactions/Resources/Menus/I_MainMenu_To_Outside1.tres" type="Resource" id=6]
-[ext_resource path="res://Interactions/Resources/Menus/I_MainMenu_To_ControlsMenu_.tres" type="Resource" id=7]
+[ext_resource path="res://Interactions/Resources/Menus/I_MainMenu_To_Outside1_Default.tres" type="Resource" id=6]
+[ext_resource path="res://Interactions/Resources/Menus/I_MainMenu_To_ControlsMenu_none.tres" type="Resource" id=7]
 [ext_resource path="res://MainMenu/MenuBackground.png" type="Texture" id=8]
 
 [sub_resource type="Shader" id=4]
@@ -98,7 +98,7 @@ custom_styles/disabled = ExtResource( 3 )
 custom_styles/normal = ExtResource( 3 )
 text = "START"
 
-[node name="ControlsButton2" type="Button" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
+[node name="ControlsButton" type="Button" parent="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer"]
 margin_left = 74.0
 margin_top = 93.0
 margin_right = 154.0
@@ -131,5 +131,5 @@ custom_styles/normal = ExtResource( 3 )
 text = "EXIT"
 
 [connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/StartButton" to="." method="OnStartButtonPressed"]
-[connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/ControlsButton2" to="." method="OnControlsButtonPressed"]
+[connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/ControlsButton" to="." method="OnControlsButtonPressed"]
 [connection signal="pressed" from="CanvasLayer/CenterContainer/MarginContainer/VBoxContainer/ExitButton" to="." method="OnExitButtonPressed"]

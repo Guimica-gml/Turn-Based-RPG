@@ -3,7 +3,7 @@
 [ext_resource path="res://Scenarios/Scenario.tscn" type="PackedScene" id=1]
 [ext_resource path="res://SceneTransition/SceneEntry/SceneEntry.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Interactions/InteractableArea/InteractableArea.tscn" type="PackedScene" id=3]
-[ext_resource path="res://Interactions/Resources/Interaction_7.tres" type="Resource" id=4]
+[ext_resource path="res://Interactions/Resources/Cave1/I_Cave1_To_Scenario2_EntryNorth.tres" type="Resource" id=4]
 [ext_resource path="res://Enemy/MaskedGoon/MaskedGoon.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Enemy/InvertedMaskedGoon/InvertedMasedGoon.tscn" type="PackedScene" id=6]
 
@@ -33,10 +33,10 @@ tile_data = PoolIntArray( 0, 20, 0, 1, 21, 0, 2, 21, 0, 3, 21, 0, 4, 21, 0, 5, 2
 
 [node name="InteractableArea" parent="." index="4" instance=ExtResource( 3 )]
 position = Vector2( 224, 272 )
-Interaction = ExtResource( 4 )
+_interaction = ExtResource( 4 )
 
 [node name="SceneEntry" parent="SceneEntries" index="0" instance=ExtResource( 2 )]
 position = Vector2( 224, 256 )
-Indentifier = "Entry06"
+Indentifier = "EntrySouth"
 
 [editable path="MainCamera"]

@@ -7,7 +7,7 @@
 [ext_resource path="res://MainMenu/Buttons/MenuButton.tres" type="StyleBox" id=5]
 [ext_resource path="res://MainMenu/Buttons/MenuButtonHover.tres" type="StyleBox" id=6]
 [ext_resource path="res://ControlsMenu/ControlsMenu.cs" type="Script" id=7]
-[ext_resource path="res://Interactions/Resources/Menus/I_ControlsMenu_To_MainMenu.tres" type="Resource" id=8]
+[ext_resource path="res://Interactions/Resources/Menus/I_ControlsMenu_To_MainMenu_none.tres" type="Resource" id=8]
 
 [sub_resource type="Shader" id=2]
 code = "shader_type canvas_item;

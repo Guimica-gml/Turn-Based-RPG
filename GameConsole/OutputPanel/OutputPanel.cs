@@ -21,6 +21,12 @@ public class OutputPanel : PanelContainer
 		_outputLine.BbcodeText = text;
 		_outputsContainer.AddChild(_outputLine);
 		
+		if (_outputsContainer.GetChildCount() > 20)
+		{
+			var child =_outputsContainer.GetChild(0);
+			_outputsContainer.RemoveChild(child);
+		}
+		
 		await ToSignal(GetTree(), "idle_frame");
 		_scrollContainer.ScrollVertical = (int) _vScrollBar.MaxValue;
 	}

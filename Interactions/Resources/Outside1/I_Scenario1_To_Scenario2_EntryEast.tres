@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
-ScenePath = "res://MainMenu/MainMenu.tscn"
-SceneEntryIndetifier = "none"
-transitionType = 0
+ScenePath = "res://Scenarios/Outside2.tscn"
+SceneEntryIndetifier = "EntryEast"
+TransitionType = 0

@@ -8,9 +8,4 @@ public abstract class Interaction : Resource
 	public abstract void OnTrigger();
 	public abstract void OnEnd();
 	public abstract Texture GetIcon();
-	
-	~Interaction()
-	{
-		Dispose();
-	}
 }

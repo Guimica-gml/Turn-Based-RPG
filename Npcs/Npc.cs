@@ -66,10 +66,12 @@ public class Npc : Entity
 	// Replace to AStar2D.GetClosestPoint since I had some problems with that method
 	private int GetIdFromPosition(Vector2 position)
 	{
-		foreach (var id in _aStar.GetPoints())
+		var points = new Array<int>(_aStar.GetPoints());
+		
+		foreach (var id in points)
 		{
-			var pos = _aStar.GetPointPosition((int) id);
-			if (pos == position) return (int) id;
+			var pos = _aStar.GetPointPosition(id);
+			if (pos == position) return id;
 		}
 		
 		return -1;
@@ -93,7 +95,7 @@ public class Npc : Entity
 					// Adding the point
 					_aStar.AddPoint(index, pos);
 					
-					// Connecting the point to its neighbors (left and top)
+					// Connecting the point to its neighbours (left and top)
 					if (_aStar.HasPoint(index - 1)) _aStar.ConnectPoints(index, index - 1);
 					var up = GetIdFromPosition(pos - new Vector2(0f, gridSize));
 					if (_aStar.HasPoint(up)) _aStar.ConnectPoints(index, up);

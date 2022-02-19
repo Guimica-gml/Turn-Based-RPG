@@ -61,7 +61,7 @@ public class Stats : Resource
 	
 	public int MaxHp
 	{
-		get => (int) (_baseMaxHp + (Mathf.Pow(1.8f, Level - 1) - 1) + ((int) Boosts[nameof(MaxHp)]["Perm"]) + ((int) Boosts[nameof(MaxHp)]["Temp"]));
+		get => (int) (_baseMaxHp + (Mathf.Pow(1.8f, Level - 1) - 1) + (GetStartBoost(nameof(MaxHp)) + GetStartBoost(nameof(MaxHp), temp:true)));
 		set => _baseMaxHp = value;
 	}
 	
@@ -113,7 +113,7 @@ public class Stats : Resource
 	
 	public int Attack
 	{
-		get => (int) (_baseAttack + (Mathf.Pow(1.9f, Level - 1) - 1)) + ((int) Boosts[nameof(Attack)]["Perm"]) + ((int) Boosts[nameof(Attack)]["Temp"]);
+		get => (int) (_baseAttack + (Mathf.Pow(1.9f, Level - 1) - 1)) + (GetStartBoost(nameof(Attack)) + GetStartBoost(nameof(Attack), temp:true));
 		set
 		{
 			_baseAttack = value;
@@ -123,7 +123,7 @@ public class Stats : Resource
 	
 	public int Defense
 	{
-		get => (int) (_baseDefense + (Mathf.Pow(1.5f, Level - 1) - 1)) + ((int) Boosts[nameof(Defense)]["Perm"]) + ((int) Boosts[nameof(Defense)]["Temp"]);
+		get => (int) (_baseDefense + (Mathf.Pow(1.5f, Level - 1) - 1)) + (GetStartBoost(nameof(Defense)) + GetStartBoost(nameof(Defense), temp:true));
 		set
 		{
 			_baseDefense = value;
@@ -155,6 +155,12 @@ public class Stats : Resource
 	{
 		if (!Boosts.ContainsKey(Stat)) return -1;
 		return ((int) Get(Stat)) - ((int) Boosts[Stat]["Temp"]);
+	}
+	
+	public int GetStartBoost(string statName, bool temp = false)
+	{
+		var state = (temp) ? "Temp" : "Perm";
+		return (int) Boosts[statName][state];
 	}
 	
 	public void IncreaseStatBoost(string Stat, int amount, bool temp)

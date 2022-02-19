@@ -1,28 +1,25 @@
 using Godot;
+using Godot.Collections;
 
 public class InventoryContainer : TabContainer
 {
 	[Export] public Inventory Inventory;
 	[Export] private NodePath _itemInfoDisplayerPath = "";
 	
-	private ItemsTab _itemsTab;
-	private ItemsTab _keyItemsTab;
-	
 	public override void _Ready()
 	{
-		_itemsTab = GetNode<ItemsTab>("Items");
-		_keyItemsTab = GetNode<ItemsTab>("KeyItems");
-		
 		if (Inventory == null)
 		{
 			GD.PrintErr("Inventory was not defined in InventoryDisplayer.cs");
 			return;
 		}
 		
-		_itemsTab.ItemInfoDisplayer = GetNode<ItemInfoDisplayer>(_itemInfoDisplayerPath);
-		_itemsTab.Inventory = Inventory;
+		var tabs = new Array<ItemsTab>(GetChildren());
 		
-		_keyItemsTab.ItemInfoDisplayer = GetNode<ItemInfoDisplayer>(_itemInfoDisplayerPath);
-		_keyItemsTab.Inventory = Inventory;
+		foreach (var tab in tabs)
+		{
+			tab.ItemInfoDisplayer = GetNode<ItemInfoDisplayer>(_itemInfoDisplayerPath);
+			tab.Inventory = Inventory;
+		}
 	}
 }

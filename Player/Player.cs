@@ -28,7 +28,7 @@ public class Player : Entity
 		_interactionSprite = GetNode<Sprite>("InteractionSprite");
 		
 		Global.InteractionManager.Connect("InteractionTriggered", this, nameof(DisableMovement));
-		Global.InteractionManager.Connect("InteractionEnded", this, nameof(UnableMovement));
+		Global.InteractionManager.Connect("InteractionEnded", this, nameof(EnableMovement));
 	}
 	
 	public override void _PhysicsProcess(float delta)
@@ -68,7 +68,7 @@ public class Player : Entity
 		CanMove = false;
 	}
 	
-	private void UnableMovement(Interaction interaction)
+	private void EnableMovement(Interaction interaction)
 	{
 		CanMove = true;
 	}
