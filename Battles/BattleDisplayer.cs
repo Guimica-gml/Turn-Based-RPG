@@ -159,29 +159,20 @@ public class BattleDisplayer : PauseDisplayer
 	private Action GetEnemyAction()
 	{
 		var enemyStats = _enemyDisplayer.Stats;
-		var healActions = new Array<Action>();
-		var attackActions = new Array<Action>();
-		
-		foreach (var action in EnemyStats.Actions)
-		{
-			if (action == null) continue;
-			
-			if (action.Heal)
-			{
-				healActions.Add(action);
-			}
-			else
-			{
-				attackActions.Add(action);
-			}
-		}
+		var healActions = enemyStats.GetHealActions();
+		var attackActions = enemyStats.GetAttackActions();
 		
 		if (enemyStats.Hp < enemyStats.MaxHp && GD.RandRange(0f, 100f) > 70f)
 		{
-			return healActions[(int) GD.RandRange(0, healActions.Count)];
+			return GetRandomAction(healActions);
 		}
 		
-		return attackActions[(int) GD.RandRange(0, attackActions.Count)];
+		return GetRandomAction(attackActions);
+	}
+	
+	private Action GetRandomAction(Array<Action> actions)
+	{
+		return actions[(int) GD.RandRange(0, actions.Count)];
 	}
 	
 	public void CheckWinner()

@@ -1,0 +1,2 @@
+﻿64048
+E:/Godot/Godot.exe

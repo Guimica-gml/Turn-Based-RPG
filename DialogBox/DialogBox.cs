@@ -239,8 +239,8 @@ public class DialogBox : Control
 	
 	private void OnResponseButtonPressed(int index)
 	{
-		var dict = new Array<Dictionary>(_dialog[_part][_page]["responses"] as Array);
-		var partName = dict[index]["part"] as string;
+		var dicts = new Array<Dictionary>(_dialog[_part][_page]["responses"] as Array);
+		var partName = dicts[index]["part"] as string;
 		
 		DeleteResponses();
 		_selectingResponseState = false;

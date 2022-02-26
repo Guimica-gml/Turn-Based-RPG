@@ -88,8 +88,8 @@ public class Stats : Resource
 		get => _baseLevel;
 		set
 		{
-			var maxHpBefore = GetStatWithoutTempBoost(nameof(MaxHp));
 			var levelBefore = Level;
+			var maxHpBefore = GetStatWithoutTempBoost(nameof(MaxHp));
 			var attackBefore = GetStatWithoutTempBoost(nameof(Attack));
 			var defenseBefore = GetStatWithoutTempBoost(nameof(Defense));
 			
@@ -149,6 +149,32 @@ public class Stats : Resource
 	public int MaxDropMoney
 	{
 		get => (int) _baseMaxDropMoney + ((Level - 1) * 20);
+	}
+	
+	public Array<Action> GetHealActions()
+	{
+		var healActions = new Array<Action>();
+		
+		foreach (var action in Actions)
+		{
+			if (action == null || !action.Heal) continue;
+			healActions.Add(action);
+		}
+		
+		return healActions;
+	}
+	
+	public Array<Action> GetAttackActions()
+	{
+		var attackActions = new Array<Action>();
+		
+		foreach (var action in Actions)
+		{
+			if (action == null || action.Heal) continue;
+			attackActions.Add(action);
+		}
+		
+		return attackActions;
 	}
 	
 	public int GetStatWithoutTempBoost(string Stat)
