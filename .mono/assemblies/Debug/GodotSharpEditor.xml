@@ -6,7 +6,8 @@
     <members>
         <member name="T:Godot.EditorExportPlugin">
             <summary>
-            <para>Editor export plugins are automatically activated whenever the user exports the project. Their most common use is to determine what files are being included in the exported project. For each plugin, <see cref="M:Godot.EditorExportPlugin._ExportBegin(System.String[],System.Boolean,System.String,System.Int32)"/> is called at the beginning of the export process and then <see cref="M:Godot.EditorExportPlugin._ExportFile(System.String,System.String,System.String[])"/> is called for each exported file.</para>
+            <para><see cref="T:Godot.EditorExportPlugin"/>s are automatically invoked whenever the user exports the project. Their most common use is to determine what files are being included in the exported project. For each plugin, <see cref="M:Godot.EditorExportPlugin._ExportBegin(System.String[],System.Boolean,System.String,System.Int32)"/> is called at the beginning of the export process and then <see cref="M:Godot.EditorExportPlugin._ExportFile(System.String,System.String,System.String[])"/> is called for each exported file.</para>
+            <para>To use <see cref="T:Godot.EditorExportPlugin"/>, register it using the <see cref="M:Godot.EditorPlugin.AddExportPlugin(Godot.EditorExportPlugin)"/> method first.</para>
             </summary>
         </member>
         <member name="M:Godot.EditorExportPlugin._ExportBegin(System.String[],System.Boolean,System.String,System.Int32)">
@@ -418,7 +419,7 @@
         </member>
         <member name="T:Godot.EditorImportPlugin">
             <summary>
-            <para>EditorImportPlugins provide a way to extend the editor's resource import functionality. Use them to import resources from custom files or to provide alternatives to the editor's existing importers. Register your <see cref="T:Godot.EditorPlugin"/> with <see cref="M:Godot.EditorPlugin.AddImportPlugin(Godot.EditorImportPlugin)"/>.</para>
+            <para><see cref="T:Godot.EditorImportPlugin"/>s provide a way to extend the editor's resource import functionality. Use them to import resources from custom files or to provide alternatives to the editor's existing importers.</para>
             <para>EditorImportPlugins work by associating with specific file extensions and a resource type. See <see cref="M:Godot.EditorImportPlugin.GetRecognizedExtensions"/> and <see cref="M:Godot.EditorImportPlugin.GetResourceType"/>. They may optionally specify some import presets that affect the import process. EditorImportPlugins are responsible for creating the resources and saving them in the <c>.import</c> directory (see ).</para>
             <para>Below is an example EditorImportPlugin that imports a <see cref="T:Godot.Mesh"/> from a file with the extension ".special" or ".spec":</para>
             <para><code>
@@ -460,6 +461,7 @@
                 var filename = save_path + "." + get_save_extension()
                 return ResourceSaver.save(filename, mesh)
             </code></para>
+            <para>To use <see cref="T:Godot.EditorImportPlugin"/>, register it using the <see cref="M:Godot.EditorPlugin.AddImportPlugin(Godot.EditorImportPlugin)"/> method first.</para>
             </summary>
         </member>
         <member name="M:Godot.EditorImportPlugin.GetImportOptions(System.Int32)">
@@ -546,13 +548,13 @@
         </member>
         <member name="T:Godot.EditorInspectorPlugin">
             <summary>
-            <para>These plugins allow adding custom property editors to <see cref="T:Godot.EditorInspector"/>.</para>
-            <para>Plugins are registered via <see cref="M:Godot.EditorPlugin.AddInspectorPlugin(Godot.EditorInspectorPlugin)"/>.</para>
+            <para><see cref="T:Godot.EditorInspectorPlugin"/> allows adding custom property editors to <see cref="T:Godot.EditorInspector"/>.</para>
             <para>When an object is edited, the <see cref="M:Godot.EditorInspectorPlugin.CanHandle(Godot.Object)"/> function is called and must return <c>true</c> if the object type is supported.</para>
             <para>If supported, the function <see cref="M:Godot.EditorInspectorPlugin.ParseBegin(Godot.Object)"/> will be called, allowing to place custom controls at the beginning of the class.</para>
             <para>Subsequently, the <see cref="M:Godot.EditorInspectorPlugin.ParseCategory(Godot.Object,System.String)"/> and <see cref="M:Godot.EditorInspectorPlugin.ParseProperty(Godot.Object,System.Int32,System.String,System.Int32,System.String,System.Int32)"/> are called for every category and property. They offer the ability to add custom controls to the inspector too.</para>
             <para>Finally, <see cref="M:Godot.EditorInspectorPlugin.ParseEnd"/> will be called.</para>
             <para>On each of these calls, the "add" functions can be called.</para>
+            <para>To use <see cref="T:Godot.EditorInspectorPlugin"/>, register it using the <see cref="M:Godot.EditorPlugin.AddInspectorPlugin(Godot.EditorInspectorPlugin)"/> method first.</para>
             </summary>
         </member>
         <member name="M:Godot.EditorInspectorPlugin.CanHandle(Godot.Object)">
@@ -1342,6 +1344,12 @@
             <para>Returns <c>true</c> if your generator supports the resource of type <c>type</c>.</para>
             </summary>
         </member>
+        <member name="T:Godot.EditorSceneImporter">
+            <summary>
+            <para><see cref="T:Godot.EditorSceneImporter"/> allows to define an importer script for a third-party 3D format.</para>
+            <para>To use <see cref="T:Godot.EditorSceneImporter"/>, register it using the <see cref="M:Godot.EditorPlugin.AddSceneImportPlugin(Godot.EditorSceneImporter)"/> method first.</para>
+            </summary>
+        </member>
         <member name="T:Godot.EditorSceneImporterFBX">
             <summary>
             <para>This is an FBX 3D asset importer with full support for most FBX features.</para>
@@ -1704,7 +1712,8 @@
         </member>
         <member name="T:Godot.EditorSpatialGizmoPlugin">
             <summary>
-            <para>EditorSpatialGizmoPlugin allows you to define a new type of Gizmo. There are two main ways to do so: extending <see cref="T:Godot.EditorSpatialGizmoPlugin"/> for the simpler gizmos, or creating a new <see cref="T:Godot.EditorSpatialGizmo"/> type. See the tutorial in the documentation for more info.</para>
+            <para><see cref="T:Godot.EditorSpatialGizmoPlugin"/> allows you to define a new type of Gizmo. There are two main ways to do so: extending <see cref="T:Godot.EditorSpatialGizmoPlugin"/> for the simpler gizmos, or creating a new <see cref="T:Godot.EditorSpatialGizmo"/> type. See the tutorial in the documentation for more info.</para>
+            <para>To use <see cref="T:Godot.EditorSpatialGizmoPlugin"/>, register it using the <see cref="M:Godot.EditorPlugin.AddSpatialGizmoPlugin(Godot.EditorSpatialGizmoPlugin)"/> method first.</para>
             </summary>
         </member>
         <member name="M:Godot.EditorSpatialGizmoPlugin.CanBeHidden">
