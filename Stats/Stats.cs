@@ -2,7 +2,7 @@ using Godot;
 using Godot.Collections;
 
 // TODO: rewrite this shit
-// Currently not working
+// It works, but it's bad
 
 public class Stats : Resource
 {
@@ -21,7 +21,7 @@ public class Stats : Resource
 	[Export] private int _baseMaxHp = 1;
 	[Export] private int _baseAttack = 1;
 	[Export] private int _baseDefense = 1;
-	[Export] private int _baseMoney = 0;
+	[Export] private int _money = 0;
 	
 	[Export] private int _baseMinXpDrop = 0;
 	[Export] private int _baseMaxXpDrop = 0;
@@ -34,18 +34,18 @@ public class Stats : Resource
 	private float _hp = 1.0f;
 	private int _baseXp = 0;
 	
-	private readonly Dictionary<string, Dictionary<string, int>> _boosts = new Dictionary<string, Dictionary<string, int>>()
+	private readonly Dictionary<string, Dictionary> _boosts = new Dictionary<string, Dictionary>()
 	{
-		{ nameof(Attack) , new Dictionary<string, int>() { { "Perm", 0 }, { "Temp", 0 } } },
-		{ nameof(Defense), new Dictionary<string, int>() { { "Perm", 0 }, { "Temp", 0 } } },
+		{ nameof(Attack) , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, { "Signal", nameof(AttackChanged)  } } },
+		{ nameof(Defense), new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, { "Signal", nameof(DefenseChanged) } } },
 	};
 	
 	public int Money
 	{
-		get => _baseMoney;
+		get => _money;
 		set
 		{
-			_baseMoney = Mathf.Max(0, value);
+			_money = Mathf.Max(0, value);
 			EmitSignal(nameof(MoneyChanged), Money);
 		}
 	}
@@ -63,8 +63,7 @@ public class Stats : Resource
 	
 	public int MaxHp
 	{
-		get => (int) (_baseMaxHp + (Mathf.Pow(1.8f, Level - 1)));
-		set => _baseMaxHp = value;
+		get => (int) (_baseMaxHp + Mathf.Pow(1.8f, Level - 1));
 	}
 	
 	public int Xp
@@ -77,7 +76,7 @@ public class Stats : Resource
 			var xpToNextLevel = XpToNextLevel();
 			if (_baseXp >= xpToNextLevel)
 			{
-				Level += (int) (_baseXp / xpToNextLevel);
+				Level += _baseXp / xpToNextLevel;
 				_baseXp -= xpToNextLevel;
 			}
 			
@@ -115,13 +114,11 @@ public class Stats : Resource
 	public int Attack
 	{
 		get => (int) (_baseAttack + Mathf.Pow(1.9f, Level - 1)) + (GetStatBoost(nameof(Attack)) + GetStatBoost(nameof(Attack), temp:true));
-		set => EmitSignal(nameof(AttackChanged), Attack);
 	}
 	
 	public int Defense
 	{
 		get => (int) (_baseDefense + Mathf.Pow(1.5f, Level - 1)) + (GetStatBoost(nameof(Defense)) + GetStatBoost(nameof(Defense), temp:true));
-		set => EmitSignal(nameof(DefenseChanged), Defense);
 	}
 	
 	public Array<Action> GetHealActions()
@@ -153,19 +150,19 @@ public class Stats : Resource
 	public int GetStatWithoutBoost(string stat)
 	{
 		if (!_boosts.ContainsKey(stat)) return -1;
-		return ((int) Get(stat)) - _boosts[stat]["Temp"] - _boosts[stat]["Perm"];
+		return ((int) Get(stat)) - (int) _boosts[stat]["Temp"] - (int) _boosts[stat]["Perm"];
 	}
 	
 	public int GetStatWithoutTempBoost(string stat)
 	{
 		if (!_boosts.ContainsKey(stat)) return -1;
-		return ((int) Get(stat)) - _boosts[stat]["Temp"];
+		return ((int) Get(stat)) - (int) _boosts[stat]["Temp"];
 	}
 	
 	public int GetStatBoost(string statName, bool temp = false)
 	{
 		var state = (temp) ? "Temp" : "Perm";
-		return _boosts[statName][state];
+		return (int) _boosts[statName][state];
 	}
 	
 	public void IncreaseStatBoost(string stat, int amount, bool temp)
@@ -174,9 +171,9 @@ public class Stats : Resource
 		if (!_boosts.ContainsKey(stat)) return;
 		
 		var state = (temp) ? "Temp" : "Perm";
-		_boosts[stat][state] += amount;
-		
-		Set(stat, ((int) Get(stat)) - _boosts[stat]["Temp"] - _boosts[stat]["Perm"]);
+		_boosts[stat][state] = (int) _boosts[stat][state] + amount;
+
+		EmitSignal((string) _boosts[stat]["Signal"]);
 	}
 	
 	public int GetXpDrop()
@@ -212,7 +209,7 @@ public class Stats : Resource
 	
 	public void Hurt(int damage)
 	{
-		var realDamage = Mathf.Max(1, (int) (damage - Defense / 15));
+		var realDamage = Mathf.Max(1, damage - Defense / 15);
 		Hp = (float) (Mathf.Max(0, Hp - realDamage) / MaxHp);
 	}
 	
