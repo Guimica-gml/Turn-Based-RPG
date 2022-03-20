@@ -48,12 +48,12 @@ public class StatsDisplayer : PanelContainer
 	
 	private void UpdateAttack(int attack)
 	{
-		_attackKeyValue.Value = Stats.Attack.ToString();
+		_attackKeyValue.Value = attack.ToString();
 	}
 	
 	private void UpdateDefense(int defense)
 	{
-		_defenseKeyValue.Value = Stats.Defense.ToString();
+		_defenseKeyValue.Value = defense.ToString();
 	}
 	
 	private void UpdateLevel(int level, string message = "")

@@ -7,7 +7,7 @@ public class Player : Entity
 	private RemoteTransform2D _remoteTransform;
 	private RayCast2D _interactionRayCast;
 	
-	private Dictionary<string, Vector2> _acceptedInputs = new Dictionary<string, Vector2>()
+	private readonly Dictionary<string, Vector2> _acceptedInputs = new Dictionary<string, Vector2>()
 	{
 		{ "ui_up", Vector2.Up },
 		{ "ui_down", Vector2.Down },

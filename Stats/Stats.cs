@@ -1,6 +1,9 @@
 using Godot;
 using Godot.Collections;
 
+// TODO: rewrite this shit
+// Currently not working
+
 public class Stats : Resource
 {
 	[Signal] private delegate void HpChanged(int hp);
@@ -31,11 +34,10 @@ public class Stats : Resource
 	private float _hp = 1.0f;
 	private int _baseXp = 0;
 	
-	public Dictionary<string, Dictionary> Boosts = new Dictionary<string, Dictionary>()
+	private readonly Dictionary<string, Dictionary<string, int>> _boosts = new Dictionary<string, Dictionary<string, int>>()
 	{
-		{ nameof(MaxHp)  , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, { "Signal", nameof(HpChanged)      }, { "AffectedStat", nameof(Hp)      } } },
-		{ nameof(Attack) , new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, { "Signal", nameof(AttackChanged)  }, { "AffectedStat", nameof(Attack)  } } },
-		{ nameof(Defense), new Dictionary() { { "Perm", 0 }, { "Temp", 0 }, { "Signal", nameof(DefenseChanged) }, { "AffectedStat", nameof(Defense) } } },
+		{ nameof(Attack) , new Dictionary<string, int>() { { "Perm", 0 }, { "Temp", 0 } } },
+		{ nameof(Defense), new Dictionary<string, int>() { { "Perm", 0 }, { "Temp", 0 } } },
 	};
 	
 	public int Money
@@ -61,7 +63,7 @@ public class Stats : Resource
 	
 	public int MaxHp
 	{
-		get => (int) (_baseMaxHp + (Mathf.Pow(1.8f, Level - 1) - 1) + (GetStartBoost(nameof(MaxHp)) + GetStartBoost(nameof(MaxHp), temp:true)));
+		get => (int) (_baseMaxHp + (Mathf.Pow(1.8f, Level - 1)));
 		set => _baseMaxHp = value;
 	}
 	
@@ -89,7 +91,7 @@ public class Stats : Resource
 		set
 		{
 			var levelBefore = Level;
-			var maxHpBefore = GetStatWithoutTempBoost(nameof(MaxHp));
+			var maxHpBefore = MaxHp;
 			var attackBefore = GetStatWithoutTempBoost(nameof(Attack));
 			var defenseBefore = GetStatWithoutTempBoost(nameof(Defense));
 			
@@ -97,12 +99,11 @@ public class Stats : Resource
 			
 			var attack = GetStatWithoutTempBoost(nameof(Attack));
 			var defense = GetStatWithoutTempBoost(nameof(Defense));
-			var maxHp = GetStatWithoutTempBoost(nameof(MaxHp));
 			
 			var message = string.Join(
 				System.Environment.NewLine,
 				$"Level: {levelBefore} -- {Level}",
-				$"Hp: {maxHpBefore} -- {maxHp}",
+				$"Hp: {maxHpBefore} -- {MaxHp}",
 				$"Attack: {attackBefore} -- {attack}",
 				$"Defense: {defenseBefore} -- {defense}"
 			);
@@ -113,7 +114,7 @@ public class Stats : Resource
 	
 	public int Attack
 	{
-		get => (int) (_baseAttack + (Mathf.Pow(1.9f, Level - 1) - 1)) + (GetStartBoost(nameof(Attack)) + GetStartBoost(nameof(Attack), temp:true));
+		get => (int) (_baseAttack + Mathf.Pow(1.9f, Level - 1)) + (GetStatBoost(nameof(Attack)) + GetStatBoost(nameof(Attack), temp:true));
 		set
 		{
 			_baseAttack = value;
@@ -123,7 +124,7 @@ public class Stats : Resource
 	
 	public int Defense
 	{
-		get => (int) (_baseDefense + (Mathf.Pow(1.5f, Level - 1) - 1)) + (GetStartBoost(nameof(Defense)) + GetStartBoost(nameof(Defense), temp:true));
+		get => (int) (_baseDefense + Mathf.Pow(1.5f, Level - 1)) + (GetStatBoost(nameof(Defense)) + GetStatBoost(nameof(Defense), temp:true));
 		set
 		{
 			_baseDefense = value;
@@ -133,22 +134,22 @@ public class Stats : Resource
 	
 	public int MinXpDrop
 	{
-		get => (int) _baseMinXpDrop + ((Level - 1) * 20);
+		get => _baseMinXpDrop + ((Level - 1) * 20);
 	}
 	
 	public int MaxXpDrop
 	{
-		get => (int) _baseMaxXpDrop + ((Level - 1) * 20);
+		get => _baseMaxXpDrop + ((Level - 1) * 20);
 	}
 	
 	public int MinDropMoney
 	{
-		get => (int) _baseMinDropMoney + ((Level - 1) * 20);
+		get => _baseMinDropMoney + ((Level - 1) * 20);
 	}
 	
 	public int MaxDropMoney
 	{
-		get => (int) _baseMaxDropMoney + ((Level - 1) * 20);
+		get => _baseMaxDropMoney + ((Level - 1) * 20);
 	}
 	
 	public Array<Action> GetHealActions()
@@ -177,37 +178,33 @@ public class Stats : Resource
 		return attackActions;
 	}
 	
-	public int GetStatWithoutTempBoost(string Stat)
+	public int GetStatWithoutBoost(string stat)
 	{
-		if (!Boosts.ContainsKey(Stat)) return -1;
-		return ((int) Get(Stat)) - ((int) Boosts[Stat]["Temp"]);
+		if (!_boosts.ContainsKey(stat)) return -1;
+		return ((int) Get(stat)) - _boosts[stat]["Temp"] - _boosts[stat]["Perm"];
 	}
 	
-	public int GetStartBoost(string statName, bool temp = false)
+	public int GetStatWithoutTempBoost(string stat)
+	{
+		if (!_boosts.ContainsKey(stat)) return -1;
+		return ((int) Get(stat)) - _boosts[stat]["Temp"];
+	}
+	
+	public int GetStatBoost(string statName, bool temp = false)
 	{
 		var state = (temp) ? "Temp" : "Perm";
-		return (int) Boosts[statName][state];
+		return _boosts[statName][state];
 	}
 	
-	public void IncreaseStatBoost(string Stat, int amount, bool temp)
+	public void IncreaseStatBoost(string stat, int amount, bool temp)
 	{
 		ConnectToBattleSystem();
-		if (!Boosts.ContainsKey(Stat)) return;
+		if (!_boosts.ContainsKey(stat)) return;
 		
 		var state = (temp) ? "Temp" : "Perm";
-		Boosts[Stat][state] = (int) Boosts[Stat][state] + amount;
+		_boosts[stat][state] += amount;
 		
-		var signal = Boosts[Stat]["Signal"] as string;
-		var affectedStat = Boosts[Stat]["AffectedStat"] as string;
-		
-		try
-		{
-			EmitSignal(signal, (int) Get(affectedStat));
-		}
-		catch(System.Exception)
-		{
-			EmitSignal(signal, (float) Get(affectedStat));
-		}
+		Set(stat, ((int) Get(stat)) - _boosts[stat]["Temp"] - _boosts[stat]["Perm"]);
 	}
 	
 	public int GetXpDrop()
@@ -249,7 +246,7 @@ public class Stats : Resource
 	
 	private void OnBattleEnded()
 	{
-		var keys = new Array<string>(Boosts.Keys);
-		foreach (var key in keys) Boosts[key]["Temp"] = 0;
+		var keys = new Array<string>(_boosts.Keys);
+		foreach (var key in keys) _boosts[key]["Temp"] = 0;
 	}
 }

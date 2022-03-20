@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "442e5e8d-df97-4203-9d9f-ac75cf6b3c97": {
+      "ProjectGuid": "442e5e8d-df97-4203-9d9f-ac75cf6b3c97",
+      "DisplayName": "Turn-Based RPG",
+      "ColorIndex": 0
+    }
+  },
+  "NextColorIndex": 1
+}
