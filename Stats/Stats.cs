@@ -115,41 +115,13 @@ public class Stats : Resource
 	public int Attack
 	{
 		get => (int) (_baseAttack + Mathf.Pow(1.9f, Level - 1)) + (GetStatBoost(nameof(Attack)) + GetStatBoost(nameof(Attack), temp:true));
-		set
-		{
-			_baseAttack = value;
-			EmitSignal(nameof(AttackChanged), Attack);
-		}
+		set => EmitSignal(nameof(AttackChanged), Attack);
 	}
 	
 	public int Defense
 	{
 		get => (int) (_baseDefense + Mathf.Pow(1.5f, Level - 1)) + (GetStatBoost(nameof(Defense)) + GetStatBoost(nameof(Defense), temp:true));
-		set
-		{
-			_baseDefense = value;
-			EmitSignal(nameof(DefenseChanged), Defense);
-		}
-	}
-	
-	public int MinXpDrop
-	{
-		get => _baseMinXpDrop + ((Level - 1) * 20);
-	}
-	
-	public int MaxXpDrop
-	{
-		get => _baseMaxXpDrop + ((Level - 1) * 20);
-	}
-	
-	public int MinDropMoney
-	{
-		get => _baseMinDropMoney + ((Level - 1) * 20);
-	}
-	
-	public int MaxDropMoney
-	{
-		get => _baseMaxDropMoney + ((Level - 1) * 20);
+		set => EmitSignal(nameof(DefenseChanged), Defense);
 	}
 	
 	public Array<Action> GetHealActions()
@@ -209,12 +181,18 @@ public class Stats : Resource
 	
 	public int GetXpDrop()
 	{
-		return (int) GD.RandRange(MinXpDrop, MaxXpDrop);
+		int minXpDrop = _baseMinXpDrop + ((Level - 1) * 20);
+		int maxXpDrop = _baseMaxXpDrop + ((Level - 1) * 20);
+		
+		return (int) GD.RandRange(minXpDrop, maxXpDrop);
 	}
 	
 	public int GetMoneyDrop()
 	{
-		return (int) GD.RandRange(MinDropMoney, MaxDropMoney);
+		int minDropMoney = _baseMinDropMoney + ((Level - 1) * 20);
+		int maxDropMoney = _baseMaxDropMoney + ((Level - 1) * 20);
+		
+		return (int) GD.RandRange(minDropMoney, maxDropMoney);
 	}
 	
 	public int XpToNextLevel()
