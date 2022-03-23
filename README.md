@@ -1,12 +1,12 @@
 # RPG
 
-A turn-based RPG developed using Godot Engine
-This project was created based on Gurpreet Singh Matharoo's version of a turn-based rpg created with GameMaker Studio
-You can find his code at:
-https://github.com/gurpreetsinghmatharoo/gms2.3-turn-based-rpg
+A turn-based RPG developed using Godot Engine<br>
+This project was created based on Gurpreet Singh Matharoo's version of a turn-based rpg created with GameMaker Studio<br>
+You can find his code at:<br>
+https://github.com/gurpreetsinghmatharoo/gms2.3-turn-based-rpg<br>
 
-I tried to recreate his game but using Godot instead of GameMaker
-It's not 100% similar, but it's pretty close
+I tried to recreate his game but using Godot instead of GameMaker<br>
+It's not 100% similar, but it's pretty close<br>
 
-I also added some features that are not present in his project
-I just felt like adding them would be nice, so I did
+I also added some features that are not present in his project<br>
+I just felt like adding them would be nice, so I did<br>
