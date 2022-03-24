@@ -9,11 +9,11 @@ public class Global : Node
 	public static BattleManager BattleManager { get; private set; }
 	public static PopupManager PopupManager { get; private set; }
 	public static ShopManager ShopManager { get; private set; }
-	
+
 	public override void _Ready()
 	{
 		var root = GetTree().Root;
-		
+
 		InteractionManager = root.GetNode<InteractionManager>("InteractionManager");
 		TransitionManager = root.GetNode<TransitionManager>("TransitionManager");
 		DialogManager = root.GetNode<DialogManager>("DialogManager");

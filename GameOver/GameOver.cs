@@ -8,7 +8,7 @@ public class GameOver : Node2D
 		{
 			GetTree().Quit();
 		}
-		
+
 		@event.Dispose();
 	}
 }

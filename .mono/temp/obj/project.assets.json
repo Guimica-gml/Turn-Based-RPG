@@ -18,7 +18,7 @@
       "projectName": "Turn-Based RPG",
       "projectPath": "E:\\Godot\\Projects (Godot)\\RPG\\Turn-Based RPG.csproj",
       "packagesPath": "C:\\Users\\ameid\\.nuget\\packages\\",
-      "outputPath": "E:\\Godot\\Projects (Godot)\\RPG\\.mono\\temp\\obj\\",
+      "outputPath": "E:\\GODOT\\PROJECTS (GODOT)\\RPG\\.mono\\temp\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "E:\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -50,7 +50,7 @@
     "frameworks": {
       "net472": {
         "targetAlias": "net472",
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.201\\RuntimeIdentifierGraph.json"
       }
     }
   }

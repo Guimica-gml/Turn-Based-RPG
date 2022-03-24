@@ -137,9 +137,6 @@ tracks/6/keys = {
 anchor_right = 1.0
 anchor_bottom = 1.0
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextureRect" type="TextureRect" parent="."]
 anchor_left = 0.5
@@ -151,9 +148,6 @@ margin_top = -88.0
 margin_right = 151.0
 margin_bottom = -6.0
 texture = ExtResource( 2 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="BackgroundRect" type="TextureRect" parent="TextureRect"]
 show_behind_parent = true
@@ -162,9 +156,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 texture = ExtResource( 6 )
 stretch_mode = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="MarginContainer" type="MarginContainer" parent="TextureRect"]
 anchor_right = 1.0
@@ -173,9 +164,6 @@ custom_constants/margin_right = 30
 custom_constants/margin_top = 15
 custom_constants/margin_left = 30
 custom_constants/margin_bottom = 10
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="TextLabel" type="RichTextLabel" parent="TextureRect/MarginContainer"]
 margin_left = 30.0
@@ -191,7 +179,6 @@ custom_fonts/bold_font = ExtResource( 3 )
 custom_fonts/normal_font = ExtResource( 3 )
 bbcode_enabled = true
 meta_underlined = false
-text = "Nine patch rects are so op.... why this is looking so fucking bad? Oh... Ok, it just looks better now.... Oh, wait, I'm not using nine patch rects anymore, it's just a simple texture rect."
 scroll_active = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -207,9 +194,6 @@ margin_bottom = -2.0
 grow_horizontal = 0
 grow_vertical = 0
 custom_constants/separation = 2
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="NameRect" type="TextureRect" parent="TextureRect"]
 margin_left = 16.0
@@ -218,8 +202,7 @@ margin_right = 116.0
 margin_bottom = 11.0
 texture = ExtResource( 7 )
 __meta__ = {
-"_edit_group_": true,
-"_edit_use_anchors_": false
+"_edit_group_": true
 }
 
 [node name="NameLabel" type="Label" parent="TextureRect/NameRect"]
@@ -244,9 +227,6 @@ margin_top = -17.0
 margin_right = -12.0
 margin_bottom = -1.0
 texture = ExtResource( 8 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Timer" type="Timer" parent="."]
 process_mode = 0

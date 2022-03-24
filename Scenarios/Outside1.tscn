@@ -82,15 +82,15 @@ tile_data = PoolIntArray( -196608, 29, 0, -196607, 18, 0, -196606, 18, 0, -19660
 position = Vector2( 0, 80 )
 _interaction = ExtResource( 5 )
 
-[node name="InteractableArea3" parent="." index="5" instance=ExtResource( 8 )]
+[node name="InteractableArea2" parent="." index="5" instance=ExtResource( 8 )]
 position = Vector2( 288, 32 )
 _interaction = ExtResource( 4 )
 
-[node name="InteractableArea4" parent="." index="6" instance=ExtResource( 8 )]
+[node name="InteractableArea3" parent="." index="6" instance=ExtResource( 8 )]
 position = Vector2( 160, 32 )
 _interaction = ExtResource( 6 )
 
-[node name="InteractableArea5" parent="." index="7" instance=ExtResource( 8 )]
+[node name="InteractableArea4" parent="." index="7" instance=ExtResource( 8 )]
 position = Vector2( 208, 32 )
 _interaction = ExtResource( 3 )
 
