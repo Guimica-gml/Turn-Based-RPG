@@ -1,2 +1,3 @@
+# Ignore IDE specific files
 .vs/
 .vscode/
