@@ -27,8 +27,8 @@ public class Player : Entity
 		_interactionRayCast = GetNode<RayCast2D>("InteractionRayCast2D");
 		_interactionSprite = GetNode<Sprite>("InteractionSprite");
 
-		Global.InteractionManager.Connect("InteractionTriggered", this, nameof(DisableMovement));
-		Global.InteractionManager.Connect("InteractionEnded", this, nameof(EnableMovement));
+		Global.InteractionManager.Connect("InteractionTriggered", this, nameof(OnInteractionTriggered));
+		Global.InteractionManager.Connect("InteractionEnded", this, nameof(OnInteractionEnded));
 	}
 
 	public override void _PhysicsProcess(float delta)
@@ -63,12 +63,12 @@ public class Player : Entity
 		_remoteTransform.RemotePath = _remoteTransform.GetPathTo(camera);
 	}
 
-	private void DisableMovement(Interaction interaction)
+	private void OnInteractionTriggered(Interaction interaction)
 	{
 		CanMove = false;
 	}
 
-	private void EnableMovement(Interaction interaction)
+	private void OnInteractionEnded(Interaction interaction)
 	{
 		CanMove = true;
 	}
