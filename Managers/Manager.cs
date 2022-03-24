@@ -12,9 +12,7 @@ public class Manager : CanvasLayer
 	private Dictionary<string, Array> _sceneInfo = new Dictionary<string, Array>();
 
 	private PackedScene _playerPreload = GD.Load<PackedScene>("res://Player/Player.tscn");
-
 	private PackedScene _pauseDisplayerPreload = GD.Load<PackedScene>("res://Inventory/InventoryDisplayer/InventoryDisplayer.tscn");
-	private PackedScene _programmerDisplayerPreload = GD.Load<PackedScene>("res://GameConsole/GameConsole.tscn");
 
 	public async override void _Ready()
 	{
@@ -27,20 +25,11 @@ public class Manager : CanvasLayer
 
 	public override void _Input(InputEvent @event)
 	{
-		if (!Global.InteractionManager.Active)
+		if (!Global.InteractionManager.Active && @event.IsActionPressed("ui_pause"))
 		{
 			// Opens the player's inventory
-			if (@event.IsActionPressed("ui_pause"))
-			{
-				var pauseDisplayer = _pauseDisplayerPreload.Instance<PauseDisplayer>();
-				PauseGame(pauseDisplayer);
-			}
-			// This should be accessible just if you run the game from the editor
-			else if (OS.HasFeature("editor") && @event.IsActionPressed("ui_programmer_access"))
-			{
-				var programmerDisplayer = _programmerDisplayerPreload.Instance<GameConsole>();
-				PauseGame(programmerDisplayer);
-			}
+			var pauseDisplayer = _pauseDisplayerPreload.Instance<PauseDisplayer>();
+			PauseGame(pauseDisplayer);
 		}
 
 		@event.Dispose();
