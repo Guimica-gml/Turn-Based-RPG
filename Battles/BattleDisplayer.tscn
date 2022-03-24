@@ -22,7 +22,7 @@ _baseLevel = 1
 _baseMaxHp = 60
 _baseAttack = 60
 _baseDefense = 60
-_baseMoney = 0
+_money = 0
 _baseMinXpDrop = 1000
 _baseMaxXpDrop = 1000
 _baseMinDropMoney = 100
@@ -39,9 +39,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 custom_constants/separation = 0
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Background" type="TextureRect" parent="VBoxContainer" index="0"]
 margin_right = 320.0
@@ -88,3 +85,4 @@ _inventoryPath = NodePath("../../InventoryDisplayer")
 visible = false
 
 [node name="TransitionEffect" parent="." index="2" instance=ExtResource( 2 )]
+visible = false
