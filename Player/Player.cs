@@ -15,13 +15,9 @@ public class Player : Entity
 		{ "ui_left", Vector2.Left },
 	};
 
-	private Array<string> _inputKeys = new Array<string>();
-
 	public override void _Ready()
 	{
 		base._Ready();
-
-		_inputKeys = _acceptedInputs.Keys as Array<string>;
 
 		_remoteTransform = GetNode<RemoteTransform2D>("CameraRemote");
 		_interactionRayCast = GetNode<RayCast2D>("InteractionRayCast2D");
@@ -49,10 +45,9 @@ public class Player : Entity
 
 	protected override Vector2 CheckForInput()
 	{
-		for (var i = 0; i < _inputKeys.Count; ++i)
+		foreach (var item in _acceptedInputs)
 		{
-			var item = _inputKeys[i];
-			if (Input.IsActionPressed(item)) return _acceptedInputs[item];
+			if (Input.IsActionPressed(item.Key)) return item.Value;
 		}
 
 		return Vector2.Zero;

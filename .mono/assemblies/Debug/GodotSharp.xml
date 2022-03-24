@@ -1978,6 +1978,7 @@
         <member name="P:Godot.Node.Owner">
             <summary>
             <para>The node owner. A node can have any other node as owner (as long as it is a valid parent, grandparent, etc. ascending in the tree). When saving a node (using <see cref="T:Godot.PackedScene"/>), all the nodes it owns will be saved with it. This allows for the creation of complex <see cref="T:Godot.SceneTree"/>s, with instancing and subinstancing.</para>
+            <para>Note: If you want a child to be persisted to a <see cref="T:Godot.PackedScene"/>, you must set <see cref="P:Godot.Node.Owner"/> in addition to calling <see cref="M:Godot.Node.AddChild(Godot.Node,System.Boolean)"/>. This is typically relevant for <a href="https://docs.godotengine.org/en/3.4/tutorials/misc/running_code_in_the_editor.html">tool scripts</a> and <a href="https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/index.html">editor plugins</a>. If <see cref="M:Godot.Node.AddChild(Godot.Node,System.Boolean)"/> is called without setting <see cref="P:Godot.Node.Owner"/>, the newly added <see cref="T:Godot.Node"/> will not be visible in the scene tree, though it will be visible in the 2D/3D view.</para>
             </summary>
         </member>
         <member name="P:Godot.Node.Multiplayer">
@@ -2081,7 +2082,7 @@
                 child_node.get_parent().remove_child(child_node)
             add_child(child_node)
             </code></para>
-            <para>Note: If you want a child to be persisted to a <see cref="T:Godot.PackedScene"/>, you must set <see cref="P:Godot.Node.Owner"/> in addition to calling <see cref="M:Godot.Node.AddChild(Godot.Node,System.Boolean)"/>. This is typically relevant for <a href="https://godot.readthedocs.io/en/3.2/tutorials/misc/running_code_in_the_editor.html">tool scripts</a> and <a href="https://godot.readthedocs.io/en/latest/tutorials/plugins/editor/index.html">editor plugins</a>. If <see cref="M:Godot.Node.AddChild(Godot.Node,System.Boolean)"/> is called without setting <see cref="P:Godot.Node.Owner"/>, the newly added <see cref="T:Godot.Node"/> will not be visible in the scene tree, though it will be visible in the 2D/3D view.</para>
+            <para>Note: If you want a child to be persisted to a <see cref="T:Godot.PackedScene"/>, you must set <see cref="P:Godot.Node.Owner"/> in addition to calling <see cref="M:Godot.Node.AddChild(Godot.Node,System.Boolean)"/>. This is typically relevant for <a href="https://docs.godotengine.org/en/3.4/tutorials/misc/running_code_in_the_editor.html">tool scripts</a> and <a href="https://docs.godotengine.org/en/3.4/tutorials/plugins/editor/index.html">editor plugins</a>. If <see cref="M:Godot.Node.AddChild(Godot.Node,System.Boolean)"/> is called without setting <see cref="P:Godot.Node.Owner"/>, the newly added <see cref="T:Godot.Node"/> will not be visible in the scene tree, though it will be visible in the 2D/3D view.</para>
             </summary>
         </member>
         <member name="M:Godot.Node.RemoveChild(Godot.Node)">
@@ -19303,7 +19304,7 @@
         </member>
         <member name="P:Godot.Control.RectPivotOffset">
             <summary>
-            <para>By default, the node's pivot is its top-left corner. When you change its <see cref="P:Godot.Control.RectScale"/>, it will scale around this pivot. Set this property to <see cref="P:Godot.Control.RectSize"/> / 2 to center the pivot in the node's rectangle.</para>
+            <para>By default, the node's pivot is its top-left corner. When you change its <see cref="P:Godot.Control.RectRotation"/> or <see cref="P:Godot.Control.RectScale"/>, it will rotate or scale around this pivot. Set this property to <see cref="P:Godot.Control.RectSize"/> / 2 to pivot around the Control's center.</para>
             </summary>
         </member>
         <member name="P:Godot.Control.RectClipContent">
@@ -20397,7 +20398,7 @@
         </member>
         <member name="M:Godot.Curve2D.AddPoint(Godot.Vector2,System.Nullable{Godot.Vector2},System.Nullable{Godot.Vector2},System.Int32)">
             <summary>
-            <para>Adds a point to a curve at <c>position</c>, with control points <c>in</c> and <c>out</c>.</para>
+            <para>Adds a point to a curve at <c>position</c> relative to the <see cref="T:Godot.Curve2D"/>'s position, with control points <c>in</c> and <c>out</c>.</para>
             <para>If <c>at_position</c> is given, the point is inserted before the point number <c>at_position</c>, moving that point (and every point after) after the inserted point. If <c>at_position</c> is not given, or is an illegal value (<c>at_position &lt;0</c> or <c>at_position &gt;= [method get_point_count]</c>), the point will be appended at the end of the point list.</para>
             </summary>
             <param name="in">If the parameter is null, then the default value is new Vector2(0, 0)</param>
@@ -20514,7 +20515,7 @@
         </member>
         <member name="M:Godot.Curve3D.AddPoint(Godot.Vector3,System.Nullable{Godot.Vector3},System.Nullable{Godot.Vector3},System.Int32)">
             <summary>
-            <para>Adds a point to a curve at <c>position</c>, with control points <c>in</c> and <c>out</c>.</para>
+            <para>Adds a point to a curve at <c>position</c> relative to the <see cref="T:Godot.Curve3D"/>'s position, with control points <c>in</c> and <c>out</c>.</para>
             <para>If <c>at_position</c> is given, the point is inserted before the point number <c>at_position</c>, moving that point (and every point after) after the inserted point. If <c>at_position</c> is not given, or is an illegal value (<c>at_position &lt;0</c> or <c>at_position &gt;= [method get_point_count]</c>), the point will be appended at the end of the point list.</para>
             </summary>
             <param name="in">If the parameter is null, then the default value is new Vector3(0, 0, 0)</param>
@@ -21119,7 +21120,8 @@
         </member>
         <member name="F:Godot.Environment.BGMode.Keep">
             <summary>
-            <para>Keeps on screen every pixel drawn in the background. This is the fastest background mode, but it can only be safely used in fully-interior scenes (no visible sky or sky reflections). If enabled in a scene where the background is visible, "ghost trail" artifacts will be visible when moving the camera.</para>
+            <para>Keeps on screen every pixel drawn in the background. Only select this mode if you really need to keep the old data. On modern GPUs it will generally not be faster than clearing the background, and can be significantly slower, particularly on mobile.</para>
+            <para>It can only be safely used in fully-interior scenes (no visible sky or sky reflections). If enabled in a scene where the background is visible, "ghost trail" artifacts will be visible when moving the camera.</para>
             </summary>
         </member>
         <member name="F:Godot.Environment.BGMode.ClearColor">
@@ -24092,12 +24094,12 @@
         </member>
         <member name="P:Godot.HeightMapShape.MapWidth">
             <summary>
-            <para>Width of the height map data. Changing this will resize the <see cref="P:Godot.HeightMapShape.MapData"/>.</para>
+            <para>Number of vertices in the width of the height map. Changing this will resize the <see cref="P:Godot.HeightMapShape.MapData"/>.</para>
             </summary>
         </member>
         <member name="P:Godot.HeightMapShape.MapDepth">
             <summary>
-            <para>Depth of the height map data. Changing this will resize the <see cref="P:Godot.HeightMapShape.MapData"/>.</para>
+            <para>Number of vertices in the depth of the height map. Changing this will resize the <see cref="P:Godot.HeightMapShape.MapData"/>.</para>
             </summary>
         </member>
         <member name="P:Godot.HeightMapShape.MapData">
@@ -34155,7 +34157,7 @@
         </member>
         <member name="M:Godot.PhysicsServer.GetProcessInfo(Godot.PhysicsServer.ProcessInfo)">
             <summary>
-            <para>Returns an Info defined by the <see cref="T:Godot.PhysicsServer.ProcessInfo"/> input given.</para>
+            <para>Returns information about the current state of the 3D physics engine. See <see cref="T:Godot.PhysicsServer.ProcessInfo"/> for a list of available states. Only implemented for Godot Physics.</para>
             </summary>
         </member>
         <member name="T:Godot.PhysicsShapeQueryParameters">
@@ -35319,12 +35321,12 @@
         </member>
         <member name="M:Godot.Range.Share(Godot.Node)">
             <summary>
-            <para>Binds two ranges together along with any ranges previously grouped with either of them. When any of range's member variables change, it will share the new value with all other ranges in its group.</para>
+            <para>Binds two <see cref="T:Godot.Range"/>s together along with any ranges previously grouped with either of them. When any of range's member variables change, it will share the new value with all other ranges in its group.</para>
             </summary>
         </member>
         <member name="M:Godot.Range.Unshare">
             <summary>
-            <para>Stops range from sharing its member variables with any other.</para>
+            <para>Stops the <see cref="T:Godot.Range"/> from sharing its member variables with any other.</para>
             </summary>
         </member>
         <member name="T:Godot.RayCast">
