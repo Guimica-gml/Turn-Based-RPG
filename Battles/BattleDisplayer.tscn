@@ -1,9 +1,10 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=16 format=2]
 
 [ext_resource path="res://Battles/BattleCharacterDisplayer/BattleCharacterDisplayer.tscn" type="PackedScene" id=1]
 [ext_resource path="res://SceneTransition/TransitionEffect.tscn" type="PackedScene" id=2]
 [ext_resource path="res://Battles/BattleStatsDisplayer/BattleStatsDisplayer.tscn" type="PackedScene" id=3]
 [ext_resource path="res://Battles/BattleOptionsPanel/BattleOptionsPanel.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Battles/EnemyAI/DumbAI/DumbEnemyAI.tres" type="Resource" id=5]
 [ext_resource path="res://PauseDisplayer/PauseDisplayer.tscn" type="PackedScene" id=6]
 [ext_resource path="res://Inventory/InventoryDisplayer/InventoryDisplayer.tscn" type="PackedScene" id=7]
 [ext_resource path="res://Battles/Actions/PunchAction.tres" type="Resource" id=8]
@@ -28,6 +29,7 @@ _baseMaxXpDrop = 1000
 _baseMinDropMoney = 100
 _baseMaxDropMoney = 200
 Actions = [ ExtResource( 10 ), ExtResource( 8 ), ExtResource( 9 ), null ]
+BattleAI = ExtResource( 5 )
 
 [node name="BattleDisplayer" instance=ExtResource( 6 )]
 script = ExtResource( 13 )

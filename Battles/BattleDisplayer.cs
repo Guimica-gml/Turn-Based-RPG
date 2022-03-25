@@ -134,7 +134,13 @@ public class BattleDisplayer : PauseDisplayer
 		_optionsPanel.SetText($"It's {EnemyStats.Name}'s turn.");
 		await ToSignal(_optionsPanel, "Interacted");
 
-		var action = GetEnemyAction();
+		var action = EnemyStats.BattleAI?.GetAction(EnemyStats);
+
+		if (action == null)
+		{
+			GD.PrintErr("No battle AI set in enemy stats");
+			return;
+		}
 
 		_optionsPanel.SetText($"{EnemyStats.Name} used action {action.Name}.", () => !_playerDisplayer.Active && !_enemyDisplayer.Active);
 		_optionsPanel.InputEnabled = false;
@@ -154,25 +160,6 @@ public class BattleDisplayer : PauseDisplayer
 		await ToSignal(_optionsPanel, "Interacted");
 
 		CheckWinner();
-	}
-
-	private Action GetEnemyAction()
-	{
-		var enemyStats = _enemyDisplayer.Stats;
-		var healActions = enemyStats.GetHealActions();
-		var attackActions = enemyStats.GetAttackActions();
-
-		if (enemyStats.Hp < enemyStats.MaxHp && GD.RandRange(0f, 100f) > 70f)
-		{
-			return GetRandomAction(healActions);
-		}
-
-		return GetRandomAction(attackActions);
-	}
-
-	private Action GetRandomAction(Array<Action> actions)
-	{
-		return actions[(int) GD.RandRange(0, actions.Count)];
 	}
 
 	public void CheckWinner()

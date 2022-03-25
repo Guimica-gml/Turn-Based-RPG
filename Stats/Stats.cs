@@ -27,6 +27,7 @@ public class Stats : Resource
 	[Export] private int _baseMaxDropMoney = 1;
 
 	[Export] public Array<Action> Actions = new Array<Action>();
+	[Export] public EnemyAI BattleAI = null;
 
 	private float _hp = 1.0f;
 	private int _baseXp = 0;
@@ -116,32 +117,6 @@ public class Stats : Resource
 	public int Defense
 	{
 		get => (int) (_baseDefense + Mathf.Pow(1.5f, Level - 1)) + GetStatBoost(nameof(Defense)) + GetStatBoost(nameof(Defense), temp:true);
-	}
-
-	public Array<Action> GetHealActions()
-	{
-		var healActions = new Array<Action>();
-
-		foreach (var action in Actions)
-		{
-			if (action == null || !action.Heal) continue;
-			healActions.Add(action);
-		}
-
-		return healActions;
-	}
-
-	public Array<Action> GetAttackActions()
-	{
-		var attackActions = new Array<Action>();
-
-		foreach (var action in Actions)
-		{
-			if (action == null || action.Heal) continue;
-			attackActions.Add(action);
-		}
-
-		return attackActions;
 	}
 
 	public int GetStatWithoutBoost(string stat)

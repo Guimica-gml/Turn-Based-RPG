@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=7 format=2]
+[gd_resource type="Resource" load_steps=8 format=2]
 
 [ext_resource path="res://Stats/Stats.cs" type="Script" id=1]
 [ext_resource path="res://Battles/Actions/SlapAction.tres" type="Resource" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://Battles/Actions/HealAction.tres" type="Resource" id=4]
 [ext_resource path="res://Enemy/InvertedMaskedGoon/InvenrtedMaskedGoon.png" type="Texture" id=5]
 [ext_resource path="res://Battles/Actions/PunchAction.tres" type="Resource" id=6]
+[ext_resource path="res://Battles/EnemyAI/AggressiveAI/AggressiveEnemyAI.tres" type="Resource" id=7]
 
 [resource]
 script = ExtResource( 1 )
@@ -15,9 +16,10 @@ _baseLevel = 1
 _baseMaxHp = 80
 _baseAttack = 80
 _baseDefense = 80
-_baseMoney = 0
+_money = 0
 _baseMinXpDrop = 60
 _baseMaxXpDrop = 80
 _baseMinDropMoney = 120
 _baseMaxDropMoney = 220
 Actions = [ ExtResource( 3 ), ExtResource( 6 ), ExtResource( 4 ), ExtResource( 2 ) ]
+BattleAI = ExtResource( 7 )
