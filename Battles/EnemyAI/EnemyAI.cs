@@ -8,6 +8,8 @@ public abstract class EnemyAI : Resource
 	protected Action GetStrongestAction(Array<Action> actions)
 	{
 		var attackActions = GetAttackActions(actions);
+		if (attackActions.Count <= 0) return null;
+
 		var strongest = attackActions[0];
 
 		foreach (Action action in attackActions)
@@ -21,6 +23,8 @@ public abstract class EnemyAI : Resource
 	protected Action GetWeakestAction(Array<Action> actions)
 	{
 		var attackActions = GetAttackActions(actions);
+		if (attackActions.Count <= 0) return null;
+
 		var weakest = attackActions[0];
 
 		foreach (Action action in attackActions)
