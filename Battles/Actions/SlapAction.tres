@@ -4,7 +4,6 @@
 
 [resource]
 script = ExtResource( 1 )
-PP = 15
 Name = "Slap"
 AnimScenePath = "res://Battles/Actions/ActionAnims/SlapAnimation/SlapAnim.tscn"
 Heal = false

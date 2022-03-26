@@ -1,7 +1,7 @@
 using Godot;
 using Godot.Collections;
 
-public class Stats : Resource
+public class Stats : MyResource
 {
 	[Signal] private delegate void HpChanged(int hp);
 	[Signal] private delegate void XpChanged(int xp);
@@ -26,23 +26,7 @@ public class Stats : Resource
 	[Export] private int _baseMinDropMoney = 1;
 	[Export] private int _baseMaxDropMoney = 1;
 
-	private Array<Action> _actions = new Array<Action>() { null, null, null, null };
-	[Export] public Array<Action> Actions
-	{
-		get => _actions;
-		set
-		{
-			_actions = value;
-
-			// Make sure all actions are unique
-			// Ugly but necessary code, bevause i can't use the `local to scene` property
-			for (var i = 0; i < _actions.Count; ++i)
-			{
-				_actions[i] = _actions[i]?.Duplicate() as Action;
-			}
-		}
-	}
-
+	[Export] public Array<Action> Actions = new Array<Action>() { null, null, null, null };
 	[Export] public EnemyAI BattleAI = null;
 
 	private float _hp = 1.0f;
@@ -135,6 +119,18 @@ public class Stats : Resource
 		get => (int) (_baseDefense + Mathf.Pow(1.5f, Level - 1)) + GetStatBoost(nameof(Defense)) + GetStatBoost(nameof(Defense), temp:true);
 	}
 
+	public override void _Init()
+	{
+		// Connecting to the battle system
+		Global.BattleManager.Connect("BattleEnded", this, nameof(OnBattleEnded));
+
+		// Making sure all resources are unique
+		for (var i = 0; i < Actions.Count; ++i)
+		{
+			Actions[i] = Actions[i]?.Duplicate() as Action;
+		}
+	}
+
 	public int GetStatWithoutBoost(string stat)
 	{
 		if (!_boosts.ContainsKey(stat)) return -1;
@@ -155,7 +151,6 @@ public class Stats : Resource
 
 	public void IncreaseStatBoost(string stat, int amount, bool temp)
 	{
-		ConnectToBattleSystem();
 		if (!_boosts.ContainsKey(stat)) return;
 
 		var state = (temp) ? "Temp" : "Perm";
@@ -214,16 +209,17 @@ public class Stats : Resource
 		return (numberOfActions > 0);
 	}
 
-	private void ConnectToBattleSystem()
-	{
-		if (Global.BattleManager == null || Global.BattleManager.IsConnected("BattleEnded", this, nameof(OnBattleEnded))) return;
-		Global.BattleManager.Connect("BattleEnded", this, nameof(OnBattleEnded));
-	}
-
 	private void OnBattleEnded()
 	{
 		// Reseting temporary boosts
 		var keys = new Array<string>(_boosts.Keys);
 		foreach (var key in keys) _boosts[key]["Temp"] = 0;
+
+		// Reseting the PPs
+		foreach (var action in Actions)
+		{
+			if (action == null) continue;
+			action.PP = action.MaxPP;
+		}
 	}
 }

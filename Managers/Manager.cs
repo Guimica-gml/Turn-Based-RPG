@@ -143,4 +143,14 @@ public class Manager : CanvasLayer
 	{
 		LoadScene();
 	}
+
+	public async void InitResource(MyResource res, bool @await = false)
+	{
+		if (@await)
+		{
+			await ToSignal(GetTree(), "idle_frame");
+		}
+
+		res._Init();
+	}
 }

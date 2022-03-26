@@ -9,7 +9,6 @@
 
 [resource]
 script = ExtResource( 1 )
-Actions = [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]
 Name = "Player"
 SpriteSheet = ExtResource( 6 )
 _baseLevel = 3
@@ -21,3 +20,4 @@ _baseMinXpDrop = 0
 _baseMaxXpDrop = 0
 _baseMinDropMoney = 1
 _baseMaxDropMoney = 1
+Actions = [ ExtResource( 5 ), ExtResource( 2 ), ExtResource( 4 ), ExtResource( 3 ) ]

@@ -1,6 +1,6 @@
 using Godot;
 
-public class Action : Resource
+public class Action : MyResource
 {
 	[Signal] private delegate void PPChanged(int pp);
 
@@ -13,7 +13,7 @@ public class Action : Resource
 	[Export] public int MaxPP = 1;
 
 	private int _pp = 1;
-	[Export] public int PP
+	public int PP
 	{
 		get => _pp;
 		set
@@ -21,5 +21,10 @@ public class Action : Resource
 			_pp = value;
 			EmitSignal(nameof(PPChanged), PP);
 		}
+	}
+
+	public override void _Init()
+	{
+		PP = MaxPP;
 	}
 }

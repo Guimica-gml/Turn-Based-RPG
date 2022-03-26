@@ -17,7 +17,6 @@
 
 [sub_resource type="Resource" id=3]
 script = ExtResource( 11 )
-Actions = [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ), null ]
 Name = "Masked Goon"
 SpriteSheet = ExtResource( 17 )
 _baseLevel = 1
@@ -29,6 +28,7 @@ _baseMinXpDrop = 1000
 _baseMaxXpDrop = 1000
 _baseMinDropMoney = 100
 _baseMaxDropMoney = 200
+Actions = [ ExtResource( 8 ), ExtResource( 10 ), ExtResource( 9 ), null ]
 BattleAI = ExtResource( 5 )
 
 [node name="BattleDisplayer" instance=ExtResource( 6 )]
