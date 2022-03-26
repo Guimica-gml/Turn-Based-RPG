@@ -15,6 +15,7 @@ public class Global : Node
 				{
 					Manager.InitResource(res);
 				}
+				_uninitializedRes.Clear();
 			}
 		}
 	}
