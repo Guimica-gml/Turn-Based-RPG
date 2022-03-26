@@ -1,19 +1,20 @@
 {
 	"default": [
 		{
-			"talker": "BobTalker",
-			"text": "Did you talk to Jessica?",
-			"responses": [
-				{ "text": "Yes", "part": "talked-to-jessica" },
-				{ "text": "No", "part": "didn't-talk-to-jessica" }
-			]
+			"conditions": [ { "script": "HasItem", "args": ["res://Inventory/PlayerInventory.tres", "res://Items/Stats/KeyItems/CaveKeyItem.tres"] } ],
+			"partIfTrue": "talked-to-jessica",
+			"partIfFalse": "didn't-talk-to-jessica"
 		}
 	],
 
 	"talked-to-jessica": [
 		{
 			"talker": "BobTalker",
-			"text": "Great."
+			"text": "I see that you got the cave key from Jessica, that's great, now you can enter the case, but be aware that there are some monsters there."
+		},
+		{
+			"talker": "BobTalker",
+			"text": "You can fight against them, but remember: your actions have limited amounts of PP and they just restore after the battle is finished, have that in mind."
 		},
 		{
 			"talker": "BobTalker",
@@ -25,7 +26,7 @@
 	"didn't-talk-to-jessica": [
 		{
 			"talker": "BobTalker",
-			"text": "You probably should."
+			"text": "Have you talked to Jessica? You probably should, she has something for you."
 		}
 	]
 }
