@@ -1,3 +1,4 @@
+using System;
 using Godot;
 using Godot.Collections;
 
@@ -40,7 +41,8 @@ public class DialogManager : CanvasLayer
 	// --- DIALOG DEFINITIONS
 	// These methods can be used from the DialogBox
 
-	private Dictionary<string, string> _variableDefinitions = new Dictionary<string, string>();
+	private Dictionary<string, string> _globalDialogDefinitions = new Dictionary<string, string>();
+	private Dictionary<string, Dictionary<string, string>> _localDialogDefinitions = new Dictionary<string, Dictionary<string, string>>();
 
 	public object CallDialogFunction(string funcName, Array<string> args)
 	{
@@ -52,6 +54,15 @@ public class DialogManager : CanvasLayer
 
 		return Call(funcName, args);
 	}
+
+	public void LoadLocalDefinitions(string filePath, Dictionary<string, string> definitions)
+	{
+		if (_localDialogDefinitions.ContainsKey(filePath)) return;
+		_localDialogDefinitions[filePath] = definitions;
+	}
+
+	// The following functions are used inside the dialgos, all should accept and Array of string as argument
+	// and return an object, return null if returning something is not necessary
 
 	private object AddItem(Array<string> args)
 	{
@@ -70,17 +81,42 @@ public class DialogManager : CanvasLayer
 		return (inventory.HasKeyItem(item.Name) || inventory.HasItem(item.Name));
 	}
 
-	private object SetVariableDefinition(Array<string> args)
+	private object SetGlobalDefinition(Array<string> args)
 	{
 		var variableKey = args[0];
 		var variableValue = args[1];
-		_variableDefinitions[variableKey] = variableValue;
+		_globalDialogDefinitions[variableKey] = variableValue;
 
 		return null;
 	}
 
-	private object CheckVariableDefinition(Array<string> args)
+	private object CheckGlobalDefinition(Array<string> args)
 	{
-		return (_variableDefinitions.ContainsKey(args[0]) &&  _variableDefinitions[args[0]] == args[1]);
+		return (_globalDialogDefinitions.ContainsKey(args[0]) &&  _globalDialogDefinitions[args[0]] == args[1]);
+	}
+
+	private object SetLocalDefinition(Array<string> args)
+	{
+		var variableFile = args[0];
+		var variableKey = args[1];
+		var variableValue = args[2];
+
+		_localDialogDefinitions[variableFile][variableKey] = variableValue;
+		return null;
+	}
+
+	private object CheckLocalDefinition(Array<string> args)
+	{
+		var variableFile = args[0];
+		var variableKey = args[1];
+		var variableValue = args[2];
+
+		if (!_localDialogDefinitions.ContainsKey(variableFile) || !_localDialogDefinitions[variableFile].ContainsKey(variableKey))
+		{
+			GD.PrintErr($"No local definition on file {variableFile} or key {variableKey}");
+			return false;
+		}
+
+		return (_localDialogDefinitions[variableFile][variableKey] == variableValue);
 	}
 }

@@ -1,4 +1,8 @@
 {
+	"definitions": [{
+		"gave-potion": "false"
+	}],
+
 	"default": [
 		{
 			"conditions": [ { "script": "HasItem", "args": ["res://Inventory/PlayerInventory.tres", "res://Items/Stats/KeyItems/CaveKeyItem.tres"] } ],
@@ -8,6 +12,14 @@
 	],
 
 	"talked-to-jessica": [
+		{
+			"conditions": [ { "script": "CheckLocalDefinition", "args": ["res://DialogBox/Scripts/Bob01.json", "gave-potion", "true"] } ],
+			"partIfTrue": "don't-give-potion",
+			"partIfFalse": "give-potion"
+		}
+	],
+
+	"give-potion": [
 		{
 			"talker": "BobTalker",
 			"text": "I see that you got the cave key from Jessica, that's great, now you can enter the case, but be aware that there are some monsters there."
@@ -19,7 +31,17 @@
 		{
 			"talker": "BobTalker",
 			"text": "Before you go, you better have this item, it will help you inside the cave.",
-			"executeScripts": [ { "script": "AddItem", "args": ["res://Inventory/PlayerInventory.tres", "res://Items/Stats/HealItems/PotionItem.tres"] } ]
+			"executeScripts": [
+				{ "script": "AddItem", "args": ["res://Inventory/PlayerInventory.tres", "res://Items/Stats/HealItems/PotionItem.tres"] },
+				{ "script": "SetLocalDefinition", "args": ["res://DialogBox/Scripts/Bob01.json", "gave-potion", "true"] }
+			]
+		}
+	],
+
+	"don't-give-potion": [
+		{
+			"talker": "BobTalker",
+			"text": "Hope you are making good use of the potion i gave you."
 		}
 	],
 

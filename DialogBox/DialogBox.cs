@@ -34,6 +34,7 @@ public class DialogBox : Control
 		_timer = GetNode<Timer>("Timer");
 
 		_dialog = LoadDialog();
+		UpdateLocalDefinitions();
 		UpdateDialog();
 	}
 
@@ -166,6 +167,13 @@ public class DialogBox : Control
 		}
 
 		return conditionsAreTrue;
+	}
+
+	private void UpdateLocalDefinitions()
+	{
+		if (!_dialog.ContainsKey("definitions")) return;
+		var definitions = new Dictionary<string, string>(_dialog["definitions"][0]);
+		Global.DialogManager.LoadLocalDefinitions(DialogPath, definitions);
 	}
 
 	private object ExecuteDialogFunction(Dictionary funcInfo)
