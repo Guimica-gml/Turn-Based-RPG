@@ -1,4 +1,3 @@
-using System;
 using Godot;
 using Godot.Collections;
 
@@ -61,7 +60,7 @@ public class DialogManager : CanvasLayer
 		_localDialogDefinitions[filePath] = definitions;
 	}
 
-	// The following functions are used inside the dialgos, all should accept and Array of string as argument
+	// The following functions are used inside the dialgos, all should accept and Array of string as parameter
 	// and return an object, return null if returning something is not necessary
 
 	private object AddItem(Array<string> args)
