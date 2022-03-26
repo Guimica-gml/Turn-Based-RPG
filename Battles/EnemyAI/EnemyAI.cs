@@ -37,7 +37,7 @@ public abstract class EnemyAI : Resource
 
 		foreach (var action in actions)
 		{
-			if (action == null) continue;
+			if (action == null || action.PP <= 0) continue;
 			healActions.Add(action);
 		}
 
@@ -50,7 +50,7 @@ public abstract class EnemyAI : Resource
 
 		foreach (var action in actions)
 		{
-			if (action == null || !action.Heal) continue;
+			if (action == null || !action.Heal || action.PP <= 0) continue;
 			healActions.Add(action);
 		}
 
@@ -63,7 +63,7 @@ public abstract class EnemyAI : Resource
 
 		foreach (var action in actions)
 		{
-			if (action == null || action.Heal) continue;
+			if (action == null || action.Heal || action.PP <= 0) continue;
 			attackActions.Add(action);
 		}
 
@@ -72,6 +72,7 @@ public abstract class EnemyAI : Resource
 
 	protected Action GetRandomAction(Array<Action> actions)
 	{
+		if (actions.Count <= 0) return null;
 		return actions[(int) GD.RandRange(0, actions.Count)];
 	}
 }

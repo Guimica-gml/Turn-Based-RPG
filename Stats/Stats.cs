@@ -26,7 +26,23 @@ public class Stats : Resource
 	[Export] private int _baseMinDropMoney = 1;
 	[Export] private int _baseMaxDropMoney = 1;
 
-	[Export] public Array<Action> Actions = new Array<Action>();
+	private Array<Action> _actions = new Array<Action>() { null, null, null, null };
+	[Export] public Array<Action> Actions
+	{
+		get => _actions;
+		set
+		{
+			_actions = value;
+
+			// Make sure all actions are unique
+			// Ugly but necessary code, bevause i can't use the `local to scene` property
+			for (var i = 0; i < _actions.Count; ++i)
+			{
+				_actions[i] = _actions[i]?.Duplicate() as Action;
+			}
+		}
+	}
+
 	[Export] public EnemyAI BattleAI = null;
 
 	private float _hp = 1.0f;
@@ -185,6 +201,19 @@ public class Stats : Resource
 		Hp = (float) (Mathf.Max(0, Hp - realDamage) / MaxHp);
 	}
 
+	public bool HasActions()
+	{
+		var numberOfActions = 0;
+
+		foreach (Action action in Actions)
+		{
+			if (action == null) continue;
+			numberOfActions += action.PP;
+		}
+
+		return (numberOfActions > 0);
+	}
+
 	private void ConnectToBattleSystem()
 	{
 		if (Global.BattleManager == null || Global.BattleManager.IsConnected("BattleEnded", this, nameof(OnBattleEnded))) return;
@@ -193,6 +222,7 @@ public class Stats : Resource
 
 	private void OnBattleEnded()
 	{
+		// Reseting temporary boosts
 		var keys = new Array<string>(_boosts.Keys);
 		foreach (var key in keys) _boosts[key]["Temp"] = 0;
 	}

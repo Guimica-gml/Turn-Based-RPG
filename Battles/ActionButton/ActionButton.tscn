@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://Battles/Resources/BattleFont.tres" type="DynamicFont" id=1]
 [ext_resource path="res://Battles/ActionButton/ActionButtonNormal.tres" type="StyleBox" id=2]
 [ext_resource path="res://Battles/ActionButton/ActionButtonHover.tres" type="StyleBox" id=3]
 [ext_resource path="res://Battles/ActionButton/ActionButton.cs" type="Script" id=4]
+[ext_resource path="res://Battles/ActionButton/BattleActionFont.tres" type="DynamicFont" id=5]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
@@ -14,9 +15,6 @@ mouse_filter = 1
 size_flags_horizontal = 3
 size_flags_vertical = 3
 script = ExtResource( 4 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="Button" type="Button" parent="."]
 margin_left = 133.0
@@ -30,6 +28,31 @@ custom_styles/pressed = ExtResource( 3 )
 custom_styles/focus = SubResource( 1 )
 custom_styles/disabled = ExtResource( 2 )
 custom_styles/normal = ExtResource( 2 )
-text = "Name here"
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Button"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = 1.0
+margin_right = -1.0
+margin_bottom = -1.0
+custom_constants/separation = 1
+
+[node name="NameLabel" type="Label" parent="Button/VBoxContainer"]
+margin_right = 51.0
+margin_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = ExtResource( 5 )
+align = 1
+
+[node name="PPLabel" type="Label" parent="Button/VBoxContainer"]
+margin_top = 9.0
+margin_right = 51.0
+margin_bottom = 17.0
+grow_horizontal = 2
+grow_vertical = 2
+custom_fonts/font = ExtResource( 5 )
+align = 1
 
 [connection signal="pressed" from="Button" to="." method="OnButtonPressed"]

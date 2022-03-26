@@ -4,10 +4,10 @@
 
 [resource]
 script = ExtResource( 1 )
-PP = 15
-Name = "Slap"
+PP = 1
+Name = "Struggle"
 AnimScenePath = "res://Battles/Actions/ActionAnims/SlapAnimation/SlapAnim.tscn"
 Heal = false
-Value = 25
-ConsiderPP = true
-MaxPP = 15
+Value = 10
+ConsiderPP = false
+MaxPP = 1

@@ -4,7 +4,10 @@
 
 [resource]
 script = ExtResource( 1 )
+PP = 20
 Name = "Kick"
 AnimScenePath = "res://Battles/Actions/ActionAnims/KickAnimation/KickAnim.tscn"
 Heal = false
 Value = 20
+ConsiderPP = true
+MaxPP = 20

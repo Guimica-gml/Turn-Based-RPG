@@ -4,7 +4,10 @@
 
 [resource]
 script = ExtResource( 1 )
+PP = 10
 Name = "Great Heal"
 AnimScenePath = "res://Battles/Actions/ActionAnims/HealAnimation/HealAnim.tscn"
 Heal = true
 Value = 40
+ConsiderPP = true
+MaxPP = 10

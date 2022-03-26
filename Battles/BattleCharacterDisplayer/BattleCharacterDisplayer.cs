@@ -41,6 +41,11 @@ public class BattleCharacterDisplayer : Node2D
 		_action = action;
 		_userStats = userStats;
 
+		if (_action.ConsiderPP)
+		{
+			_action.PP--;
+		}
+
 		var anim = animScenePacked.Instance<ActionAnim>();
 		anim.Position += new Vector2(0f, -20f);
 		anim.Connect("ApplyAction", this, nameof(ApplyActionEffect));

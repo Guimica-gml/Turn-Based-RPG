@@ -1,5 +1,4 @@
 using Godot;
-using Godot.Collections;
 
 public class BattleDisplayer : PauseDisplayer
 {
@@ -28,9 +27,12 @@ public class BattleDisplayer : PauseDisplayer
 	private BattleCharacterDisplayer _playerDisplayer;
 	private BattleCharacterDisplayer _enemyDisplayer;
 
+	private Action _struggleAction;
+
 	public override void _Ready()
 	{
 		// Getting some resource and node references
+		_struggleAction = GD.Load<Action>("res://Battles/Actions/Struggle.tres");
 		_playerStats = GD.Load<Stats>("res://Stats/PlayerStats.tres");
 		_playerInventory = GD.Load<Inventory>("res://Inventory/PlayerInventory.tres");
 
@@ -84,18 +86,28 @@ public class BattleDisplayer : PauseDisplayer
 	public async void PlayerTurn()
 	{
 		_currentTurn = Turns.Player;
+		Action action = null;
 
-		_optionsPanel.SetText("Select your action.");
-		await ToSignal(_optionsPanel, "TextDisplayed");
+		if (!_playerStats.HasActions())
+		{
+			action = _struggleAction.Duplicate() as Action;
+			_optionsPanel.SetText($"Player has no actions left, player uses its last efforts to {action.Name}.", () => !_playerDisplayer.Active && !_enemyDisplayer.Active);
+		}
+		else
+		{
+			_optionsPanel.SetText("Select your action.");
+			await ToSignal(_optionsPanel, "TextDisplayed");
 
-		_optionsPanel.SetActionsVisibility(true);
-		var vars = await ToSignal(_optionsPanel, "ActionSelected");
-		var action = vars[0] as Action;
+			_optionsPanel.SetActionsVisibility(true);
+			var vars = await ToSignal(_optionsPanel, "ActionSelected");
+			action = vars[0] as Action;
 
-		if (_playerDisplayer.Active || _enemyDisplayer.Active) return;
+			if (_playerDisplayer.Active || _enemyDisplayer.Active) return;
 
-		_optionsPanel.SetActionsVisibility(false);
-		_optionsPanel.SetText($"You selected action {action.Name}.", () => !_playerDisplayer.Active && !_enemyDisplayer.Active);
+			_optionsPanel.SetActionsVisibility(false);
+			_optionsPanel.SetText($"You selected action {action.Name}.", () => !_playerDisplayer.Active && !_enemyDisplayer.Active);
+		}
+
 		_optionsPanel.InputEnabled = false;
 
 		if (!action.Heal)
@@ -138,8 +150,7 @@ public class BattleDisplayer : PauseDisplayer
 
 		if (action == null)
 		{
-			GD.PrintErr("No battle AI set in enemy stats");
-			return;
+			action = _struggleAction.Duplicate() as Action;
 		}
 
 		_optionsPanel.SetText($"{EnemyStats.Name} used action {action.Name}.", () => !_playerDisplayer.Active && !_enemyDisplayer.Active);
