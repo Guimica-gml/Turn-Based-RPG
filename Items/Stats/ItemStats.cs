@@ -1,6 +1,6 @@
 using Godot;
 
-public abstract class ItemStats : Resource
+public abstract class ItemStats : MyResource
 {
 	[Export] public bool KeyItem;
 	[Export] public string Name;
@@ -9,19 +9,14 @@ public abstract class ItemStats : Resource
 	[Export] public bool Stackable = true;
 	[Export] public bool UseJustInBattle = false;
 	[Export] public int Price = 1;
+
 	public int Amount = 1;
-	
 	protected Stats playerStats = null;
-	
-	public abstract void Use();
-	
-	public ItemStats()
+
+	public override void _Init()
 	{
 		playerStats = GD.Load("res://Stats/PlayerStats.tres") as Stats;
 	}
-	
-	~ItemStats()
-	{
-		Dispose();
-	}
+
+	public abstract void Use();
 }

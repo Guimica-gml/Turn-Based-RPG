@@ -9,14 +9,19 @@
 			]
 		}
 	],
-	
+
 	"talked-to-jessica": [
 		{
 			"talker": "BobTalker",
 			"text": "Great."
+		},
+		{
+			"talker": "BobTalker",
+			"text": "Before you go, you better have this item, it will help you inside the cave.",
+			"executeScripts": [ { "script": "AddItem", "args": ["res://Inventory/PlayerInventory.tres", "res://Items/Stats/HealItems/PotionItem.tres"] } ]
 		}
 	],
-	
+
 	"didn't-talk-to-jessica": [
 		{
 			"talker": "BobTalker",
