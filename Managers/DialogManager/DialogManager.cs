@@ -91,7 +91,7 @@ public class DialogManager : CanvasLayer
 
 	private object CheckGlobalDefinition(Array<string> args)
 	{
-		return (_globalDialogDefinitions.ContainsKey(args[0]) &&  _globalDialogDefinitions[args[0]] == args[1]);
+		return (_globalDialogDefinitions.ContainsKey(args[0]) && _globalDialogDefinitions[args[0]] == args[1]);
 	}
 
 	private object SetLocalDefinition(Array<string> args)
