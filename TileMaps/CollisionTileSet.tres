@@ -994,8 +994,8 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 42/tile_mode = 0
 42/occluder_offset = Vector2( 0, 0 )
 42/navigation_offset = Vector2( 0, 0 )
-42/shape_offset = Vector2( -48, -64 )
-42/shape_transform = Transform2D( 1, 0, 0, 1, -48, -64 )
+42/shape_offset = Vector2( 0, 0 )
+42/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 42/shape = SubResource( 41 )
 42/shape_one_way = false
 42/shape_one_way_margin = 1.0
@@ -1004,7 +1004,7 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 "one_way": false,
 "one_way_margin": 1.0,
 "shape": SubResource( 41 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, -48, -64 )
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 42/z_index = 0
 43/name = "TilesetCollision.png 43"
@@ -1015,8 +1015,8 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 43/tile_mode = 0
 43/occluder_offset = Vector2( 0, 0 )
 43/navigation_offset = Vector2( 0, 0 )
-43/shape_offset = Vector2( -48, -64 )
-43/shape_transform = Transform2D( 1, 0, 0, 1, -48, -64 )
+43/shape_offset = Vector2( 0, 0 )
+43/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 43/shape = SubResource( 42 )
 43/shape_one_way = false
 43/shape_one_way_margin = 1.0
@@ -1025,7 +1025,7 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 "one_way": false,
 "one_way_margin": 1.0,
 "shape": SubResource( 42 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, -48, -64 )
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 43/z_index = 0
 44/name = "TilesetCollision.png 44"
@@ -1036,8 +1036,8 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 44/tile_mode = 0
 44/occluder_offset = Vector2( 0, 0 )
 44/navigation_offset = Vector2( 0, 0 )
-44/shape_offset = Vector2( -32, -64 )
-44/shape_transform = Transform2D( 1, 0, 0, 1, -32, -64 )
+44/shape_offset = Vector2( 0, 0 )
+44/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
 44/shape = SubResource( 43 )
 44/shape_one_way = false
 44/shape_one_way_margin = 1.0
@@ -1046,6 +1046,6 @@ points = PoolVector2Array( 0, 0, 16, 0, 16, 16, 0, 16 )
 "one_way": false,
 "one_way_margin": 1.0,
 "shape": SubResource( 43 ),
-"shape_transform": Transform2D( 1, 0, 0, 1, -32, -64 )
+"shape_transform": Transform2D( 1, 0, 0, 1, 0, 0 )
 } ]
 44/z_index = 0

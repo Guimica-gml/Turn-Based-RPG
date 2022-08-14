@@ -7,14 +7,14 @@
 code = "shader_type canvas_item;
 render_mode unshaded;
 
-uniform float cutoff: hint_range(0f, 1f) = 0f;
-uniform float smoothsize: hint_range(0f, 1f) = 0f;
+uniform float cutoff: hint_range(0.0, 1.0) = 0.0;
+uniform float smoothsize: hint_range(0.0, 1.0) = 0.0;
 uniform sampler2D mask: hint_albedo;
 
 void fragment()
 {
 	float value = texture(mask, UV).r;
-	float alpha = smoothstep(cutoff, cutoff + smoothsize, value * (1f - smoothsize) + smoothsize);
+	float alpha = smoothstep(cutoff, cutoff + smoothsize, value * (1.0 - smoothsize) + smoothsize);
 	COLOR = vec4(COLOR.rgb, alpha);
 }
 "
@@ -31,9 +31,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 mouse_filter = 2
 script = ExtResource( 1 )
-__meta__ = {
-"_edit_use_anchors_": false
-}
 
 [node name="ColorRect" type="ColorRect" parent="."]
 use_parent_material = true
