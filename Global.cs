@@ -8,6 +8,7 @@ public class Global : Node
 		get => _manager;
 		private set
 		{
+			// This is just an ungly workaroung to have Resources with _Init() function
 			_manager = value;
 			if (Manager != null)
 			{
