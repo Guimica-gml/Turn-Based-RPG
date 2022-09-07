@@ -10,3 +10,6 @@ It's not 100% similar, but it's pretty close<br>
 
 I also added some features that are not present in his project<br>
 I just felt like adding them would be nice, so I did<br>
+
+Web version of the game:<br>
+https://guimica-gml.github.io/RPG/WebExport/index.html
